@@ -212,6 +212,25 @@ func (self *Node) Size() int32 {
 }
 
 
+func (self *Node) NextColour() Colour {
+
+	// What colour a new move made from this node should be.
+	// FIXME... should be better.
+
+	if len(self.Props["B"]) > 0 {
+		return WHITE
+	} else if len(self.Props["W"]) > 0 {
+		return BLACK
+	} else if len(self.Props["AB"]) > 0 {
+		return WHITE
+	} else if len(self.Props["AW"]) > 0 {
+		return BLACK
+	} else {
+		return BLACK
+	}
+}
+
+
 func (self *Node) __make_board() {
 
 	sz := self.Size()
@@ -580,14 +599,32 @@ func (self *App) DrawBoard() {
 
 			if self.Node.Board[x][y] != EMPTY {
 
-				if self.Node.Board[x][y] == BLACK {
-					self.Renderer.SetDrawColor(0, 0, 0, 255)
-				} else if self.Node.Board[x][y] == WHITE {
-					self.Renderer.SetDrawColor(255, 255, 255, 255)
-				}
-
 				x1, y1 := self.PixelXY(x, y)
-				self.Renderer.DrawRect(&sdl.Rect{x1 - 9, y1 - 9, 18, 18})
+
+				if self.Node.Board[x][y] == BLACK {
+					self.Fcircle(x1, y1, self.CellWidth / 2, 0, 0, 0)
+				} else if self.Node.Board[x][y] == WHITE {
+					self.Fcircle(x1, y1, self.CellWidth / 2, 255, 255, 255)
+				}
+			}
+		}
+	}
+}
+
+
+func (self *App) Fcircle(x, y, radius int32, r, g, b uint8) {
+
+	var pyth float64;
+
+	self.Renderer.SetDrawColor(r, g, b, 255)
+
+	for j := radius; j >= 0; j-- {
+		for i:= radius; i >= 0; i-- {
+			pyth = math.Sqrt(math.Pow(float64(i), 2) + math.Pow(float64(j), 2));
+			if (pyth < float64(radius) - 0.5) {
+				self.Renderer.DrawLine(x - i - 1, y - j - 1, x + i, y - j - 1)
+				self.Renderer.DrawLine(x - i - 1, y + j, x + i, y + j)
+				break
 			}
 		}
 	}
@@ -611,7 +648,7 @@ func (self *App) Poll() {
 
 				x, y := self.BoardXY(event.(*sdl.MouseButtonEvent).X, event.(*sdl.MouseButtonEvent).Y)
 
-				new_node, err := self.Node.TryMove(BLACK, x, y)
+				new_node, err := self.Node.TryMove(self.Node.NextColour(), x, y)
 				if err != nil {
 					// fmt.Printf("%v\n", err)
 				} else {
