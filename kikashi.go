@@ -14,7 +14,7 @@ const TITLE = "Kikashi"
 func main() {
 
 	app := new(App)
-	app.Init(19, 400, 400)
+	app.Init(19, 24, 20)
 
 	for {
 		app.Poll()
@@ -29,19 +29,27 @@ type App struct {
 	PixelWidth		int32
 	PixelHeight		int32
 	CellWidth		int32
+	Margin			int32
 	Offset			int32
 	SZ				int32
 }
 
 
-func (self *App) Init(SZ, pixel_width, pixel_height int32) {
+func (self *App) Init(SZ, cell_width, margin int32) {
 
 	self.SZ = SZ
-	self.PixelWidth = pixel_width
-	self.PixelHeight = pixel_height
+
+	self.CellWidth = cell_width
+	self.Offset = self.CellWidth / 2
+	self.Margin = margin
+
+	self.PixelWidth = (self.CellWidth * SZ) + (self.Margin * 2)
+	self.PixelHeight = self.PixelWidth
 
 	self.InitSDL()
-	self.InitBoard()
+
+	self.DrawGrid()
+	self.Flip()
 }
 
 
@@ -70,14 +78,6 @@ func (self *App) InitSDL() {
 }
 
 
-func (self *App) InitBoard() {
-	self.CellWidth = self.PixelWidth / self.SZ
-	self.Offset = self.CellWidth / 2
-	self.DrawGrid()
-	self.Flip()
-}
-
-
 func (self *App) Shutdown() {
 	fmt.Printf("Destroy...\n")
 	self.Renderer.Destroy()
@@ -99,6 +99,12 @@ func (self *App) Cls(r, g, b uint8) {
 }
 
 
+func (self *App) PixelXY(x, y int32) (int32, int32) {
+	retx := x * self.CellWidth + self.Offset + self.Margin
+	rety := y * self.CellWidth + self.Offset + self.Margin
+	return retx, rety
+}
+
 func (self *App) DrawGrid() {
 
 	self.Cls(210, 175, 120)
@@ -106,11 +112,15 @@ func (self *App) DrawGrid() {
 	self.Renderer.SetDrawColor(0, 0, 0, 255)
 
 	for x := int32(0) ; x < self.SZ ; x++ {
-		self.Renderer.DrawLine(x * self.CellWidth + self.Offset, self.Offset, x * self.CellWidth + self.Offset, (self.SZ - 1) * self.CellWidth + self.Offset)
+		x1, y1 := self.PixelXY(x, 0)
+		x2, y2 := self.PixelXY(x, self.SZ - 1)
+		self.Renderer.DrawLine(x1, y1, x2, y2)
 	}
 
 	for y := int32(0) ; y < self.SZ ; y++ {
-		self.Renderer.DrawLine(self.Offset, y * self.CellWidth + self.Offset, (self.SZ - 1) * self.CellWidth + self.Offset, y * self.CellWidth + self.Offset)
+		x1, y1 := self.PixelXY(0, y)
+		x2, y2 := self.PixelXY(self.SZ - 1, y)
+		self.Renderer.DrawLine(x1, y1, x2, y2)
 	}
 }
 
