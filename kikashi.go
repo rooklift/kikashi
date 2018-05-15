@@ -601,15 +601,15 @@ func (self *App) PixelXY(x, y int32) (int32, int32) {
 }
 
 
-func (self *App) BoardXY(x, y int32) (int32, int32) {
+func (self *App) BoardXY(x1, y1 int32) (int32, int32) {
 
 	min := self.Offset + self.Margin - (self.CellWidth / 2)
 	max := ((self.Node.Size() - 1) * self.CellWidth) + self.Offset + self.Margin + (self.CellWidth / 2)
 
 	diff := float64(max - min)
 
-	retx_f := (float64(x - min) / diff) * float64(self.Node.Size())
-	rety_f := (float64(y - min) / diff) * float64(self.Node.Size())
+	retx_f := (float64(x1 - min) / diff) * float64(self.Node.Size())
+	rety_f := (float64(y1 - min) / diff) * float64(self.Node.Size())
 
 	retx := int32(math.Floor(retx_f))
 	rety := int32(math.Floor(rety_f))
@@ -673,6 +673,17 @@ func (self *App) DrawBoard() {
 					self.Circle(x1, y1, self.CellWidth / 2, 0, 0, 0)
 				}
 			}
+		}
+	}
+
+	move_info := self.Node.MoveInfo()
+
+	if move_info.OK && move_info.Pass == false {
+		x1, y1 := self.PixelXY(move_info.X, move_info.Y)
+		if self.Node.Board[move_info.X][move_info.Y] == WHITE {
+			self.Fcircle(x1, y1, self.CellWidth / 8, 0, 0, 0)
+		} else {
+			self.Fcircle(x1, y1, self.CellWidth / 8, 255, 255, 255)
 		}
 	}
 }
