@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 
@@ -515,6 +516,28 @@ func (self *App) PixelXY(x, y int32) (int32, int32) {
 }
 
 
+func (self *App) BoardXY(x, y int32) (int32, int32) {
+
+	min := self.Offset + self.Margin - (self.CellWidth / 2)
+	max := ((self.Node.Size() - 1) * self.CellWidth) + self.Offset + self.Margin + (self.CellWidth / 2)
+
+	diff := float64(max - min)
+
+	retx_f := (float64(x - min) / diff) * float64(self.Node.Size())
+	rety_f := (float64(y - min) / diff) * float64(self.Node.Size())
+
+	retx := int32(math.Floor(retx_f))
+	rety := int32(math.Floor(rety_f))
+
+	if retx < 0 { retx = 0 }
+	if retx >= self.Node.Size() { retx = self.Node.Size() - 1 }
+	if rety < 0 { rety = 0 }
+	if rety >= self.Node.Size() { rety = self.Node.Size() - 1 }
+
+	return retx, rety
+}
+
+
 func (self *App) AllHoshi() []Point {
 	// FIXME - generalise
 	return []Point{{3, 3}, {3, 9}, {3, 15}, {9, 3}, {9, 9}, {9, 15}, {15, 3}, {15, 9}, {15, 15}}
@@ -553,10 +576,19 @@ func (self *App) Poll() {
 		switch event.(type) {
 
 		case *sdl.QuitEvent:
+
 			self.Shutdown()
 			os.Exit(0)
+
+		case *sdl.MouseButtonEvent:
+
+			x, y := self.BoardXY(event.(*sdl.MouseButtonEvent).X, event.(*sdl.MouseButtonEvent).Y)
+			fmt.Printf("%d, %d\n", x, y)
+
 		}
 	}
+
+	self.Flip()
 }
 
 // -------------------------------------------------------------------------
