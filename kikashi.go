@@ -14,10 +14,7 @@ const TITLE = "Kikashi"
 func main() {
 
 	app := new(App)
-	app.Init(400, 400)
-
-	app.DrawGrid(19)
-	app.Flip()
+	app.Init(19, 400, 400)
 
 	for {
 		app.Poll()
@@ -29,15 +26,26 @@ func main() {
 type App struct {
 	Window			*sdl.Window
 	Renderer		*sdl.Renderer
-	Width			int32
-	Height			int32
+	PixelWidth		int32
+	PixelHeight		int32
+	CellWidth		int32
+	Offset			int32
+	SZ				int32
 }
 
 
-func (self *App) Init(width, height int32) {
+func (self *App) Init(SZ, pixel_width, pixel_height int32) {
 
-	self.Width = width
-	self.Height = height
+	self.SZ = SZ
+	self.PixelWidth = pixel_width
+	self.PixelHeight = pixel_height
+
+	self.InitSDL()
+	self.InitBoard()
+}
+
+
+func (self *App) InitSDL() {
 
 	fmt.Printf("Init...\n")
 
@@ -48,7 +56,7 @@ func (self *App) Init(width, height int32) {
 
 	fmt.Printf("CreateWindow...\n")
 
-	self.Window, err = sdl.CreateWindow(TITLE, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, width, height, sdl.WINDOW_SHOWN)
+	self.Window, err = sdl.CreateWindow(TITLE, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, self.PixelWidth, self.PixelHeight, sdl.WINDOW_SHOWN)
 	if err != nil {
 		panic(err)
 	}
@@ -59,6 +67,14 @@ func (self *App) Init(width, height int32) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+
+func (self *App) InitBoard() {
+	self.CellWidth = self.PixelWidth / self.SZ
+	self.Offset = self.CellWidth / 2
+	self.DrawGrid()
+	self.Flip()
 }
 
 
@@ -79,25 +95,22 @@ func (self *App) Flip() {
 
 func (self *App) Cls(r, g, b uint8) {
 	self.Renderer.SetDrawColor(r, g, b, 255)
-	self.Renderer.FillRect(&sdl.Rect{0, 0, self.Width, self.Height})
+	self.Renderer.FillRect(&sdl.Rect{0, 0, self.PixelWidth, self.PixelHeight})
 }
 
 
-func (self *App) DrawGrid(sz int32) {
+func (self *App) DrawGrid() {
 
 	self.Cls(210, 175, 120)
 
 	self.Renderer.SetDrawColor(0, 0, 0, 255)
 
-	cell_width := self.Width / sz
-	offset := cell_width / 2
-
-	for x := int32(0) ; x < sz ; x++ {
-		self.Renderer.DrawLine(x * cell_width + offset, offset, x * cell_width + offset, (sz - 1) * cell_width + offset)
+	for x := int32(0) ; x < self.SZ ; x++ {
+		self.Renderer.DrawLine(x * self.CellWidth + self.Offset, self.Offset, x * self.CellWidth + self.Offset, (self.SZ - 1) * self.CellWidth + self.Offset)
 	}
 
-	for y := int32(0) ; y < sz ; y++ {
-		self.Renderer.DrawLine(offset, y * cell_width + offset, (sz - 1) * cell_width + offset, y * cell_width + offset)
+	for y := int32(0) ; y < self.SZ ; y++ {
+		self.Renderer.DrawLine(self.Offset, y * self.CellWidth + self.Offset, (self.SZ - 1) * self.CellWidth + self.Offset, y * self.CellWidth + self.Offset)
 	}
 }
 
