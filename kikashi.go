@@ -57,7 +57,6 @@ func NewNode(parent *Node, props map[string][]string) *Node {
 	node.Props = make(map[string][]string)
 
 	for key, _ := range props {
-		node.Props[key] = nil
 		for _, s := range props[key] {
 			node.Props[key] = append(node.Props[key], s)
 		}
