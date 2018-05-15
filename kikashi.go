@@ -212,10 +212,6 @@ func (self *Node) Size() int32 {
 
 func (self *Node) __make_board() {
 
-	if self.Board != nil {
-		panic("__make_board(): already have a board")
-	}
-
 	sz := self.Size()
 
 	self.Board = make([][]Colour, sz)
@@ -267,10 +263,6 @@ func (self *Node) __handle_move(colour Colour, x, y int32) {
 	// Additional changes to the board based on moves.
 	// No legality checking here.
 
-	if self.Board == nil {
-		panic("__handle_move(): self.Board == nil")
-	}
-
 	if colour != BLACK && colour != WHITE {
 		panic("__handle_move(): colour != BLACK && colour != WHITE")
 	}
@@ -300,10 +292,6 @@ func (self *Node) __handle_move(colour Colour, x, y int32) {
 
 
 func (self *Node) GroupHasLiberties(x, y int32) bool {
-
-	if self.Board == nil {
-		panic("GroupHasLiberties(): self.Board == nil")
-	}
 
 	touched := make(map[Point]bool)
 	return self.__group_has_liberties(x, y, touched)
@@ -337,10 +325,6 @@ func (self *Node) __group_has_liberties(x, y int32, touched map[Point]bool) bool
 
 func (self *Node) __destroy_group(x, y int32) {
 
-	if self.Board == nil {
-		panic("__destroy_group(): self.Board == nil")
-	}
-
 	colour := self.Board[x][y]
 	if colour != BLACK && colour != WHITE {
 		panic("__destroy_group: colour != BLACK && colour != WHITE")
@@ -359,10 +343,6 @@ func (self *Node) __destroy_group(x, y int32) {
 func (self *Node) TryMove(colour Colour, x, y int32) (*Node, error) {
 
 	// Returns a new node on success.
-
-	if self.Board == nil {
-		panic("TryMove(): self.Board == nil")
-	}
 
 	if colour != BLACK && colour != WHITE {
 		panic("TryMove(): colour != BLACK && colour != WHITE")
