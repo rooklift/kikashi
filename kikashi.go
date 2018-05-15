@@ -35,6 +35,9 @@ type Move struct {
 
 // -------------------------------------------------------------------------
 // Nodes in an SGF tree...
+//
+// After creation, any B, W, AB, AW, AE tags should be added,
+// and then MakeBoard() should be called.
 
 type Node struct {
 	Props			map[string][]string
@@ -164,6 +167,8 @@ func (self *Node) MakeBoard() {
 			}
 		}
 	}
+
+	self.UpdateBoard()
 }
 
 
