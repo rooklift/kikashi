@@ -9,6 +9,7 @@ import (
 )
 
 const TITLE = "Kikashi"
+const ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 // -------------------------------------------------------------------------
 
@@ -48,6 +49,7 @@ type Node struct {
 
 
 func NewNode(parent *Node) *Node {
+
 	node := new(Node)
 	node.Props = make(map[string][]string)
 	node.Parent = parent
@@ -72,6 +74,14 @@ func (self *Node) AddValue(key, value string) {
 }
 
 
+func (self *Node) SetValue(key, value string) {
+
+	self.Props[key] = nil
+	self.AddValue(key, value)
+
+}
+
+
 func (self *Node) GetValue(key string) (value string, ok bool) {
 
 	// Get the value for the key, on the assumption that there's only 1 value.
@@ -86,13 +96,19 @@ func (self *Node) GetValue(key string) (value string, ok bool) {
 }
 
 
-func (self *Node) MoveInfo(size int32) Move {
+func (self *Node) MoveInfo() Move {
+
+	// We need a board so we can know about board size...
+
+	if self.Board == nil {
+		panic("MoveInfo(): self.Board == nil")
+	}
 
 	// There should only be 1 move in a valid SGF node.
 
 	for _, foo := range self.Props["B"] {
 
-		x, y, valid := point_from_string(foo, size)
+		x, y, valid := point_from_string(foo, self.Size())
 
 		ret := Move{
 			OK: true,
@@ -110,7 +126,7 @@ func (self *Node) MoveInfo(size int32) Move {
 
 	for _, foo := range self.Props["W"] {
 
-		x, y, valid := point_from_string(foo, size)
+		x, y, valid := point_from_string(foo, self.Size())
 
 		ret := Move{
 			OK: true,
@@ -132,11 +148,11 @@ func (self *Node) MoveInfo(size int32) Move {
 
 func (self *Node) MakeBoard() {
 
-	sz := 19
+	sz := int32(19)
 
 	if self.Parent != nil {
 
-		sz = len(self.Parent.Board)
+		sz = self.Parent.Size()
 
 	} else {
 
@@ -149,7 +165,7 @@ func (self *Node) MakeBoard() {
 			if err == nil {
 
 				if val > 0 && val <= 52 {
-					sz = val
+					sz = int32(val)
 				}
 			}
 		}
@@ -161,34 +177,14 @@ func (self *Node) MakeBoard() {
 	}
 
 	if self.Parent != nil {
-		for x := 0; x < len(self.Board); x++ {
-			for y := 0; y < sz; y++ {
+		for x := int32(0); x < sz; x++ {
+			for y := int32(0); y < sz; y++ {
 				self.Board[x][y] = self.Parent.Board[x][y]
 			}
 		}
 	}
 
-	self.UpdateBoard()
-}
-
-
-func (self *Node) Size() int32 {
-
-	if self.Board == nil {
-		panic("Size(): self.Board == nil")
-	}
-
-	return int32(len(self.Board))
-}
-
-
-func (self *Node) UpdateBoard() {
-
-	if self.Board == nil {
-		panic("UpdateBoard(): self.Board == nil")
-	}
-
-	sz := self.Size()
+	// Now fix the board using the properties...
 
 	for _, foo := range self.Props["AB"] {
 		x, y, ok := point_from_string(foo, sz)
@@ -209,24 +205,24 @@ func (self *Node) UpdateBoard() {
 
 	for _, foo := range self.Props["B"] {
 		x, y, ok := point_from_string(foo, sz)
-		if ok { self.PlayMove(BLACK, x, y) }
+		if ok { self.ForceMove(BLACK, x, y) }
 	}
 
 	for _, foo := range self.Props["W"] {
 		x, y, ok := point_from_string(foo, sz)
-		if ok { self.PlayMove(WHITE, x, y) }
+		if ok { self.ForceMove(WHITE, x, y) }
 	}
 }
 
 
-func (self *Node) PlayMove(colour Colour, x, y int32) {		// No legality checking here.
+func (self *Node) ForceMove(colour Colour, x, y int32) {		// No legality checking here.
 
 	if self.Board == nil {
-		panic("PlayMove(): self.Board == nil")
+		panic("ForceMove(): self.Board == nil")
 	}
 
 	if colour != BLACK && colour != WHITE {
-		panic("PlayMove(): colour != BLACK && colour != WHITE")
+		panic("ForceMove(): colour != BLACK && colour != WHITE")
 	}
 
 	opponent := BLACK ; if colour == BLACK { opponent = WHITE }
@@ -234,7 +230,7 @@ func (self *Node) PlayMove(colour Colour, x, y int32) {		// No legality checking
 	sz := self.Size()
 
 	if x < 0 || x >= sz || y < 0 || y >= sz {
-		panic("PlayMove(): off board")
+		panic("ForceMove(): off board")
 	}
 
 	self.Board[x][y] = colour
@@ -252,6 +248,7 @@ func (self *Node) PlayMove(colour Colour, x, y int32) {		// No legality checking
 	}
 }
 
+
 func (self *Node) GroupHasLiberties(x, y int32) bool {
 
 	if self.Board == nil {
@@ -261,6 +258,7 @@ func (self *Node) GroupHasLiberties(x, y int32) bool {
 	touched := make(map[Point]bool)
 	return self.group_has_liberties(x, y, touched)
 }
+
 
 func (self *Node) group_has_liberties(x, y int32, touched map[Point]bool) bool {
 
@@ -286,6 +284,7 @@ func (self *Node) group_has_liberties(x, y int32, touched map[Point]bool) bool {
 	return false
 }
 
+
 func (self *Node) DestroyGroup(x, y int32) {
 
 	if self.Board == nil {
@@ -304,6 +303,64 @@ func (self *Node) DestroyGroup(x, y int32) {
 			self.DestroyGroup(point.X, point.Y)
 		}
 	}
+}
+
+
+func (self *Node) Size() int32 {
+
+	if self.Board == nil {
+		panic("Size(): self.Board == nil")
+	}
+
+	return int32(len(self.Board))
+}
+
+
+func (self *Node) TryMove(colour Colour, x, y int32) (*Node, error) {
+
+	if self.Board == nil {
+		panic("TryMove(): self.Board == nil")
+	}
+
+	if colour != BLACK && colour != WHITE {
+		panic("TryMove(): colour != BLACK && colour != WHITE")
+	}
+
+	sz := self.Size()
+
+	if x < 0 || x >= sz || y < 0 || y >= sz {
+		return nil, fmt.Errorf("TryMove(): Off board")
+	}
+	if self.Board[x][y] != EMPTY {
+		return nil, fmt.Errorf("TryMove(): Occupied point")
+	}
+
+	key := "B" ; if colour == WHITE { key = "W" }
+	val := string(ALPHA[x]) + string(ALPHA[y])
+
+	// If the move already exists, just return the (first) relevant child...
+
+	test := Move{
+		OK: true,
+		Pass: false,
+		Colour: colour,
+		X: x,
+		Y: y,
+	}
+
+	for _, child := range self.Children {
+		if child.MoveInfo() == test {
+			return child, nil
+		}
+	}
+
+	// FIXME: Check for legality...
+
+	new_node := NewNode(self)
+	new_node.SetValue(key, val)
+	new_node.MakeBoard()
+
+	return new_node, nil
 }
 
 // -------------------------------------------------------------------------
