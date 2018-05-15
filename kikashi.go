@@ -11,6 +11,7 @@ import (
 
 const TITLE = "Kikashi"
 const ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const DEFAULT_SIZE = 19
 
 var MUTORS = []string{"B", "W", "AB", "AW", "AE"}
 
@@ -196,8 +197,8 @@ func (self *Node) Size() int32 {
 			}
 
 			if self.__SZ == 0 {
-				self.__SZ = 19
-				self.SetValue("SZ", "19")			// Set the actual property in the root.
+				self.__SZ = DEFAULT_SIZE
+				self.SetValue("SZ", fmt.Sprintf("%d", DEFAULT_SIZE))			// Set the actual property in the root.
 			}
 
 		} else {
@@ -594,7 +595,7 @@ func (self *App) Poll() {
 // -------------------------------------------------------------------------
 
 func main() {
-	app := NewApp(19, 24, 20)
+	app := NewApp(DEFAULT_SIZE, 36, 20)
 	for {
 		app.Poll()
 	}
