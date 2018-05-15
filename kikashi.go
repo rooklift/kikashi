@@ -11,27 +11,36 @@ const TITLE = "Kikashi"
 
 // -------------------------------------------------------------------------
 
-func main() {
-	app := NewApp(19, 24, 20)
-	for {
-		app.Poll()
-	}
-}
+type Colour int
 
-// -------------------------------------------------------------------------
+const (
+	EMPTY = Colour(iota)
+	BLACK
+	WHITE
+)
 
 type Point struct {
 	X				int32
 	Y				int32
 }
 
+type Move struct {
+	OK				bool
+	Pass			bool
+	Colour			Colour
+	X				int
+	Y				int
+}
+
 // -------------------------------------------------------------------------
+// Nodes in an SGF tree...
 
 type Node struct {
 	Props			map[string][]string
 	Children		[]*Node
 	Parent			*Node
 }
+
 
 func NewNode(parent *Node) *Node {
 	node := new(Node)
@@ -43,6 +52,76 @@ func NewNode(parent *Node) *Node {
 	}
 
 	return node
+}
+
+
+func (self *Node) AddValue(key, value string) {
+
+	for i := 0; i < len(self.Props[key]); i++ {
+		if self.Props[key][i] == value {
+			return
+		}
+	}
+
+	self.Props[key] = append(self.Props[key], value)
+}
+
+
+func (self *Node) GetValue(key string) (value string, ok bool) {
+
+	// Get the value for the key, on the assumption that there's only 1 value.
+
+	list := self.Props[key]
+
+	if len(list) == 0 {
+		return "", false
+	}
+
+	return list[0], true
+}
+
+
+func (self *Node) MoveInfo(size int) Move {
+
+	// There should only be 1 move in a valid SGF node.
+
+	for _, foo := range self.Props["B"] {
+
+		x, y, valid := point_from_string(foo, size)
+
+		ret := Move{
+			OK: true,
+			Colour: BLACK,
+			X: x,
+			Y: y,
+		}
+
+		if valid == false {
+			ret.Pass = true
+		}
+
+		return ret
+	}
+
+	for _, foo := range self.Props["W"] {
+
+		x, y, valid := point_from_string(foo, size)
+
+		ret := Move{
+			OK: true,
+			Colour: WHITE,
+			X: x,
+			Y: y,
+		}
+
+		if valid == false {
+			ret.Pass = true
+		}
+
+		return ret
+	}
+
+	return Move{OK: false}
 }
 
 // -------------------------------------------------------------------------
@@ -176,4 +255,33 @@ func (self *App) Poll() {
 			os.Exit(0)
 		}
 	}
+}
+
+// -------------------------------------------------------------------------
+
+func main() {
+	app := NewApp(19, 24, 20)
+	for {
+		app.Poll()
+	}
+}
+
+func point_from_string(s string, size int) (x int, y int, ok bool) {
+
+	// If ok == false, that means the move was a pass.
+
+	if len(s) < 2 {
+		return 0, 0, false
+	}
+
+	x = int(s[0]) - 97
+	y = int(s[1]) - 97
+
+	ok = false
+
+	if x >= 0 && x < size && y >= 0 && y < size {
+		ok = true
+	}
+
+	return x, y, ok
 }
