@@ -464,7 +464,7 @@ func (self *Node) GetRoot() *Node {
 
 func (self *Node) Save(filename string) {
 	root := self.GetRoot()
-	outfile, _ := os.Create(filename)
+	outfile, _ := os.Create(filename)					// FIXME: handle errors
 	root.WriteTree(outfile)
 }
 
@@ -670,7 +670,46 @@ func (self *App) DrawBoard() {
 					self.Fcircle(x1, y1, self.CellWidth / 2, 0, 0, 0)
 				} else if self.Node.Board[x][y] == WHITE {
 					self.Fcircle(x1, y1, self.CellWidth / 2, 255, 255, 255)
+					self.Circle(x1, y1, self.CellWidth / 2, 0, 0, 0)
 				}
+			}
+		}
+	}
+}
+
+
+func (self *App) Circle(x, y, radius int32, r, g, b uint8) {
+
+	self.Renderer.SetDrawColor(r, g, b, 255)
+
+	var pyth float64
+	var topline bool = true
+	var lastiplusone int32
+
+	for j := radius - 1; j >= 0; j-- {
+		for i := radius - 1; i >= 0; i-- {
+			pyth = math.Sqrt(math.Pow(float64(i), 2) + math.Pow(float64(j), 2))
+			if (pyth < float64(radius) - 0.5) {
+				if topline {                    // i.e. if we're on the top (and, with mirroring, bottom) lines
+					topline = false
+					self.Renderer.DrawLine(x - i - 1, y - j - 1, x + i, y - j - 1)
+					self.Renderer.DrawLine(x - i - 1, y + j, x + i, y + j)
+					lastiplusone = i + 1
+				} else {
+					if lastiplusone == i + 1 {
+						self.Renderer.DrawPoint(x - i - 1, y - j - 1)
+						self.Renderer.DrawPoint(x + i, y - j - 1)
+						self.Renderer.DrawPoint(x - i - 1, y + j)
+						self.Renderer.DrawPoint(x + i, y + j)
+					} else {
+						self.Renderer.DrawLine(x - i - 1, y - j - 1, x - lastiplusone - 1, y - j - 1)
+						self.Renderer.DrawLine(x + lastiplusone, y - j - 1, x + i, y - j - 1)
+						self.Renderer.DrawLine(x - i - 1, y + j, x - lastiplusone - 1, y + j)
+						self.Renderer.DrawLine(x + lastiplusone, y + j, x + i, y + j)
+						lastiplusone = i + 1
+					}
+				}
+				break
 			}
 		}
 	}
