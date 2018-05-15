@@ -23,6 +23,13 @@ func main() {
 
 // -------------------------------------------------------------------------
 
+type Point struct {
+	X				int32
+	Y				int32
+}
+
+// -------------------------------------------------------------------------
+
 type App struct {
 	Window			*sdl.Window
 	Renderer		*sdl.Renderer
@@ -105,6 +112,13 @@ func (self *App) PixelXY(x, y int32) (int32, int32) {
 	return retx, rety
 }
 
+
+func (self *App) AllHoshi() []Point {
+	// FIXME - generalise
+	return []Point{{3, 3}, {3, 9}, {3, 15}, {9, 3}, {9, 9}, {9, 15}, {15, 3}, {15, 9}, {15, 15}}
+}
+
+
 func (self *App) DrawGrid() {
 
 	self.Cls(210, 175, 120)
@@ -121,6 +135,11 @@ func (self *App) DrawGrid() {
 		x1, y1 := self.PixelXY(0, y)
 		x2, y2 := self.PixelXY(self.SZ - 1, y)
 		self.Renderer.DrawLine(x1, y1, x2, y2)
+	}
+
+	for _, hoshi := range self.AllHoshi() {
+		x, y := self.PixelXY(hoshi.X, hoshi.Y)
+		self.Renderer.DrawRect(&sdl.Rect{x - 1, y - 1, 3, 3})
 	}
 }
 
