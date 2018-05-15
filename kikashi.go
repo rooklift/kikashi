@@ -383,12 +383,12 @@ func (self *Node) TryMove(colour Colour, x, y int32) (*Node, error) {
 	new_node := NewNode(self, map[string][]string{key: []string{val}})
 
 	if new_node.SameBoard(self.Parent) {
-		self.Parent.RemoveChild(new_node)
+		self.RemoveChild(new_node)
 		return nil, fmt.Errorf("TryMove(): Ko")
 	}
 
 	if new_node.Board[x][y] == EMPTY {
-		self.Parent.RemoveChild(new_node)
+		self.RemoveChild(new_node)
 		return nil, fmt.Errorf("TryMove(): Suicide")
 	}
 
@@ -412,7 +412,7 @@ func (self *Node) RemoveChild(child *Node) {
 
 func (self *Node) SameBoard(other *Node) bool {
 
-	if self.Board == nil || other.Board == nil {
+	if self == nil || other == nil || self.Board == nil || other.Board == nil {
 		return false
 	}
 
@@ -570,6 +570,30 @@ func (self *App) DrawGrid() {
 }
 
 
+func (self *App) DrawBoard() {
+
+	self.DrawGrid()
+
+	for x := int32(0); x < self.Node.Size(); x++ {
+
+		for y := int32(0); y < self.Node.Size(); y++ {
+
+			if self.Node.Board[x][y] != EMPTY {
+
+				if self.Node.Board[x][y] == BLACK {
+					self.Renderer.SetDrawColor(0, 0, 0, 255)
+				} else if self.Node.Board[x][y] == WHITE {
+					self.Renderer.SetDrawColor(255, 255, 255, 255)
+				}
+
+				x1, y1 := self.PixelXY(x, y)
+				self.Renderer.DrawRect(&sdl.Rect{x1 - 9, y1 - 9, 18, 18})
+			}
+		}
+	}
+}
+
+
 func (self *App) Poll() {
 
 	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
@@ -583,9 +607,18 @@ func (self *App) Poll() {
 
 		case *sdl.MouseButtonEvent:
 
-			x, y := self.BoardXY(event.(*sdl.MouseButtonEvent).X, event.(*sdl.MouseButtonEvent).Y)
-			fmt.Printf("%d, %d\n", x, y)
+			if event.(*sdl.MouseButtonEvent).Type == sdl.MOUSEBUTTONDOWN {
 
+				x, y := self.BoardXY(event.(*sdl.MouseButtonEvent).X, event.(*sdl.MouseButtonEvent).Y)
+
+				new_node, err := self.Node.TryMove(BLACK, x, y)
+				if err != nil {
+					// fmt.Printf("%v\n", err)
+				} else {
+					self.Node = new_node
+					self.DrawBoard()
+				}
+			}
 		}
 	}
 
