@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -39,6 +40,7 @@ type Node struct {
 	Props			map[string][]string
 	Children		[]*Node
 	Parent			*Node
+	Board			[][]Colour
 }
 
 
@@ -124,6 +126,48 @@ func (self *Node) MoveInfo(size int) Move {
 	return Move{OK: false}
 }
 
+
+func (self *Node) MakeBoard() {
+
+	sz := 19
+
+	if self.Parent != nil {
+
+		sz = len(self.Parent.Board)
+
+	} else {
+
+		sz_string, ok := self.GetValue("SZ")
+
+		if ok {
+
+			val, err := strconv.Atoi(sz_string)
+
+			if err == nil {
+
+				if val > 0 && val <= 52 {
+					sz = val
+				}
+			}
+		}
+	}
+
+	self.Board = make([][]Colour, sz)
+	for x := 0; x < len(self.Board); x++ {
+		self.Board[x] = make([]Colour, sz)
+	}
+
+	if self.Parent != nil {
+		for x := 0; x < len(self.Board); x++ {
+			for y := 0; y < sz; y++ {
+				self.Board[x][y] = self.Parent.Board[x][y]
+			}
+		}
+	}
+
+	// FIXME / TODO : update from properties
+}
+
 // -------------------------------------------------------------------------
 
 type App struct {
@@ -135,6 +179,7 @@ type App struct {
 	Margin			int32
 	Offset			int32
 	SZ				int32
+	Node			*Node
 }
 
 
@@ -150,6 +195,8 @@ func NewApp(SZ, cell_width, margin int32) *App {
 
 	self.PixelWidth = (self.CellWidth * SZ) + (self.Margin * 2)
 	self.PixelHeight = self.PixelWidth
+
+	self.Node = NewNode(nil)
 
 	self.InitSDL()
 
