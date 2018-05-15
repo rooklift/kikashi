@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"math"
 	"os"
 	"strconv"
@@ -447,6 +448,71 @@ func (self *Node) SameBoard(other *Node) bool {
 	return true
 }
 
+
+func (self *Node) GetRoot() *Node {
+	node := self
+	for {
+		if node.Parent != nil {
+			node = node.Parent
+		} else {
+			break
+		}
+	}
+	return node
+}
+
+
+func (self *Node) Save(filename string) {
+	root := self.GetRoot()
+	outfile, _ := os.Create(filename)
+	root.WriteTree(outfile)
+}
+
+
+func (self *Node) WriteTree(outfile io.Writer) {		// Relies on values already being correctly backslash-escaped
+
+	node := self
+
+	fmt.Fprintf(outfile, "(")
+
+	for {
+
+		fmt.Fprintf(outfile, ";")
+
+		for key, _ := range node.Props {
+
+			fmt.Fprintf(outfile, "%s", key)
+
+			for _, value := range node.Props[key] {
+				fmt.Fprintf(outfile, "[%s]", value)
+			}
+		}
+
+		if len(node.Children) > 1 {
+
+			for _, child := range node.Children {
+				child.WriteTree(outfile)
+			}
+
+			break
+
+		} else if len(node.Children) == 1 {
+
+			node = node.Children[0]
+			continue
+
+		} else {
+
+			break
+
+		}
+
+	}
+
+	fmt.Fprintf(outfile, ")\n")
+	return
+}
+
 // -------------------------------------------------------------------------
 
 type App struct {
@@ -632,9 +698,9 @@ func (self *App) Fcircle(x, y, radius int32, r, g, b uint8) {
 
 func (self *App) Poll() {
 
-	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
+	for ev := sdl.PollEvent(); ev != nil; ev = sdl.PollEvent() {
 
-		switch event.(type) {
+		switch event := ev.(type) {
 
 		case *sdl.QuitEvent:
 
@@ -643,9 +709,9 @@ func (self *App) Poll() {
 
 		case *sdl.MouseButtonEvent:
 
-			if event.(*sdl.MouseButtonEvent).Type == sdl.MOUSEBUTTONDOWN {
+			if event.Type == sdl.MOUSEBUTTONDOWN {
 
-				x, y := self.BoardXY(event.(*sdl.MouseButtonEvent).X, event.(*sdl.MouseButtonEvent).Y)
+				x, y := self.BoardXY(event.X, event.Y)
 
 				new_node, err := self.Node.TryMove(self.Node.NextColour(), x, y)
 				if err != nil {
@@ -653,6 +719,17 @@ func (self *App) Poll() {
 				} else {
 					self.Node = new_node
 					self.DrawBoard()
+				}
+			}
+
+		case *sdl.KeyboardEvent:
+
+			if event.Type == sdl.KEYDOWN {
+
+				switch event.Keysym.Sym {
+
+				case 's', 'S':
+					self.Node.Save("foo.sgf")
 				}
 			}
 		}
