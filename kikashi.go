@@ -9,12 +9,30 @@ import (
 
 const TITLE = "Kikashi"
 
+// -------------------------------------------------------------------------
+
+func main() {
+
+	app := new(App)
+	app.Init(400, 400)
+
+	app.Cls(96, 0, 0)
+	app.Flip()
+
+	for {
+		app.Poll()
+	}
+}
+
+// -------------------------------------------------------------------------
+
 type App struct {
 	Window			*sdl.Window
 	Renderer		*sdl.Renderer
 	Width			int32
 	Height			int32
 }
+
 
 func (self *App) Init(width, height int32) {
 
@@ -43,6 +61,7 @@ func (self *App) Init(width, height int32) {
 	}
 }
 
+
 func (self *App) Shutdown() {
 	fmt.Printf("Destroy...\n")
 	self.Renderer.Destroy()
@@ -52,9 +71,17 @@ func (self *App) Shutdown() {
 	sdl.Quit()
 }
 
+
 func (self *App) Flip() {
 	self.Renderer.Present()
 }
+
+
+func (self *App) Cls(r, g, b uint8) {
+	self.Renderer.SetDrawColor(r, g, b, 255)
+	self.Renderer.FillRect(&sdl.Rect{0, 0, self.Width, self.Height})
+}
+
 
 func (self *App) Poll() {
 	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
@@ -64,23 +91,4 @@ func (self *App) Poll() {
 			os.Exit(0)
 		}
 	}
-}
-
-func (self *App) Cls(r, g, b uint8) {
-	self.Renderer.SetDrawColor(r, g, b, 255)
-	self.Renderer.FillRect(&sdl.Rect{0, 0, self.Width, self.Height})
-}
-
-func main() {
-
-	app := new(App)
-	app.Init(400, 400)
-
-	app.Cls(96, 0, 0)
-	app.Flip()
-
-	for {
-		app.Poll()
-	}
-
 }
