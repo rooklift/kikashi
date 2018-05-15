@@ -29,8 +29,8 @@ type Move struct {
 	OK				bool
 	Pass			bool
 	Colour			Colour
-	X				int
-	Y				int
+	X				int32
+	Y				int32
 }
 
 // -------------------------------------------------------------------------
@@ -83,7 +83,7 @@ func (self *Node) GetValue(key string) (value string, ok bool) {
 }
 
 
-func (self *Node) MoveInfo(size int) Move {
+func (self *Node) MoveInfo(size int32) Move {
 
 	// There should only be 1 move in a valid SGF node.
 
@@ -164,8 +164,141 @@ func (self *Node) MakeBoard() {
 			}
 		}
 	}
+}
 
-	// FIXME / TODO : update from properties
+
+func (self *Node) Size() int32 {
+
+	if self.Board == nil {
+		panic("Size(): self.Board == nil")
+	}
+
+	return int32(len(self.Board))
+}
+
+
+func (self *Node) UpdateBoard() {
+
+	if self.Board == nil {
+		panic("UpdateBoard(): self.Board == nil")
+	}
+
+	sz := self.Size()
+
+	for _, foo := range self.Props["AB"] {
+		x, y, ok := point_from_string(foo, sz)
+		if ok { self.Board[x][y] = BLACK }
+	}
+
+	for _, foo := range self.Props["AW"] {
+		x, y, ok := point_from_string(foo, sz)
+		if ok { self.Board[x][y] = WHITE }
+	}
+
+	for _, foo := range self.Props["AE"] {
+		x, y, ok := point_from_string(foo, sz)
+		if ok { self.Board[x][y] = EMPTY }
+	}
+
+	// Play move: B / W
+
+	for _, foo := range self.Props["B"] {
+		x, y, ok := point_from_string(foo, sz)
+		if ok { self.PlayMove(BLACK, x, y) }
+	}
+
+	for _, foo := range self.Props["W"] {
+		x, y, ok := point_from_string(foo, sz)
+		if ok { self.PlayMove(WHITE, x, y) }
+	}
+}
+
+
+func (self *Node) PlayMove(colour Colour, x, y int32) {		// No legality checking here.
+
+	if self.Board == nil {
+		panic("PlayMove(): self.Board == nil")
+	}
+
+	if colour != BLACK && colour != WHITE {
+		panic("PlayMove(): colour != BLACK && colour != WHITE")
+	}
+
+	opponent := BLACK ; if colour == BLACK { opponent = WHITE }
+
+	sz := self.Size()
+
+	if x < 0 || x >= sz || y < 0 || y >= sz {
+		panic("PlayMove(): off board")
+	}
+
+	self.Board[x][y] = colour
+
+	for _, point := range adjacent_points(x, y, sz) {
+		if self.Board[point.X][point.Y] == opponent {
+			if self.GroupHasLiberties(point.X, point.Y) == false {
+				self.DestroyGroup(point.X, point.Y)
+			}
+		}
+	}
+
+	if self.GroupHasLiberties(x, y) == false {
+		self.DestroyGroup(x, y)
+	}
+}
+
+func (self *Node) GroupHasLiberties(x, y int32) bool {
+
+	if self.Board == nil {
+		panic("GroupHasLiberties(): self.Board == nil")
+	}
+
+	touched := make(map[Point]bool)
+	return self.group_has_liberties(x, y, touched)
+}
+
+func (self *Node) group_has_liberties(x, y int32, touched map[Point]bool) bool {
+
+	touched[Point{x, y}] = true
+
+	colour := self.Board[x][y]
+	if colour != BLACK && colour != WHITE {
+		panic("group_has_liberties(): colour != BLACK && colour != WHITE")
+	}
+
+	for _, point := range adjacent_points(x, y, self.Size()) {
+		if self.Board[point.X][point.Y] == EMPTY {
+			return true
+		} else if self.Board[point.X][point.Y] == colour {
+			if touched[Point{point.X, point.Y}] == false {
+				if self.group_has_liberties(point.X, point.Y, touched) {
+					return true
+				}
+			}
+		}
+	}
+
+	return false
+}
+
+func (self *Node) DestroyGroup(x, y int32) {
+
+	if self.Board == nil {
+		panic("DestroyGroup(): self.Board == nil")
+	}
+
+	colour := self.Board[x][y]
+	if colour != BLACK && colour != WHITE {
+		panic("DestroyGroup: colour != BLACK && colour != WHITE")
+	}
+
+	self.Board[x][y] = EMPTY
+
+	for _, point := range adjacent_points(x, y, self.Size()) {
+		if self.Board[point.X][point.Y] == colour {
+			self.DestroyGroup(point.X, point.Y)
+		}
+	}
 }
 
 // -------------------------------------------------------------------------
@@ -313,7 +446,7 @@ func main() {
 	}
 }
 
-func point_from_string(s string, size int) (x int, y int, ok bool) {
+func point_from_string(s string, size int32) (x int32, y int32, ok bool) {
 
 	// If ok == false, that means the move was a pass.
 
@@ -321,8 +454,8 @@ func point_from_string(s string, size int) (x int, y int, ok bool) {
 		return 0, 0, false
 	}
 
-	x = int(s[0]) - 97
-	y = int(s[1]) - 97
+	x = int32(s[0]) - 97
+	y = int32(s[1]) - 97
 
 	ok = false
 
@@ -331,4 +464,26 @@ func point_from_string(s string, size int) (x int, y int, ok bool) {
 	}
 
 	return x, y, ok
+}
+
+func adjacent_points(x, y, size int32) []Point {
+
+	var ret []Point
+
+	possibles := []Point{
+		Point{x - 1, y},
+		Point{x + 1, y},
+		Point{x, y - 1},
+		Point{x, y + 1},
+	}
+
+	for _, point := range possibles {
+		if point.X >= 0 && point.X < size {
+			if point.Y >= 0 && point.Y < size {
+				ret = append(ret, point)
+			}
+		}
+	}
+
+	return ret
 }
