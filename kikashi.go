@@ -43,8 +43,8 @@ type Node struct {
 	Props			map[string][]string
 	Children		[]*Node
 	Parent			*Node
-	Board			[][]Colour
-	SZ				int32			// 0 means we haven't got it cached here.
+	Board			[][]Colour		// Created immediately by NewNode()
+	__SZ			int32			// Cached value. 0 means not cached yet.
 }
 
 
@@ -172,7 +172,7 @@ func (self *Node) Size() int32 {
 
 	// Note that this line is NOT a check of the property SZ:
 
-	if self.SZ == 0 {
+	if self.__SZ == 0 {
 
 		// We don't have the info cached...
 
@@ -189,24 +189,24 @@ func (self *Node) Size() int32 {
 				if err == nil {
 
 					if val > 0 && val <= 52 {
-						self.SZ = int32(val)
+						self.__SZ = int32(val)
 					}
 				}
 			}
 
-			if self.SZ == 0 {
-				self.SZ = 19
+			if self.__SZ == 0 {
+				self.__SZ = 19
 				self.SetValue("SZ", "19")			// Set the actual property in the root.
 			}
 
 		} else {
 
-			self.SZ = self.Parent.Size()			// Recurse.
+			self.__SZ = self.Parent.Size()			// Recurse.
 
 		}
 	}
 
-	return self.SZ
+	return self.__SZ
 }
 
 
@@ -260,7 +260,7 @@ func (self *Node) __make_board() {
 
 func (self *Node) __handle_move(colour Colour, x, y int32) {
 
-	// Additional changes to the board based on moves.
+	// Additional changes to the board based on moves in the properties.
 	// No legality checking here.
 
 	if colour != BLACK && colour != WHITE {
