@@ -12,10 +12,7 @@ const TITLE = "Kikashi"
 // -------------------------------------------------------------------------
 
 func main() {
-
-	app := new(App)
-	app.Init(19, 24, 20)
-
+	app := NewApp(19, 24, 20)
 	for {
 		app.Poll()
 	}
@@ -26,6 +23,26 @@ func main() {
 type Point struct {
 	X				int32
 	Y				int32
+}
+
+// -------------------------------------------------------------------------
+
+type Node struct {
+	Props			map[string][]string
+	Children		[]*Node
+	Parent			*Node
+}
+
+func NewNode(parent *Node) *Node {
+	node := new(Node)
+	node.Props = make(map[string][]string)
+	node.Parent = parent
+
+	if parent != nil {
+		parent.Children = append(parent.Children, node)
+	}
+
+	return node
 }
 
 // -------------------------------------------------------------------------
@@ -42,7 +59,9 @@ type App struct {
 }
 
 
-func (self *App) Init(SZ, cell_width, margin int32) {
+func NewApp(SZ, cell_width, margin int32) *App {
+
+	self := new(App)
 
 	self.SZ = SZ
 
@@ -57,6 +76,8 @@ func (self *App) Init(SZ, cell_width, margin int32) {
 
 	self.DrawGrid()
 	self.Flip()
+
+	return self
 }
 
 
