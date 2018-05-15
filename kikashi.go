@@ -44,12 +44,12 @@ type Node struct {
 	Props			map[string][]string
 	Children		[]*Node
 	Parent			*Node
-	Board			[][]Colour
+	Board			[][]Colour		// Shouldn't be left as nil for long.
+	SZ				int32			// 0 means we haven't got it cached here.
 }
 
 
 func NewNode(parent *Node) *Node {
-
 	node := new(Node)
 	node.Props = make(map[string][]string)
 	node.Parent = parent
@@ -60,6 +60,9 @@ func NewNode(parent *Node) *Node {
 
 	return node
 }
+
+
+// FIXME: Add and Set need escaping...
 
 
 func (self *Node) AddValue(key, value string) {
@@ -75,10 +78,8 @@ func (self *Node) AddValue(key, value string) {
 
 
 func (self *Node) SetValue(key, value string) {
-
 	self.Props[key] = nil
 	self.AddValue(key, value)
-
 }
 
 
@@ -98,17 +99,13 @@ func (self *Node) GetValue(key string) (value string, ok bool) {
 
 func (self *Node) MoveInfo() Move {
 
-	// We need a board so we can know about board size...
-
-	if self.Board == nil {
-		panic("MoveInfo(): self.Board == nil")
-	}
+	sz := self.Size()
 
 	// There should only be 1 move in a valid SGF node.
 
 	for _, foo := range self.Props["B"] {
 
-		x, y, valid := point_from_string(foo, self.Size())
+		x, y, valid := point_from_string(foo, sz)
 
 		ret := Move{
 			OK: true,
@@ -126,7 +123,7 @@ func (self *Node) MoveInfo() Move {
 
 	for _, foo := range self.Props["W"] {
 
-		x, y, valid := point_from_string(foo, self.Size())
+		x, y, valid := point_from_string(foo, sz)
 
 		ret := Move{
 			OK: true,
@@ -146,30 +143,51 @@ func (self *Node) MoveInfo() Move {
 }
 
 
-func (self *Node) MakeBoard() {
+func (self *Node) Size() int32 {
 
-	sz := int32(19)
+	// Note that this is NOT a check of the property SZ...
 
-	if self.Parent != nil {
+	if self.SZ == 0 {
 
-		sz = self.Parent.Size()
+		// We don't have the info cached...
 
-	} else {
+		if self.Parent == nil {
 
-		sz_string, ok := self.GetValue("SZ")
+			// We are root...
 
-		if ok {
+			sz_string, ok := self.GetValue("SZ")
 
-			val, err := strconv.Atoi(sz_string)
+			if ok {
 
-			if err == nil {
+				val, err := strconv.Atoi(sz_string)
 
-				if val > 0 && val <= 52 {
-					sz = int32(val)
+				if err == nil {
+
+					if val > 0 && val <= 52 {
+						self.SZ = int32(val)
+					}
 				}
 			}
+
+			if self.SZ == 0 {
+				self.SZ = 19
+				self.SetValue("SZ", "19")			// Set the actual property in the root.
+			}
+
+		} else {
+
+			self.SZ = self.Parent.Size()			// Recurse.
+
 		}
 	}
+
+	return self.SZ
+}
+
+
+func (self *Node) MakeBoard() {
+
+	sz := self.Size()
 
 	self.Board = make([][]Colour, sz)
 	for x := 0; x < len(self.Board); x++ {
@@ -303,16 +321,6 @@ func (self *Node) DestroyGroup(x, y int32) {
 			self.DestroyGroup(point.X, point.Y)
 		}
 	}
-}
-
-
-func (self *Node) Size() int32 {
-
-	if self.Board == nil {
-		panic("Size(): self.Board == nil")
-	}
-
-	return int32(len(self.Board))
 }
 
 
