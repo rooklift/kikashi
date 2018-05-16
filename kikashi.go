@@ -81,7 +81,7 @@ func (self *Node) AddValue(key, value string) {
 
 	for _, s := range MUTORS {
 		if key == s {
-			panic("AddValue(): Already have a blocking key")
+			panic("AddValue(): Board altering properties disallowed after creation")
 		}
 	}
 
@@ -101,7 +101,7 @@ func (self *Node) SetValue(key, value string) {
 
 	for _, s := range MUTORS {
 		if key == s {
-			panic("SetValue(): Already have a blocking key")
+			panic("SetValue(): Board altering properties disallowed after creation")
 		}
 	}
 
