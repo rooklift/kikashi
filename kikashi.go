@@ -1,11 +1,14 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"math"
 	"os"
+	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -48,7 +51,7 @@ type Node struct {
 	Props			map[string][]string
 	Children		[]*Node
 	Parent			*Node
-	Board			[][]Colour		// Created immediately by NewNode()
+	Board			[][]Colour		// Created immediately by NewNode().
 	SZ_cache		int32			// Cached value. 0 means not cached yet.
 }
 
@@ -533,8 +536,9 @@ func (self *Node) GetEnd() *Node {
 
 func (self *Node) Save(filename string) {
 	root := self.GetRoot()
-	outfile, _ := os.Create(filename)					// FIXME: handle errors
-	root.WriteTree(outfile)
+	outfile, _ := os.Create(filename)					// FIXME: handle errors!
+	w := bufio.NewWriter(outfile)						// bufio for speedier output if file is huge.
+	root.WriteTree(w)
 }
 
 
@@ -997,17 +1001,43 @@ func (self *App) Poll() {
 
 				case sdl.K_s:
 
-					self.Node.Save("foo.sgf")
+					filename, err := file_dialog(true)
+					if err != nil {
+						fmt.Printf("%v\n", err)
+						break
+					}
+
+					self.Node.Save(filename)
+
+					// We seem to get mouseclicks while using the open dialog.
+					// As a crude workaround, delete all events... (FIXME?)
+
+					for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {}
 
 				case sdl.K_o:
 
-					new_root, err := LoadFile("bar.sgf")
-					if err == nil {
-						self.Node = new_root
-						self.DrawBoard()
+					filename, err := file_dialog(false)
+					if err != nil {
+						fmt.Printf("%v\n", err)
+						break
 					}
 
+					new_root, err := LoadFile(string(filename))
+					if err != nil {
+						fmt.Printf("%v\n", err)
+						break
+					}
+
+					self.Node = new_root
+					self.DrawBoard()
+
+					// We seem to get mouseclicks while using the open dialog.
+					// As a crude workaround, delete all events... (FIXME?)
+
+					for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {}
+
 				case sdl.K_p:
+
 					self.Node = self.Node.TryPass(self.Node.NextColour())
 					self.DrawBoard()
 
@@ -1135,4 +1165,30 @@ func unescape_string(s string) string {
 	}
 
 	return string(new_s)
+}
+
+func file_dialog(save bool) (string, error) {
+
+	var script_name string
+	if save {
+		script_name = "savedialog.py"
+	} else {
+		script_name = "opendialog.py"
+	}
+
+	exe_dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
+
+	script_path := filepath.Join(exe_dir, script_name)
+
+	subprocess_output, err := exec.Command("python", script_path).Output()
+
+	if err != nil {
+		return "", err
+	}
+
+	if strings.TrimSpace(string(subprocess_output)) == "" {
+		return "", fmt.Errorf("file dialog Python subprocess cancelled")
+	}
+
+	return string(subprocess_output), nil
 }
