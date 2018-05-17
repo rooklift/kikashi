@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"math"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -67,7 +69,24 @@ func NewNode(parent *Node, props map[string][]string) *Node {
 		node.Parent.Children = append(node.Parent.Children, node)
 	}
 
-	node.__make_board()
+	node.make_board()
+	return node
+}
+
+
+func new_bare_node(parent *Node) *Node {
+
+	// Doesn't handle properties or make a board.
+	// Used only for file loading.
+
+	node := new(Node)
+	node.Parent = parent
+	node.Props = make(map[string][]string)
+
+	if parent != nil {
+		parent.Children = append(parent.Children, node)
+	}
+
 	return node
 }
 
@@ -84,6 +103,12 @@ func (self *Node) AddValue(key, value string) {
 			panic("AddValue(): Board altering properties disallowed after creation")
 		}
 	}
+
+	self.add_value_forced(key, value)
+}
+
+
+func (self *Node) add_value_forced(key, value string) {
 
 	for i := 0; i < len(self.Props[key]); i++ {
 		if self.Props[key][i] == value {
@@ -106,7 +131,7 @@ func (self *Node) SetValue(key, value string) {
 	}
 
 	self.Props[key] = nil
-	self.AddValue(key, value)
+	self.add_value_forced(key, value)
 }
 
 
@@ -231,7 +256,7 @@ func (self *Node) NextColour() Colour {
 }
 
 
-func (self *Node) __make_board() {
+func (self *Node) make_board() {
 
 	sz := self.Size()
 
@@ -269,23 +294,35 @@ func (self *Node) __make_board() {
 
 	for _, foo := range self.Props["B"] {
 		x, y, ok := point_from_string(foo, sz)
-		if ok { self.__handle_move(BLACK, x, y) }
+		if ok { self.handle_move(BLACK, x, y) }
 	}
 
 	for _, foo := range self.Props["W"] {
 		x, y, ok := point_from_string(foo, sz)
-		if ok { self.__handle_move(WHITE, x, y) }
+		if ok { self.handle_move(WHITE, x, y) }
 	}
 }
 
 
-func (self *Node) __handle_move(colour Colour, x, y int32) {
+func (self *Node) make_board_recursive() {
+
+	// Normally, new nodes have their board made instantly,
+	// but not when loading a file, hence the need for this.
+
+	self.make_board()
+	for _, child := range self.Children {
+		child.make_board_recursive()
+	}
+}
+
+
+func (self *Node) handle_move(colour Colour, x, y int32) {
 
 	// Additional changes to the board based on moves in the properties.
 	// No legality checking here.
 
 	if colour != BLACK && colour != WHITE {
-		panic("__handle_move(): colour != BLACK && colour != WHITE")
+		panic("handle_move(): colour != BLACK && colour != WHITE")
 	}
 
 	opponent := BLACK ; if colour == BLACK { opponent = WHITE }
@@ -293,7 +330,7 @@ func (self *Node) __handle_move(colour Colour, x, y int32) {
 	sz := self.Size()
 
 	if x < 0 || x >= sz || y < 0 || y >= sz {
-		panic("__handle_move(): off board")
+		panic("handle_move(): off board")
 	}
 
 	self.Board[x][y] = colour
@@ -301,13 +338,13 @@ func (self *Node) __handle_move(colour Colour, x, y int32) {
 	for _, point := range adjacent_points(x, y, sz) {
 		if self.Board[point.X][point.Y] == opponent {
 			if self.GroupHasLiberties(point.X, point.Y) == false {
-				self.__destroy_group(point.X, point.Y)
+				self.destroy_group(point.X, point.Y)
 			}
 		}
 	}
 
 	if self.GroupHasLiberties(x, y) == false {
-		self.__destroy_group(x, y)
+		self.destroy_group(x, y)
 	}
 }
 
@@ -315,17 +352,17 @@ func (self *Node) __handle_move(colour Colour, x, y int32) {
 func (self *Node) GroupHasLiberties(x, y int32) bool {
 
 	touched := make(map[Point]bool)
-	return self.__group_has_liberties(x, y, touched)
+	return self.group_has_liberties(x, y, touched)
 }
 
 
-func (self *Node) __group_has_liberties(x, y int32, touched map[Point]bool) bool {
+func (self *Node) group_has_liberties(x, y int32, touched map[Point]bool) bool {
 
 	touched[Point{x, y}] = true
 
 	colour := self.Board[x][y]
 	if colour != BLACK && colour != WHITE {
-		panic("__group_has_liberties(): colour != BLACK && colour != WHITE")
+		panic("group_has_liberties(): colour != BLACK && colour != WHITE")
 	}
 
 	for _, point := range adjacent_points(x, y, self.Size()) {
@@ -333,7 +370,7 @@ func (self *Node) __group_has_liberties(x, y int32, touched map[Point]bool) bool
 			return true
 		} else if self.Board[point.X][point.Y] == colour {
 			if touched[Point{point.X, point.Y}] == false {
-				if self.__group_has_liberties(point.X, point.Y, touched) {
+				if self.group_has_liberties(point.X, point.Y, touched) {
 					return true
 				}
 			}
@@ -344,18 +381,18 @@ func (self *Node) __group_has_liberties(x, y int32, touched map[Point]bool) bool
 }
 
 
-func (self *Node) __destroy_group(x, y int32) {
+func (self *Node) destroy_group(x, y int32) {
 
 	colour := self.Board[x][y]
 	if colour != BLACK && colour != WHITE {
-		panic("__destroy_group: colour != BLACK && colour != WHITE")
+		panic("destroy_group: colour != BLACK && colour != WHITE")
 	}
 
 	self.Board[x][y] = EMPTY
 
 	for _, point := range adjacent_points(x, y, self.Size()) {
 		if self.Board[point.X][point.Y] == colour {
-			self.__destroy_group(point.X, point.Y)
+			self.destroy_group(point.X, point.Y)
 		}
 	}
 }
@@ -511,6 +548,132 @@ func (self *Node) WriteTree(outfile io.Writer) {		// Relies on values already be
 
 	fmt.Fprintf(outfile, ")\n")
 	return
+}
+
+// -------------------------------------------------------------------------
+
+func LoadFile(filename string) (*Node, error) {
+
+	sgf_bytes, err := ioutil.ReadFile(filename)
+
+	if err != nil {
+		return nil, err
+	}
+
+	root, err := load_sgf(string(sgf_bytes))
+
+	if err != nil {
+		return nil, err
+	}
+
+	// So we now have a tree but without boards...
+
+	root.make_board_recursive()
+	return root, nil
+}
+
+
+func load_sgf_tree(sgf string, parent_of_local_root *Node) (*Node, int, error) {
+
+	// FIXME: this is not unicode aware. Potential problems exist
+	// if a unicode code point contains a meaningful character.
+
+	var root *Node
+	var node *Node
+
+	var inside bool
+	var value string
+	var key string
+	var keycomplete bool
+	var chars_to_skip int
+
+	var err error
+
+	for i := 0; i < len(sgf); i++ {
+
+		c := sgf[i]
+
+		if chars_to_skip > 0 {
+			chars_to_skip--
+			continue
+		}
+
+		if inside {
+
+			if c == '\\' {
+				if len(sgf) <= i + 1 {
+					return nil, 0, fmt.Errorf("load_sgf_tree: escape character at end of input")
+				}
+				value += string('\\')
+				value += string(sgf[i + 1])
+				chars_to_skip = 1
+			} else if c == ']' {
+				inside = false
+				if node == nil {
+					return nil, 0, fmt.Errorf("load_sgf_tree: node == nil after: else if c == ']'")
+				}
+				node.add_value_forced(key, value)
+			} else {
+				value += string(c)
+			}
+
+		} else {
+
+			if c == '[' {
+				value = ""
+				inside = true
+				keycomplete = true
+			} else if c == '(' {
+				if node == nil {
+					return nil, 0, fmt.Errorf("load_sgf_tree: node == nil after: else if c == '('")
+				}
+				_, chars_to_skip, err = load_sgf_tree(sgf[i + 1:], node)
+				if err != nil {
+					return nil, 0, err
+				}
+			} else if c == ')' {
+				if root == nil {
+					return nil, 0, fmt.Errorf("load_sgf_tree: root == nil after: else if c == ')'")
+				}
+				return root, i + 1, nil		// Return characters read.
+			} else if c == ';' {
+				if node == nil {
+					newnode := new_bare_node(parent_of_local_root)
+					root = newnode
+					node = newnode
+				} else {
+					newnode := new_bare_node(node)
+					node = newnode
+				}
+			} else {
+				if c >= 'A' && c <= 'Z' {
+					if keycomplete {
+						key = ""
+						keycomplete = false
+					}
+					key += string(c)
+				}
+			}
+		}
+	}
+
+	if root == nil {
+		return nil, 0, fmt.Errorf("load_sgf_tree: root == nil at function end")
+	}
+
+	return root, len(sgf), nil		// Return characters read.
+}
+
+
+func load_sgf(sgf string) (*Node, error) {
+
+	sgf = strings.TrimSpace(sgf)
+	if sgf[0] == '(' {				// the load_sgf_tree() function assumes the
+		sgf = sgf[1:]				// leading "(" has already been discarded.
+	}
+
+	root, _, err := load_sgf_tree(sgf, nil)
+	return root, err
 }
 
 // -------------------------------------------------------------------------
@@ -772,6 +935,26 @@ func (self *App) Poll() {
 				}
 			}
 
+		case *sdl.MouseWheelEvent:
+
+			if event.Y > 0 {
+
+				if self.Node.Parent != nil {
+
+					self.Node = self.Node.Parent
+					self.DrawBoard()
+				}
+			}
+
+			if event.Y < 0 {		// Ideally we'd remember which line of the game we've been in.
+
+				if len(self.Node.Children) > 0 {
+
+					self.Node = self.Node.Children[0]
+					self.DrawBoard()
+				}
+			}
+
 		case *sdl.KeyboardEvent:
 
 			if event.Type == sdl.KEYDOWN {
@@ -779,8 +962,17 @@ func (self *App) Poll() {
 				switch event.Keysym.Sym {
 
 				case 's', 'S':
+
 					self.Node.Save("foo.sgf")
+
+				case 'o', 'O':
+
+					new_root, err := LoadFile("bar.sgf")
+					if err == nil {
+						self.Node = new_root
+					}
 				}
+
 			}
 		}
 	}
