@@ -1023,7 +1023,13 @@ func (self *App) Poll() {
 							dialog_done = true
 
 						default:
-							for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {}
+							for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {
+								// switch foo.(type) {
+								// case *sdl.QuitEvent:
+								// 	self.Shutdown()
+								// 	os.Exit(0)
+								// }
+							}
 						}
 					}
 
@@ -1043,7 +1049,7 @@ func (self *App) Poll() {
 
 					// SDL is healthier when it's constantly getting polled.
 					// Therefore, while we await the dialog, continue to poll
-					// for events (but just ignore them).
+					// for events (but just ignore most of them).
 
 					for !dialog_done {
 
@@ -1053,7 +1059,13 @@ func (self *App) Poll() {
 							dialog_done = true
 
 						default:
-							for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {}
+							for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {
+								// switch foo.(type) {
+								// case *sdl.QuitEvent:
+								// 	self.Shutdown()
+								// 	os.Exit(0)
+								// }
+							}
 						}
 					}
 
