@@ -996,6 +996,19 @@ func (self *App) Poll() {
 					self.Node = self.Node.GetRoot()
 					self.DrawBoard()
 
+				case sdl.K_DOWN:
+
+					if len(self.Node.Children) > 0 {
+						self.Node = self.Node.Children[0]
+						self.DrawBoard()
+					}
+
+				case sdl.K_UP:
+
+					if self.Node.Parent != nil {
+						self.Node = self.Node.Parent
+						self.DrawBoard()
+					}
 				}
 			}
 		}
