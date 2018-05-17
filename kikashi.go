@@ -49,7 +49,7 @@ type Node struct {
 	Children		[]*Node
 	Parent			*Node
 	Board			[][]Colour		// Created immediately by NewNode()
-	__SZ			int32			// Cached value. 0 means not cached yet.
+	SZ_cache		int32			// Cached value. 0 means not cached yet.
 }
 
 
@@ -91,9 +91,6 @@ func new_bare_node(parent *Node) *Node {
 }
 
 
-// FIXME: Add and Set need escaping...
-
-
 func (self *Node) AddValue(key, value string) {
 
 	// Disallow things that change the board...
@@ -104,11 +101,13 @@ func (self *Node) AddValue(key, value string) {
 		}
 	}
 
-	self.add_value_forced(key, value)
+	self.add_value(key, value)
 }
 
 
-func (self *Node) add_value_forced(key, value string) {
+func (self *Node) add_value(key, value string) {			// Handles escaping
+
+	value = escape_string(value)
 
 	for i := 0; i < len(self.Props[key]); i++ {
 		if self.Props[key][i] == value {
@@ -131,8 +130,11 @@ func (self *Node) SetValue(key, value string) {
 	}
 
 	self.Props[key] = nil
-	self.add_value_forced(key, value)
+	self.add_value(key, value)
 }
+
+
+// FIXME: Get needs unescaping...
 
 
 func (self *Node) GetValue(key string) (value string, ok bool) {
@@ -145,7 +147,7 @@ func (self *Node) GetValue(key string) (value string, ok bool) {
 		return "", false
 	}
 
-	return list[0], true
+	return unescape_string(list[0]), true
 }
 
 
@@ -199,7 +201,7 @@ func (self *Node) Size() int32 {
 
 	// Note that this line is NOT a check of the property SZ:
 
-	if self.__SZ == 0 {
+	if self.SZ_cache == 0 {
 
 		// We don't have the info cached...
 
@@ -216,24 +218,24 @@ func (self *Node) Size() int32 {
 				if err == nil {
 
 					if val > 0 && val <= 52 {
-						self.__SZ = int32(val)
+						self.SZ_cache = int32(val)
 					}
 				}
 			}
 
-			if self.__SZ == 0 {
-				self.__SZ = DEFAULT_SIZE
+			if self.SZ_cache == 0 {
+				self.SZ_cache = DEFAULT_SIZE
 				self.SetValue("SZ", fmt.Sprintf("%d", DEFAULT_SIZE))			// Set the actual property in the root.
 			}
 
 		} else {
 
-			self.__SZ = self.Parent.Size()			// Recurse.
+			self.SZ_cache = self.Parent.Size()			// Recurse.
 
 		}
 	}
 
-	return self.__SZ
+	return self.SZ_cache
 }
 
 
@@ -452,6 +454,25 @@ func (self *Node) TryMove(colour Colour, x, y int32) (*Node, error) {
 }
 
 
+func (self *Node) TryPass(colour Colour) *Node {
+
+	if colour != BLACK && colour != WHITE {
+		panic("TryMove(): colour != BLACK && colour != WHITE")
+	}
+
+	for _, child := range self.Children {
+		mi := child.MoveInfo()
+		if mi.OK && mi.Pass && mi.Colour == colour {
+			return child
+		}
+	}
+
+	key := "B" ; if colour == WHITE { key = "W" }
+	new_node := NewNode(self, map[string][]string{key: []string{""}})
+	return new_node
+}
+
+
 func (self *Node) RemoveChild(child *Node) {
 
 	if self == nil {
@@ -623,7 +644,7 @@ func load_sgf_tree(sgf string, parent_of_local_root *Node) (*Node, int, error) {
 				if node == nil {
 					return nil, 0, fmt.Errorf("load_sgf_tree: node == nil after: else if c == ']'")
 				}
-				node.add_value_forced(key, value)
+				node.add_value(key, value)
 			} else {
 				value += string(c)
 			}
@@ -986,6 +1007,10 @@ func (self *App) Poll() {
 						self.DrawBoard()
 					}
 
+				case sdl.K_p:
+					self.Node = self.Node.TryPass(self.Node.NextColour())
+					self.DrawBoard()
+
 				case sdl.K_END:
 
 					self.Node = self.Node.GetEnd()
@@ -1066,4 +1091,48 @@ func adjacent_points(x, y, size int32) []Point {
 	}
 
 	return ret
+}
+
+func escape_string(s string) string {
+
+	// Treating the input as a byte sequence, not a sequence of code points. Meh.
+
+	var new_s []byte
+
+	for n := 0; n < len(s); n++ {
+		if s[n] == '\\' || s[n] == ']' {
+			new_s = append(new_s, '\\')
+		}
+		new_s = append(new_s, s[n])
+	}
+
+	return string(new_s)
+}
+
+func unescape_string(s string) string {
+
+	// Treating the input as a byte sequence, not a sequence of code points. Meh.
+	// Some issues with unicode.
+
+	var new_s []byte
+
+	forced_accept := false
+
+	for n := 0; n < len(s); n++ {
+
+		if forced_accept {
+			new_s = append(new_s, s[n])
+			forced_accept = false
+			continue
+		}
+
+		if s[n] == '\\' {
+			forced_accept = true
+			continue
+		}
+
+		new_s = append(new_s, s[n])
+	}
+
+	return string(new_s)
 }
