@@ -492,10 +492,21 @@ func (self *Node) GetRoot() *Node {
 		if node.Parent != nil {
 			node = node.Parent
 		} else {
-			break
+			return node
 		}
 	}
-	return node
+}
+
+
+func (self *Node) GetEnd() *Node {
+	node := self
+	for {
+		if len(node.Children) > 0 {
+			node = node.Children[0]
+		} else {
+			return node
+		}
+	}
 }
 
 
@@ -961,18 +972,31 @@ func (self *App) Poll() {
 
 				switch event.Keysym.Sym {
 
-				case 's', 'S':
+				// https://github.com/veandco/go-sdl2/blob/master/sdl/keycode.go
+
+				case sdl.K_s:
 
 					self.Node.Save("foo.sgf")
 
-				case 'o', 'O':
+				case sdl.K_o:
 
 					new_root, err := LoadFile("bar.sgf")
 					if err == nil {
 						self.Node = new_root
+						self.DrawBoard()
 					}
-				}
 
+				case sdl.K_END:
+
+					self.Node = self.Node.GetEnd()
+					self.DrawBoard()
+
+				case sdl.K_HOME:
+
+					self.Node = self.Node.GetRoot()
+					self.DrawBoard()
+
+				}
 			}
 		}
 	}
