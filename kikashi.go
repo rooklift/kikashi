@@ -535,10 +535,14 @@ func (self *Node) GetEnd() *Node {
 
 
 func (self *Node) Save(filename string) {
-	root := self.GetRoot()
+
 	outfile, _ := os.Create(filename)					// FIXME: handle errors!
+	defer outfile.Close()
+
 	w := bufio.NewWriter(outfile)						// bufio for speedier output if file is huge.
-	root.WriteTree(w)
+	defer w.Flush()
+
+	self.GetRoot().WriteTree(w)
 }
 
 
@@ -1001,24 +1005,57 @@ func (self *App) Poll() {
 
 				case sdl.K_s:
 
-					filename, err := file_dialog(true)
-					if err != nil {
-						fmt.Printf("%v\n", err)
+					var filename string
+					result_chan := make(chan string)
+					go file_dialog(true, result_chan)
+
+					// SDL is healthier when it's constantly getting polled.
+					// Therefore, while we await the dialog, continue to poll
+					// for events (but just ignore them).
+
+					SelectLoopSave:
+					for {
+
+						select {
+
+						case filename = <- result_chan:
+							break SelectLoopSave
+
+						default:
+							for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {}
+						}
+					}
+
+					if filename == "" {
 						break
 					}
 
 					self.Node.Save(filename)
 
-					// We seem to get mouseclicks while using the open dialog.
-					// As a crude workaround, delete all events... (FIXME?)
-
-					for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {}
-
 				case sdl.K_o:
 
-					filename, err := file_dialog(false)
-					if err != nil {
-						fmt.Printf("%v\n", err)
+					var filename string
+					result_chan := make(chan string)
+					go file_dialog(false, result_chan)
+
+					// SDL is healthier when it's constantly getting polled.
+					// Therefore, while we await the dialog, continue to poll
+					// for events (but just ignore them).
+
+					SelectLoopLoad:
+					for {
+
+						select {
+
+						case filename = <- result_chan:
+							break SelectLoopLoad
+
+						default:
+							for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {}
+						}
+					}
+
+					if filename == "" {
 						break
 					}
 
@@ -1030,11 +1067,6 @@ func (self *App) Poll() {
 
 					self.Node = new_root
 					self.DrawBoard()
-
-					// We seem to get mouseclicks while using the open dialog.
-					// As a crude workaround, delete all events... (FIXME?)
-
-					for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {}
 
 				case sdl.K_p:
 
@@ -1167,7 +1199,7 @@ func unescape_string(s string) string {
 	return string(new_s)
 }
 
-func file_dialog(save bool) (string, error) {
+func file_dialog(save bool, result_chan chan string) {
 
 	var script_name string
 	if save {
@@ -1183,12 +1215,14 @@ func file_dialog(save bool) (string, error) {
 	subprocess_output, err := exec.Command("python", script_path).Output()
 
 	if err != nil {
-		return "", err
+		result_chan <- ""
+		return
 	}
 
 	if strings.TrimSpace(string(subprocess_output)) == "" {
-		return "", fmt.Errorf("file dialog Python subprocess cancelled")
+		result_chan <- ""
+		return
 	}
 
-	return string(subprocess_output), nil
+	result_chan <- string(subprocess_output)
 }
