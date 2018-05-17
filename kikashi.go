@@ -1006,6 +1006,8 @@ func (self *App) Poll() {
 				case sdl.K_s:
 
 					var filename string
+					var dialog_done bool
+
 					result_chan := make(chan string)
 					go file_dialog(true, result_chan)
 
@@ -1013,13 +1015,12 @@ func (self *App) Poll() {
 					// Therefore, while we await the dialog, continue to poll
 					// for events (but just ignore them).
 
-					SelectLoopSave:
-					for {
+					for !dialog_done {
 
 						select {
 
 						case filename = <- result_chan:
-							break SelectLoopSave
+							dialog_done = true
 
 						default:
 							for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {}
@@ -1035,6 +1036,8 @@ func (self *App) Poll() {
 				case sdl.K_o:
 
 					var filename string
+					var dialog_done bool
+
 					result_chan := make(chan string)
 					go file_dialog(false, result_chan)
 
@@ -1042,13 +1045,12 @@ func (self *App) Poll() {
 					// Therefore, while we await the dialog, continue to poll
 					// for events (but just ignore them).
 
-					SelectLoopLoad:
-					for {
+					for !dialog_done {
 
 						select {
 
 						case filename = <- result_chan:
-							break SelectLoopLoad
+							dialog_done = true
 
 						default:
 							for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {}
