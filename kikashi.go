@@ -590,6 +590,70 @@ func (self *Node) WriteTree(outfile io.Writer) {		// Relies on values already be
 	return
 }
 
+
+func (self *Node) FullGTP() []string {
+
+	// Return a full list of GTP commands to recreate this position.
+	// Doesn't work if "AE" properties are present anywhere in the line.
+
+	var nodes []*Node
+	var commands []string
+
+	sz := self.Size()
+	node := self
+
+	// Make a list of relevant nodes, in reverse order...
+
+	for {
+		nodes = append(nodes, node)
+		if node.Parent != nil {
+			node = node.Parent
+		} else {
+			break
+		}
+	}
+
+	commands = append(commands, fmt.Sprintf("boardsize %v", sz))
+	commands = append(commands, "clear_board")
+
+	for n := len(nodes) - 1; n >= 0; n-- {
+
+		node = nodes[n]
+
+		for _, foo := range node.Props["AB"] {
+			x, y, ok := point_from_string(foo, sz)
+			if ok {
+				commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
+			}
+		}
+
+		for _, foo := range node.Props["AW"] {
+			x, y, ok := point_from_string(foo, sz)
+			if ok {
+				commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
+			}
+		}
+
+		// Play move: B / W
+
+		for _, foo := range node.Props["B"] {
+			x, y, ok := point_from_string(foo, sz)
+			if ok {
+				commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
+			}
+		}
+
+		for _, foo := range node.Props["W"] {
+			x, y, ok := point_from_string(foo, sz)
+			if ok {
+				commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
+			}
+		}
+	}
+
+	return commands
+}
+
 // -------------------------------------------------------------------------
 
 func LoadFile(filename string) (*Node, error) {
@@ -949,6 +1013,13 @@ func (self *App) Fcircle(x, y, radius int32, r, g, b uint8) {
 }
 
 
+func (self *App) PollNoAction() {
+	for ev := sdl.PollEvent(); ev != nil; ev = sdl.PollEvent() {
+		// Take no action. SDL still cleans itself up I think.
+	}
+}
+
+
 func (self *App) Poll() {
 
 	for ev := sdl.PollEvent(); ev != nil; ev = sdl.PollEvent() {
@@ -1023,13 +1094,7 @@ func (self *App) Poll() {
 							dialog_done = true
 
 						default:
-							for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {
-								// switch foo.(type) {
-								// case *sdl.QuitEvent:
-								// 	self.Shutdown()
-								// 	os.Exit(0)
-								// }
-							}
+							self.PollNoAction()
 						}
 					}
 
@@ -1059,13 +1124,7 @@ func (self *App) Poll() {
 							dialog_done = true
 
 						default:
-							for foo := sdl.PollEvent(); foo != nil; foo = sdl.PollEvent() {
-								// switch foo.(type) {
-								// case *sdl.QuitEvent:
-								// 	self.Shutdown()
-								// 	os.Exit(0)
-								// }
-							}
+							self.PollNoAction()
 						}
 					}
 
@@ -1147,6 +1206,11 @@ func point_from_string(s string, size int32) (x int32, y int32, ok bool) {
 	return x, y, ok
 }
 
+func human_string_from_point(x, y, size int32) string {
+	const letters = "ABCDEFGHJKLMNOPQRSTUVWXYZ"
+	return fmt.Sprintf("%c%v", letters[x], size - y)
+}
+
 func adjacent_points(x, y, size int32) []Point {
 
 	var ret []Point
@@ -1215,20 +1279,19 @@ func unescape_string(s string) string {
 
 func file_dialog(save bool, result_chan chan string) {
 
-	var script_name string
+	exe_dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
+	script_path := filepath.Join(exe_dir, "filedialog.py")
+
+	all_python_args := []string{script_path}
+
 	if save {
-		script_name = "savedialog.py"
-	} else {
-		script_name = "opendialog.py"
+		all_python_args = append(all_python_args, "save")
 	}
 
-	exe_dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
-
-	script_path := filepath.Join(exe_dir, script_name)
-
-	subprocess_output, err := exec.Command("python", script_path).Output()
+	subprocess_output, err := exec.Command("python", all_python_args...).Output()
 
 	if err != nil {
+		fmt.Printf("file_dialog(): %v\n", err)
 		result_chan <- ""
 		return
 	}
