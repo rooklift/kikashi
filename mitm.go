@@ -11,7 +11,7 @@ import (
 
 const REAL_PROGRAM = "./real_leelaz.exe"
 
-var log_chan = make(chan []byte)
+var log_chan = make(chan []byte, 128)
 
 func main() {
 
@@ -37,11 +37,9 @@ func mitm(input io.Reader, output io.Writer, prefix []byte) {
 		output.Write(scanner.Bytes())
 		output.Write([]byte{'\n'})
 
-		log_message := make([]byte, len(prefix) + len(scanner.Bytes()) + 1)
+		log_message := make([]byte, len(prefix) + len(scanner.Bytes()))
 		copy(log_message, prefix)
 		copy(log_message[len(prefix):], scanner.Bytes())
-		log_message[len(log_message) - 1] = '\n'
-
 		log_chan <- log_message
 	}
 }
@@ -53,5 +51,6 @@ func logger() {
 	for {
 		b := <- log_chan
 		outfile.Write(b)
+		outfile.Write([]byte{'\n'})
 	}
 }
