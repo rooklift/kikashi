@@ -1298,18 +1298,13 @@ func file_dialog(save bool, result_chan chan string) {
 	}
 
 	s := string(subprocess_output)
-	tokens := strings.Fields(s)
-	filebytes := ""
-
-	for _, t := range tokens {
-		n, _ := strconv.Atoi(t)
-		filebytes += string(n)
-	}
+	s = strings.Replace(s, "\r", "", -1)
+	s = strings.Replace(s, "\n", "", -1)
 
 	if s == "" {
 		result_chan <- ""
 		return
 	}
 
-	result_chan <- filebytes
+	result_chan <- s
 }

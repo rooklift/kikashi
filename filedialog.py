@@ -10,11 +10,4 @@ if "save" in sys.argv:
 else:
 	file_path = tkinter.filedialog.askopenfilename(filetypes = [SGF_tuple])
 
-pathbytes = bytes(file_path, encoding=sys.getfilesystemencoding())
-
-for i, b in enumerate(pathbytes):
-	print("{}".format(b), end="")
-	if i < len(pathbytes) - 1:
-		print(" ", end="")
-
-print()
+print(file_path)	# FIXME: Windows uncode issues
