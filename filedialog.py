@@ -10,4 +10,4 @@ if "save" in sys.argv:
 else:
 	file_path = tkinter.filedialog.askopenfilename(filetypes = [SGF_tuple])
 
-print(file_path, end="")
+print(file_path)

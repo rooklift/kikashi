@@ -1296,10 +1296,14 @@ func file_dialog(save bool, result_chan chan string) {
 		return
 	}
 
-	if strings.TrimSpace(string(subprocess_output)) == "" {
+	s := string(subprocess_output)
+	s = strings.Replace(s, "\r", "", -1)
+	s = strings.Replace(s, "\n", "", -1)
+
+	if s == "" {
 		result_chan <- ""
 		return
 	}
 
-	result_chan <- string(subprocess_output)
+	result_chan <- s
 }
