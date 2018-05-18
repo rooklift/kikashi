@@ -1,0 +1,2177 @@
+Lizzie: time_left B 0 0
+stderr: Using 2 thread(s).
+stderr: RNG seed: 6458349208783978520
+stderr: Using per-move time margin of 0.00s.
+stderr: Detecting residual layers...v1...192 channels...15 blocks.
+stderr: Initializing OpenCL.
+stderr: Detected 2 OpenCL platforms.
+stderr: Platform version: OpenCL 1.2 
+stderr: Platform profile: FULL_PROFILE
+stderr: Platform name:    Intel(R) OpenCL
+stderr: Platform vendor:  Intel(R) Corporation
+stderr: Device ID:     0
+stderr: Device name:   Intel(R) HD Graphics 4600
+stderr: Device type:   GPU
+stderr: Device vendor: Intel(R) Corporation
+stderr: Device driver: 10.18.14.4264
+stderr: Device speed:  1100 MHz
+stderr: Device cores:  20 CU
+stderr: Device score:  612
+stderr: Device ID:     1
+stderr: Device name:   Intel(R) Core(TM) i5-4460  CPU @ 3.20GHz
+stderr: Device type:   CPU
+stderr: Device vendor: Intel(R) Corporation
+stderr: Device driver: 4.2.0.148
+stderr: Device speed:  3200 MHz
+stderr: Device cores:  4 CU
+stderr: Device score:  512
+stderr: Platform version: OpenCL 1.2 CUDA 9.1.75
+stderr: Platform profile: FULL_PROFILE
+stderr: Platform name:    NVIDIA CUDA
+stderr: Platform vendor:  NVIDIA Corporation
+stderr: Device ID:     2
+stderr: Device name:   GeForce GTX 750
+stderr: Device type:   GPU
+stderr: Device vendor: NVIDIA Corporation
+stderr: Device driver: 388.13
+stderr: Device speed:  1150 MHz
+stderr: Device cores:  4 CU
+stderr: Device score:  1112
+stderr: Selected platform: NVIDIA CUDA
+stderr: Selected device: GeForce GTX 750
+stderr: with OpenCL 1.2 capability.
+stderr: Loaded existing SGEMM tuning.
+stderr: Wavefront/Warp size: 32
+stderr: Max workgroup size: 1024
+stderr: Max workgroup dimensions: 1024 1024 64 
+stderr: BLAS Core: Haswell
+STDOUT: = 
+STDOUT: 
+stderr: ~begin
+stderr: ~end
+Lizzie: name
+stderr: 
+stderr:  C16 ->       1 (V: 47.40%) (N:  9.19%) PV: C16 
+stderr:   R4 ->       0 (V:  0.00%) (N:  9.04%) PV: R4 
+stderr: 1.5 average depth, 2 max depth
+stderr: 1 non leaf nodes, 1.00 average children
+stderr: 
+stderr: 2 visits, 723 nodes
+stderr: 
+STDOUT: = Leela Zero
+STDOUT: 
+Lizzie: time_left b 0 0
+STDOUT: = 
+STDOUT: 
+stderr: ~begin
+stderr:  C16 ->       3 (V: 46.98%) (N:  9.19%) PV: C16 Q4 R3
+stderr:   R4 ->       1 (V: 11.87%) (N:  9.04%) PV: R4 
+stderr: 2.4 average depth, 4 max depth
+stderr: 3 non leaf nodes, 1.33 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C16 ->       4 (V: 46.68%) (N:  9.19%) PV: C16 Q4 R3 Q3
+stderr:   R4 ->       3 (V: 47.00%) (N:  9.04%) PV: R4 D16 C17
+stderr:   Q3 ->       3 (V: 46.79%) (N:  8.94%) PV: Q3 D16 C17
+stderr:  Q17 ->       2 (V: 46.69%) (N:  8.85%) PV: Q17 D4
+stderr:  R16 ->       1 (V: 11.87%) (N:  8.82%) PV: R16 
+stderr:  D17 ->       2 (V: 46.66%) (N:  8.83%) PV: D17 Q4
+stderr: 2.8 average depth, 5 max depth
+stderr: 10 non leaf nodes, 1.50 average children
+stderr: ~end
+stderr: ~begin
+stderr:   C4 ->       4 (V: 46.79%) (N:  8.66%) PV: C4 Q16 R17
+stderr:  C16 ->       4 (V: 46.68%) (N:  9.19%) PV: C16 Q4 R3 Q3
+stderr:  R16 ->       3 (V: 46.85%) (N:  8.82%) PV: R16 D4 C3
+stderr:  Q17 ->       3 (V: 46.81%) (N:  8.85%) PV: Q17 D4 C3
+stderr:   Q3 ->       3 (V: 23.39%) (N:  8.94%) PV: Q3 D16 C17
+stderr:  D17 ->       3 (V: 46.75%) (N:  8.83%) PV: D17 Q4 R3
+stderr:   D3 ->       3 (V: 46.75%) (N:  8.68%) PV: D3 Q16 R17
+stderr:   R4 ->       4 (V: 46.58%) (N:  9.04%) PV: R4 D16 C17 D17
+stderr: 3.1 average depth, 5 max depth
+stderr: 19 non leaf nodes, 1.42 average children
+stderr: ~end
+stderr: ~begin
+stderr:   C4 ->       5 (V: 46.87%) (N:  8.66%) PV: C4 Q16 R17
+stderr:  R16 ->       5 (V: 46.67%) (N:  8.82%) PV: R16 D4 C3 D3
+stderr:  C16 ->       5 (V: 46.57%) (N:  9.19%) PV: C16 Q4 R3 Q3
+stderr:  D17 ->       5 (V: 46.54%) (N:  8.83%) PV: D17 Q4 R3 R4
+stderr:  Q17 ->       5 (V: 46.52%) (N:  8.85%) PV: Q17 D4 C3 C4
+stderr:   R4 ->       5 (V: 46.49%) (N:  9.04%) PV: R4 D16 C17 D17
+stderr:   Q3 ->       5 (V: 46.46%) (N:  8.94%) PV: Q3 D16 C17 C16
+stderr:   D3 ->       4 (V: 26.58%) (N:  8.68%) PV: D3 Q16 R17 R16
+stderr: 3.3 average depth, 5 max depth
+stderr: 25 non leaf nodes, 1.56 average children
+stderr: ~end
+stderr: ~begin
+stderr:  R16 ->       7 (V: 46.90%) (N:  8.82%) PV: R16 D4 C3 D3 C4
+stderr:  C16 ->       7 (V: 46.84%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4
+stderr:   R4 ->       7 (V: 46.77%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:   C4 ->       6 (V: 46.71%) (N:  8.66%) PV: C4 Q16 R17 Q17
+stderr:  D17 ->       6 (V: 46.69%) (N:  8.83%) PV: D17 Q4 R3 R4
+stderr:   D3 ->       6 (V: 46.66%) (N:  8.68%) PV: D3 Q16 R17 R16
+stderr:  Q17 ->       6 (V: 46.61%) (N:  8.85%) PV: Q17 D4 C3 C4
+stderr:   Q3 ->       6 (V: 31.12%) (N:  8.94%) PV: Q3 D16 C17 C16
+stderr: 3.6 average depth, 6 max depth
+stderr: 36 non leaf nodes, 1.42 average children
+stderr: ~end
+stderr: ~begin
+stderr:  R16 ->       8 (V: 46.93%) (N:  8.82%) PV: R16 D4 C3 D3 C4
+stderr:  C16 ->       8 (V: 46.78%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4
+stderr:   R4 ->       8 (V: 46.77%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:  D17 ->       8 (V: 46.77%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:   Q3 ->       8 (V: 46.75%) (N:  8.94%) PV: Q3 D16 C17 C16 D17
+stderr:   D3 ->       8 (V: 46.75%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17
+stderr:   C4 ->       8 (V: 46.74%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16
+stderr:  Q17 ->       7 (V: 32.58%) (N:  8.85%) PV: Q17 D4 C3 C4
+stderr: 3.7 average depth, 6 max depth
+stderr: 40 non leaf nodes, 1.58 average children
+stderr: ~end
+stderr: ~begin
+stderr:  R16 ->       9 (V: 46.99%) (N:  8.82%) PV: R16 D4 C3 D3 C4
+stderr:  C16 ->       9 (V: 46.86%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4
+stderr:   R4 ->       9 (V: 46.78%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:   Q3 ->       9 (V: 46.77%) (N:  8.94%) PV: Q3 D16 C17 C16 D17
+stderr:  D17 ->       8 (V: 46.77%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:   D3 ->       8 (V: 46.75%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17
+stderr:   C4 ->       8 (V: 46.74%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16
+stderr:  Q17 ->       8 (V: 46.63%) (N:  8.85%) PV: Q17 D4 C3 C4
+stderr:   D4 ->       4 (V: 47.07%) (N:  4.26%) PV: D4 Q16 R17
+stderr:  Q16 ->       2 (V: 18.90%) (N:  4.26%) PV: Q16 D4
+stderr: 3.6 average depth, 6 max depth
+stderr: 48 non leaf nodes, 1.54 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C16 ->      10 (V: 46.75%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4
+stderr:  R16 ->       9 (V: 46.99%) (N:  8.82%) PV: R16 D4 C3 D3 C4
+stderr:  D17 ->       9 (V: 46.88%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:   C4 ->       9 (V: 46.82%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16
+stderr:   D3 ->       9 (V: 46.80%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17
+stderr:   R4 ->       9 (V: 46.78%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:   Q3 ->       9 (V: 46.77%) (N:  8.94%) PV: Q3 D16 C17 C16 D17
+stderr:  Q17 ->       9 (V: 46.69%) (N:  8.85%) PV: Q17 D4 C3 C4 D3
+stderr:  Q16 ->       4 (V: 47.13%) (N:  4.26%) PV: Q16 D4 C3
+stderr:   D4 ->       4 (V: 47.07%) (N:  4.26%) PV: D4 Q16 R17
+stderr:  D16 ->       4 (V: 46.95%) (N:  4.16%) PV: D16 Q4 R3
+stderr:   Q4 ->       2 (V: 18.88%) (N:  4.16%) PV: Q4 D16
+stderr: 3.6 average depth, 6 max depth
+stderr: 57 non leaf nodes, 1.53 average children
+stderr: ~end
+stderr: ~begin
+stderr:  R16 ->      10 (V: 46.88%) (N:  8.82%) PV: R16 D4 C3 D3 C4
+stderr:  D17 ->      10 (V: 46.75%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:  C16 ->      10 (V: 46.75%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4
+stderr:   R4 ->      10 (V: 46.73%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:   C4 ->      10 (V: 46.70%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16
+stderr:   D3 ->      10 (V: 46.69%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17
+stderr:   Q3 ->      10 (V: 46.65%) (N:  8.94%) PV: Q3 D16 C17 C16 D17
+stderr:  Q17 ->      10 (V: 46.60%) (N:  8.85%) PV: Q17 D4 C3 C4 D3
+stderr:  Q16 ->       5 (V: 47.19%) (N:  4.26%) PV: Q16 D16 Q4
+stderr:   Q4 ->       5 (V: 47.13%) (N:  4.16%) PV: Q4 Q16 D4
+stderr:   D4 ->       5 (V: 47.09%) (N:  4.26%) PV: D4 Q16 R17
+stderr:  D16 ->       4 (V: 26.83%) (N:  4.16%) PV: D16 Q4 R3
+stderr: 3.7 average depth, 6 max depth
+stderr: 68 non leaf nodes, 1.46 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C16 ->      12 (V: 46.56%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4
+stderr:  R16 ->      11 (V: 46.78%) (N:  8.82%) PV: R16 D4 C3 D3 C4
+stderr:  D17 ->      11 (V: 46.67%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:   C4 ->      11 (V: 46.59%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16
+stderr:   D3 ->      11 (V: 46.59%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17
+stderr:   Q3 ->      11 (V: 46.57%) (N:  8.94%) PV: Q3 D16 C17 C16 D17
+stderr:  Q17 ->      11 (V: 46.52%) (N:  8.85%) PV: Q17 D4 C3 C4 D3
+stderr:   R4 ->      11 (V: 36.70%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:  Q16 ->       6 (V: 47.08%) (N:  4.26%) PV: Q16 D16 Q4
+stderr:   D4 ->       6 (V: 46.98%) (N:  4.26%) PV: D4 Q16 R17
+stderr:   Q4 ->       5 (V: 47.13%) (N:  4.16%) PV: Q4 Q16 D4
+stderr:  D16 ->       5 (V: 47.01%) (N:  4.16%) PV: D16 Q4 R3
+stderr: 3.8 average depth, 6 max depth
+stderr: 77 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  R16 ->      13 (V: 46.70%) (N:  8.82%) PV: R16 D4 C3 D3 C4
+stderr:   R4 ->      13 (V: 46.67%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:  C16 ->      13 (V: 46.62%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4
+stderr:   D3 ->      12 (V: 46.53%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17
+stderr:   C4 ->      12 (V: 46.51%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16
+stderr:   Q3 ->      12 (V: 46.49%) (N:  8.94%) PV: Q3 D16 C17 C16 D17
+stderr:  Q17 ->      12 (V: 46.44%) (N:  8.85%) PV: Q17 D4 C3 C4 D3
+stderr:  D17 ->      12 (V: 37.32%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:  Q16 ->       6 (V: 47.08%) (N:  4.26%) PV: Q16 D16 Q4
+stderr:   Q4 ->       6 (V: 47.03%) (N:  4.16%) PV: Q4 Q16 D4
+stderr:   D4 ->       6 (V: 46.98%) (N:  4.26%) PV: D4 Q16 R17
+stderr:  D16 ->       6 (V: 46.96%) (N:  4.16%) PV: D16 Q4 R3
+stderr: 3.9 average depth, 6 max depth
+stderr: 80 non leaf nodes, 1.54 average children
+stderr: ~end
+stderr: ~begin
+stderr:  R16 ->      14 (V: 46.74%) (N:  8.82%) PV: R16 D4 C3 D3 C4
+stderr:   R4 ->      14 (V: 46.72%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:  D17 ->      14 (V: 46.71%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:  C16 ->      14 (V: 46.66%) (N:  9.19%) PV: C16 Q4 R3 R4 Q3
+stderr:   D3 ->      13 (V: 46.54%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17
+stderr:   Q3 ->      13 (V: 46.54%) (N:  8.94%) PV: Q3 D16 C17 C16 D17
+stderr:   C4 ->      13 (V: 46.52%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16
+stderr:  Q17 ->      13 (V: 46.49%) (N:  8.85%) PV: Q17 D4 C3 C4 D3
+stderr:  Q16 ->       7 (V: 47.15%) (N:  4.26%) PV: Q16 Q4 D16
+stderr:   D4 ->       7 (V: 47.08%) (N:  4.26%) PV: D4 Q16 R17
+stderr:   Q4 ->       7 (V: 47.07%) (N:  4.16%) PV: Q4 Q16 D4
+stderr:  D16 ->       6 (V: 31.30%) (N:  4.16%) PV: D16 Q4 R3
+stderr: 4.0 average depth, 6 max depth
+stderr: 89 non leaf nodes, 1.52 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      15 (V: 46.79%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:  R16 ->      15 (V: 46.79%) (N:  8.82%) PV: R16 D4 C3 C4 D3
+stderr:  D17 ->      15 (V: 46.74%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:  Q17 ->      15 (V: 46.68%) (N:  8.85%) PV: Q17 D4 C3 C4 D3
+stderr:   Q3 ->      15 (V: 46.61%) (N:  8.94%) PV: Q3 D16 C17 C16 D17
+stderr:  C16 ->      15 (V: 38.92%) (N:  9.19%) PV: C16 Q4 R3 R4 Q3
+stderr:   D3 ->      14 (V: 46.58%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17
+stderr:   C4 ->      14 (V: 46.57%) (N:  8.66%) PV: C4 Q16 R17 R16 Q17
+stderr:  Q16 ->       8 (V: 47.04%) (N:  4.26%) PV: Q16 D4 C3 D3
+stderr:   D4 ->       7 (V: 47.08%) (N:  4.26%) PV: D4 Q16 R17
+stderr:   Q4 ->       7 (V: 47.07%) (N:  4.16%) PV: Q4 Q16 D4
+stderr:  D16 ->       7 (V: 46.98%) (N:  4.16%) PV: D16 Q4 R3
+stderr: 4.1 average depth, 6 max depth
+stderr: 96 non leaf nodes, 1.53 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      17 (V: 46.77%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:  R16 ->      16 (V: 46.73%) (N:  8.82%) PV: R16 D4 C3 C4 D3
+stderr:  D17 ->      16 (V: 46.72%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:  Q17 ->      16 (V: 46.64%) (N:  8.85%) PV: Q17 D4 C3 C4 D3
+stderr:   Q3 ->      16 (V: 46.61%) (N:  8.94%) PV: Q3 D16 C17 C16 D17
+stderr:  C16 ->      16 (V: 39.28%) (N:  9.19%) PV: C16 Q4 R3 R4 Q3
+stderr:   D3 ->      15 (V: 46.63%) (N:  8.68%) PV: D3 Q16 R17 Q17 R16
+stderr:   C4 ->      15 (V: 46.62%) (N:  8.66%) PV: C4 Q16 R17 R16 Q17
+stderr:  Q16 ->       8 (V: 47.04%) (N:  4.26%) PV: Q16 D4 C3 D3
+stderr:   D4 ->       8 (V: 46.99%) (N:  4.26%) PV: D4 Q16 R17 Q17
+stderr:   Q4 ->       8 (V: 46.94%) (N:  4.16%) PV: Q4 D16 C17 C16
+stderr:  D16 ->       8 (V: 46.90%) (N:  4.16%) PV: D16 Q4 R3 Q3
+stderr: 4.1 average depth, 6 max depth
+stderr: 101 non leaf nodes, 1.57 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      18 (V: 46.68%) (N:  9.04%) PV: R4 D16 C17 D17 C16
+stderr:  R16 ->      18 (V: 46.65%) (N:  8.82%) PV: R16 D4 C3 C4 D3
+stderr:  D17 ->      18 (V: 46.64%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:  C16 ->      18 (V: 46.60%) (N:  9.19%) PV: C16 Q4 R3 R4 Q3
+stderr:  Q17 ->      18 (V: 46.59%) (N:  8.85%) PV: Q17 D4 C3 C4 D3
+stderr:   Q3 ->      18 (V: 46.56%) (N:  8.94%) PV: Q3 D16 C17 C16 D17
+stderr:   D3 ->      17 (V: 46.63%) (N:  8.68%) PV: D3 Q16 R17 Q17 R16
+stderr:   C4 ->      17 (V: 46.61%) (N:  8.66%) PV: C4 Q16 R17 R16 Q17
+stderr:  Q16 ->       9 (V: 47.02%) (N:  4.26%) PV: Q16 D4 C3 D3
+stderr:   D4 ->       9 (V: 47.02%) (N:  4.26%) PV: D4 Q16 R17 Q17
+stderr:   Q4 ->       9 (V: 47.00%) (N:  4.16%) PV: Q4 D16 C17 C16
+stderr:  D16 ->       8 (V: 34.11%) (N:  4.16%) PV: D16 Q4 R3 Q3
+stderr: 4.1 average depth, 6 max depth
+stderr: 117 non leaf nodes, 1.51 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      20 (V: 46.63%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14
+stderr:  R16 ->      19 (V: 46.68%) (N:  8.82%) PV: R16 D4 C3 C4 D3
+stderr:  D17 ->      19 (V: 46.58%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3
+stderr:   D3 ->      19 (V: 46.58%) (N:  8.68%) PV: D3 Q16 R17 Q17 R16
+stderr:  Q17 ->      19 (V: 46.56%) (N:  8.85%) PV: Q17 D4 C3 C4 D3
+stderr:  C16 ->      19 (V: 46.53%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4 R6
+stderr:   Q3 ->      19 (V: 46.48%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17
+stderr:   C4 ->      18 (V: 46.53%) (N:  8.66%) PV: C4 Q16 R17 R16 Q17
+stderr:  Q16 ->      10 (V: 47.02%) (N:  4.26%) PV: Q16 D4 C3 D3
+stderr:   D4 ->      10 (V: 47.00%) (N:  4.26%) PV: D4 Q16 R17 Q17
+stderr:   Q4 ->      10 (V: 46.99%) (N:  4.16%) PV: Q4 D16 C17 C16
+stderr:  D16 ->       9 (V: 35.23%) (N:  4.16%) PV: D16 Q4 R3 Q3
+stderr: 4.2 average depth, 7 max depth
+stderr: 128 non leaf nodes, 1.49 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      21 (V: 46.61%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14
+stderr:  C16 ->      21 (V: 46.55%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4 R6
+stderr:  R16 ->      20 (V: 46.61%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3
+stderr:   C4 ->      20 (V: 46.55%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16 R14
+stderr:   Q3 ->      20 (V: 46.53%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17
+stderr:  D17 ->      20 (V: 46.53%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3 O3
+stderr:   D3 ->      20 (V: 46.52%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17
+stderr:  Q17 ->      20 (V: 46.50%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3
+stderr:  Q16 ->      11 (V: 47.09%) (N:  4.26%) PV: Q16 D4 C3 D3 C4
+stderr:  D16 ->      10 (V: 47.00%) (N:  4.16%) PV: D16 Q4 R3 Q3
+stderr:   Q4 ->      10 (V: 46.99%) (N:  4.16%) PV: Q4 D16 C17 C16
+stderr:   D4 ->      10 (V: 36.16%) (N:  4.26%) PV: D4 Q4 D16 Q17
+stderr: 4.3 average depth, 7 max depth
+stderr: 137 non leaf nodes, 1.48 average children
+stderr: ~end
+stderr: ~begin
+stderr:  R16 ->      22 (V: 46.61%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3
+stderr:   R4 ->      22 (V: 46.59%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14
+stderr:  C16 ->      22 (V: 46.53%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4 R6
+stderr:   C4 ->      21 (V: 46.52%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16 R14
+stderr:  D17 ->      21 (V: 46.51%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3 O3
+stderr:   D3 ->      21 (V: 46.50%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17
+stderr:  Q17 ->      21 (V: 46.48%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3
+stderr:   Q3 ->      21 (V: 40.70%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17
+stderr:   D4 ->      11 (V: 47.09%) (N:  4.26%) PV: D4 Q16 R17 Q17 R16
+stderr:  Q16 ->      11 (V: 47.09%) (N:  4.26%) PV: Q16 D4 C3 D3 C4
+stderr:  D16 ->      11 (V: 47.06%) (N:  4.16%) PV: D16 Q4 R3 Q3 R4
+stderr:   Q4 ->      11 (V: 47.05%) (N:  4.16%) PV: Q4 D16 C17 C16 D17
+stderr: 4.3 average depth, 7 max depth
+stderr: 142 non leaf nodes, 1.51 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      24 (V: 46.55%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14
+stderr:  C16 ->      24 (V: 46.50%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4 R6
+stderr:  R16 ->      23 (V: 46.56%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3
+stderr:  D17 ->      23 (V: 46.48%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3 O3
+stderr:   Q3 ->      23 (V: 46.46%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17
+stderr:  Q17 ->      23 (V: 46.45%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3
+stderr:   D3 ->      22 (V: 46.51%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17
+stderr:   C4 ->      22 (V: 46.49%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16 R14
+stderr:  Q16 ->      12 (V: 47.10%) (N:  4.26%) PV: Q16 D16 Q4 D3 C5
+stderr:  D16 ->      12 (V: 47.06%) (N:  4.16%) PV: D16 Q4 R3 Q3 R4
+stderr:   Q4 ->      12 (V: 47.05%) (N:  4.16%) PV: Q4 D16 C17 C16 D17
+stderr:   D4 ->      12 (V: 37.70%) (N:  4.26%) PV: D4 Q16 R17 Q17 R16
+stderr: 4.3 average depth, 7 max depth
+stderr: 158 non leaf nodes, 1.47 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      25 (V: 46.51%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14
+stderr:  C16 ->      25 (V: 46.49%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4 R6
+stderr:  R16 ->      24 (V: 46.53%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3
+stderr:  Q17 ->      24 (V: 46.49%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3
+stderr:   C4 ->      24 (V: 46.47%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16 R14
+stderr:  D17 ->      24 (V: 46.44%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3 O3
+stderr:   Q3 ->      24 (V: 46.44%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17
+stderr:   D3 ->      24 (V: 46.43%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17
+stderr:  Q16 ->      13 (V: 47.12%) (N:  4.26%) PV: Q16 D16 Q4 D3 C5
+stderr:  D16 ->      13 (V: 47.09%) (N:  4.16%) PV: D16 Q4 R3 Q3 R4
+stderr:   Q4 ->      13 (V: 47.06%) (N:  4.16%) PV: Q4 D4 Q16 D17 C15
+stderr:   D4 ->      13 (V: 38.31%) (N:  4.26%) PV: D4 Q4 D16 Q17 R15
+stderr: 4.4 average depth, 7 max depth
+stderr: 171 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      26 (V: 46.53%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14
+stderr:  R16 ->      26 (V: 46.48%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3
+stderr:  C16 ->      26 (V: 46.45%) (N:  9.19%) PV: C16 Q4 R3 R4 Q3 O3
+stderr:   C4 ->      25 (V: 46.49%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16 R14
+stderr:  D17 ->      25 (V: 46.46%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3 O3
+stderr:   D3 ->      25 (V: 46.45%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17
+stderr:   Q3 ->      25 (V: 46.39%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17
+stderr:  Q17 ->      25 (V: 41.50%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3
+stderr:   D4 ->      14 (V: 47.10%) (N:  4.26%) PV: D4 Q16 R17 Q17 R16
+stderr:  Q16 ->      14 (V: 47.06%) (N:  4.26%) PV: Q16 D4 C3 D3 C4
+stderr:  D16 ->      14 (V: 47.05%) (N:  4.16%) PV: D16 Q4 R3 Q3 R4
+stderr:   Q4 ->      14 (V: 47.01%) (N:  4.16%) PV: Q4 D16 C17 C16 D17
+stderr: 4.4 average depth, 7 max depth
+stderr: 176 non leaf nodes, 1.47 average children
+stderr: ~end
+stderr: ~begin
+stderr:  Q17 ->      27 (V: 46.52%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3
+stderr:  R16 ->      27 (V: 46.46%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3
+stderr:  C16 ->      27 (V: 46.44%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4 R6 R5
+stderr:   Q3 ->      27 (V: 46.40%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17
+stderr:   R4 ->      27 (V: 41.86%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14 C15
+stderr:   C4 ->      26 (V: 46.45%) (N:  8.66%) PV: C4 Q16 R17 R16 Q17 O17
+stderr:   D3 ->      26 (V: 46.44%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17
+stderr:  D17 ->      26 (V: 46.41%) (N:  8.83%) PV: D17 Q4 R3 Q3 R4 R6
+stderr:   D4 ->      15 (V: 47.15%) (N:  4.26%) PV: D4 Q16 R17 Q17 R16
+stderr:  Q16 ->      15 (V: 47.10%) (N:  4.26%) PV: Q16 D4 C3 D3 C4
+stderr:  D16 ->      14 (V: 47.05%) (N:  4.16%) PV: D16 Q4 R3 Q3 R4
+stderr:   Q4 ->      14 (V: 47.01%) (N:  4.16%) PV: Q4 D16 C17 C16 D17
+stderr: 4.5 average depth, 8 max depth
+stderr: 186 non leaf nodes, 1.46 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      29 (V: 46.53%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14 C15
+stderr:  C16 ->      29 (V: 46.45%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4 R6 R5
+stderr:  R16 ->      28 (V: 46.48%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3
+stderr:  Q17 ->      28 (V: 46.48%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3 E3
+stderr:  D17 ->      27 (V: 46.45%) (N:  8.83%) PV: D17 Q4 R3 Q3 R4 R6
+stderr:   C4 ->      27 (V: 46.43%) (N:  8.66%) PV: C4 Q16 R17 R16 Q17 O17
+stderr:   D3 ->      27 (V: 46.41%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17
+stderr:   Q3 ->      27 (V: 41.76%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17
+stderr:   D4 ->      16 (V: 47.21%) (N:  4.26%) PV: D4 Q16 R17 Q17 R16
+stderr:  Q16 ->      15 (V: 47.10%) (N:  4.26%) PV: Q16 D4 C3 D3 C4
+stderr:  D16 ->      15 (V: 47.09%) (N:  4.16%) PV: D16 Q4 R3 Q3 R4
+stderr:   Q4 ->      15 (V: 47.06%) (N:  4.16%) PV: Q4 D16 C17 C16 D17
+stderr: 4.5 average depth, 8 max depth
+stderr: 195 non leaf nodes, 1.45 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      30 (V: 46.55%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14 C15
+stderr:  C16 ->      30 (V: 46.48%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4 R6 R5
+stderr:  Q17 ->      29 (V: 46.49%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3 E3
+stderr:  R16 ->      29 (V: 46.46%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3 E3
+stderr:  D17 ->      29 (V: 46.44%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3 O3 P3
+stderr:   Q3 ->      29 (V: 46.39%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17 E17
+stderr:   D3 ->      28 (V: 46.44%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17
+stderr:   C4 ->      28 (V: 46.42%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16 R14 R15
+stderr:   D4 ->      17 (V: 47.25%) (N:  4.26%) PV: D4 Q16 R17 R16 Q17
+stderr:  D16 ->      16 (V: 47.12%) (N:  4.16%) PV: D16 Q4 R3 Q3 R4
+stderr:   Q4 ->      16 (V: 47.09%) (N:  4.16%) PV: Q4 D16 C17 C16 D17
+stderr:  Q16 ->      16 (V: 39.73%) (N:  4.26%) PV: Q16 D16 Q4 D3 C5 C4
+stderr: 4.6 average depth, 8 max depth
+stderr: 204 non leaf nodes, 1.46 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      31 (V: 46.56%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14 C15
+stderr:  C16 ->      31 (V: 46.45%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4 R6 R5
+stderr:  R16 ->      30 (V: 46.50%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3 E3
+stderr:  Q17 ->      30 (V: 46.48%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3 E3
+stderr:  D17 ->      30 (V: 46.47%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3 O3 P3
+stderr:   D3 ->      30 (V: 46.44%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17 P17
+stderr:   Q3 ->      30 (V: 46.41%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17 E17
+stderr:   C4 ->      29 (V: 46.45%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16 R14 R15
+stderr:   D4 ->      18 (V: 47.19%) (N:  4.26%) PV: D4 Q16 R17 Q17 R16 R14
+stderr:  Q16 ->      17 (V: 47.20%) (N:  4.26%) PV: Q16 D4 C3 C4 D3
+stderr:  D16 ->      17 (V: 47.15%) (N:  4.16%) PV: D16 Q4 R3 Q3 R4
+stderr:   Q4 ->      16 (V: 39.66%) (N:  4.16%) PV: Q4 D4 Q16 D17 C15 C16
+stderr: 4.6 average depth, 8 max depth
+stderr: 209 non leaf nodes, 1.48 average children
+stderr: ~end
+stderr: ~begin
+stderr:   R4 ->      33 (V: 46.54%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14 C15
+stderr:  C16 ->      33 (V: 46.48%) (N:  9.19%) PV: C16 Q4 R3 Q3 R4 R6 R5
+stderr:  Q17 ->      32 (V: 46.47%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3 E3
+stderr:  R16 ->      31 (V: 46.51%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3 E3
+stderr:  D17 ->      31 (V: 46.48%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3 O3 P3
+stderr:   Q3 ->      31 (V: 46.42%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17 E17
+stderr:   C4 ->      30 (V: 46.46%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16 R14 R15
+stderr:   D3 ->      30 (V: 46.44%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17 P17
+stderr:  Q16 ->      18 (V: 47.20%) (N:  4.26%) PV: Q16 D4 C3 C4 D3
+stderr:   D4 ->      18 (V: 47.19%) (N:  4.26%) PV: D4 Q16 R17 Q17 R16 R14
+stderr:   Q4 ->      17 (V: 47.12%) (N:  4.16%) PV: Q4 D16 C17 C16 D17
+stderr:  D16 ->      17 (V: 40.08%) (N:  4.16%) PV: D16 Q4 R3 Q3 R4
+stderr: 4.6 average depth, 8 max depth
+stderr: 215 non leaf nodes, 1.49 average children
+stderr: ~end
+Lizzie: play B R4
+Lizzie: name
+stderr: 
+stderr:  C16 ->      34 (V: 46.46%) (N:  9.19%) PV: C16 Q4 R3 R4 Q3 O3 P3
+stderr:   R4 ->      33 (V: 46.54%) (N:  9.04%) PV: R4 D16 C17 D17 C16 C14 C15
+stderr:  R16 ->      32 (V: 46.53%) (N:  8.82%) PV: R16 D4 C3 C4 D3 F3 E3
+stderr:  D17 ->      32 (V: 46.51%) (N:  8.83%) PV: D17 Q4 R3 R4 Q3 O3 P3
+stderr:  Q17 ->      32 (V: 46.47%) (N:  8.85%) PV: Q17 D4 C3 C4 D3 F3 E3
+stderr:   C4 ->      32 (V: 46.46%) (N:  8.66%) PV: C4 Q16 R17 Q17 R16 R14 R15
+stderr:   Q3 ->      32 (V: 46.45%) (N:  8.94%) PV: Q3 D16 C17 C16 D17 F17 E17
+stderr:   D3 ->      31 (V: 46.45%) (N:  8.68%) PV: D3 Q16 R17 R16 Q17 O17 P17
+stderr:  Q16 ->      19 (V: 47.24%) (N:  4.26%) PV: Q16 D4 C3 C4 D3
+stderr:   D4 ->      19 (V: 47.19%) (N:  4.26%) PV: D4 Q16 R17 Q17 R16 R14
+stderr:  D16 ->      18 (V: 47.15%) (N:  4.16%) PV: D16 Q4 R3 Q3 R4
+stderr:   Q4 ->      18 (V: 47.09%) (N:  4.16%) PV: Q4 D16 C17 C16 D17
+stderr: 4.6 average depth, 8 max depth
+stderr: 223 non leaf nodes, 1.49 average children
+stderr: 
+stderr: 333 visits, 119340 nodes
+stderr: 
+STDOUT: = 
+STDOUT: 
+STDOUT: = Leela Zero
+STDOUT: 
+Lizzie: time_left b 0 0
+STDOUT: = 
+STDOUT: 
+stderr: ~begin
+stderr:  D16 ->      10 (V: 41.38%) (N: 19.28%) PV: D16 C17 C16 D17 F17 E17
+stderr:  C16 ->       7 (V: 53.28%) (N: 13.40%) PV: C16 Q17 D4
+stderr:  D17 ->       7 (V: 53.12%) (N: 13.79%) PV: D17 Q17 D4 C3
+stderr:  Q16 ->       5 (V: 53.82%) (N:  9.42%) PV: Q16 R17 R16
+stderr:   D4 ->       4 (V: 53.61%) (N:  8.09%) PV: D4 D17 Q16
+stderr:   D3 ->       3 (V: 53.53%) (N:  6.98%) PV: D3 C16 Q16
+stderr: 3.6 average depth, 7 max depth
+stderr: 24 non leaf nodes, 1.50 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      13 (V: 53.99%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14
+stderr:  C16 ->       8 (V: 53.29%) (N: 13.40%) PV: C16 C4 Q16 R17
+stderr:  D17 ->       8 (V: 53.14%) (N: 13.79%) PV: D17 Q17 D4 C3
+stderr:  Q16 ->       6 (V: 53.67%) (N:  9.42%) PV: Q16 R17 R16
+stderr:   D4 ->       5 (V: 53.85%) (N:  8.09%) PV: D4 C16 Q16
+stderr:   D3 ->       4 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16
+stderr:   C4 ->       3 (V: 53.63%) (N:  5.88%) PV: C4 D17 Q16
+stderr:  R16 ->       3 (V: 53.25%) (N:  6.28%) PV: R16 D17 D3
+stderr:  Q17 ->       1 (V: 13.38%) (N:  5.78%) PV: Q17 
+stderr: 3.8 average depth, 9 max depth
+stderr: 34 non leaf nodes, 1.50 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      15 (V: 45.08%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4
+stderr:  D17 ->      10 (V: 53.14%) (N: 13.79%) PV: D17 Q17 D4 C3
+stderr:  C16 ->       9 (V: 53.22%) (N: 13.40%) PV: C16 Q17 D4 E17
+stderr:  Q16 ->       7 (V: 53.83%) (N:  9.42%) PV: Q16 R17 R16
+stderr:   D4 ->       6 (V: 53.72%) (N:  8.09%) PV: D4 C16 Q16
+stderr:   D3 ->       5 (V: 53.52%) (N:  6.98%) PV: D3 D17 Q16
+stderr:   C4 ->       4 (V: 53.45%) (N:  5.88%) PV: C4 D17 Q16
+stderr:  R16 ->       4 (V: 53.17%) (N:  6.28%) PV: R16 D17 D3
+stderr:  Q17 ->       4 (V: 53.14%) (N:  5.78%) PV: Q17 D17 C4 R15
+stderr: 4.0 average depth, 10 max depth
+stderr: 43 non leaf nodes, 1.49 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      19 (V: 54.16%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17
+stderr:  C16 ->      11 (V: 53.24%) (N: 13.40%) PV: C16 Q17 D4 E17
+stderr:  D17 ->      11 (V: 41.76%) (N: 13.79%) PV: D17 Q17 D4 C3
+stderr:  Q16 ->       8 (V: 53.81%) (N:  9.42%) PV: Q16 D17 D4 R17
+stderr:   D4 ->       7 (V: 53.83%) (N:  8.09%) PV: D4 C3 D3
+stderr:   D3 ->       6 (V: 53.48%) (N:  6.98%) PV: D3 C16 Q16 R17
+stderr:   C4 ->       5 (V: 53.51%) (N:  5.88%) PV: C4 C16 Q17
+stderr:  R16 ->       5 (V: 53.31%) (N:  6.28%) PV: R16 D17 D3
+stderr:  Q17 ->       5 (V: 53.07%) (N:  5.78%) PV: Q17 D17 C4 R15
+stderr: 4.1 average depth, 11 max depth
+stderr: 53 non leaf nodes, 1.45 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      21 (V: 54.08%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17
+stderr:  C16 ->      13 (V: 53.27%) (N: 13.40%) PV: C16 C4 Q16 R17 R16
+stderr:  D17 ->      13 (V: 53.19%) (N: 13.79%) PV: D17 Q17 D4 C3
+stderr:  Q16 ->       9 (V: 40.31%) (N:  9.42%) PV: Q16 R17 R16 Q17
+stderr:   D4 ->       8 (V: 53.81%) (N:  8.09%) PV: D4 D17 Q16 R17
+stderr:   D3 ->       7 (V: 53.44%) (N:  6.98%) PV: D3 D17 Q16 R17
+stderr:   C4 ->       6 (V: 53.42%) (N:  5.88%) PV: C4 C16 Q17 E3
+stderr:  R16 ->       6 (V: 53.24%) (N:  6.28%) PV: R16 D17 D3 P17
+stderr:  Q17 ->       5 (V: 53.07%) (N:  5.78%) PV: Q17 D17 C4 R15
+stderr: 4.2 average depth, 11 max depth
+stderr: 62 non leaf nodes, 1.42 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      24 (V: 48.07%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3
+stderr:  C16 ->      15 (V: 53.31%) (N: 13.40%) PV: C16 Q17 D4 E17
+stderr:  D17 ->      15 (V: 53.12%) (N: 13.79%) PV: D17 Q17 D4 C3
+stderr:  Q16 ->      11 (V: 53.68%) (N:  9.42%) PV: Q16 R17 R16 Q17
+stderr:   D4 ->       9 (V: 53.67%) (N:  8.09%) PV: D4 D17 Q16 R17
+stderr:   D3 ->       8 (V: 53.42%) (N:  6.98%) PV: D3 C16 Q16 R17
+stderr:  R16 ->       7 (V: 53.20%) (N:  6.28%) PV: R16 D17 D3 P17
+stderr:   C4 ->       6 (V: 53.42%) (N:  5.88%) PV: C4 C16 Q17 E3
+stderr:  Q17 ->       6 (V: 53.27%) (N:  5.78%) PV: Q17 D17 C4 R15
+stderr: 4.3 average depth, 12 max depth
+stderr: 71 non leaf nodes, 1.42 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      28 (V: 53.88%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3
+stderr:  C16 ->      17 (V: 53.31%) (N: 13.40%) PV: C16 C4 Q16 R17 R16
+stderr:  D17 ->      17 (V: 45.26%) (N: 13.79%) PV: D17 Q17 D4 C3
+stderr:  Q16 ->      13 (V: 53.72%) (N:  9.42%) PV: Q16 D17 D4 R17
+stderr:   D4 ->      11 (V: 53.67%) (N:  8.09%) PV: D4 C16 Q16 R17
+stderr:   D3 ->       9 (V: 53.47%) (N:  6.98%) PV: D3 C16 Q16 R17
+stderr:  R16 ->       8 (V: 53.27%) (N:  6.28%) PV: R16 D17 D3 P17
+stderr:   C4 ->       7 (V: 53.33%) (N:  5.88%) PV: C4 C16 Q17 E3
+stderr:  Q17 ->       7 (V: 53.29%) (N:  5.78%) PV: Q17 D17 C4 R15
+stderr: 4.4 average depth, 12 max depth
+stderr: 79 non leaf nodes, 1.48 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      30 (V: 49.05%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3
+stderr:  C16 ->      19 (V: 53.25%) (N: 13.40%) PV: C16 Q17 D4 E17
+stderr:  D17 ->      19 (V: 53.24%) (N: 13.79%) PV: D17 Q17 D4 C3
+stderr:  Q16 ->      14 (V: 53.66%) (N:  9.42%) PV: Q16 D17 D4 R17
+stderr:   D4 ->      12 (V: 53.58%) (N:  8.09%) PV: D4 C3 D3 C4
+stderr:   D3 ->      10 (V: 53.46%) (N:  6.98%) PV: D3 C16 Q16 R17
+stderr:  R16 ->       9 (V: 53.12%) (N:  6.28%) PV: R16 D17 D3 P17
+stderr:   C4 ->       8 (V: 53.46%) (N:  5.88%) PV: C4 C16 Q17 E3
+stderr:  Q17 ->       8 (V: 53.26%) (N:  5.78%) PV: Q17 D17 C4 R15
+stderr: 4.5 average depth, 12 max depth
+stderr: 88 non leaf nodes, 1.47 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      35 (V: 54.00%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      22 (V: 53.25%) (N: 13.79%) PV: D17 Q17 D4 C3
+stderr:  C16 ->      21 (V: 53.25%) (N: 13.40%) PV: C16 C4 Q16 R17 R16
+stderr:  Q16 ->      16 (V: 53.75%) (N:  9.42%) PV: Q16 R17 R16 Q17 O17
+stderr:   D4 ->      13 (V: 53.53%) (N:  8.09%) PV: D4 D16 Q16 C3
+stderr:   D3 ->      11 (V: 53.40%) (N:  6.98%) PV: D3 D17 Q16 R17
+stderr:   C4 ->       9 (V: 53.51%) (N:  5.88%) PV: C4 C16 Q17 E3
+stderr:  Q17 ->       9 (V: 53.11%) (N:  5.78%) PV: Q17 D17 C4 R15
+stderr:  R16 ->       9 (V: 39.84%) (N:  6.28%) PV: R16 D17 D3 P17
+stderr: 4.6 average depth, 13 max depth
+stderr: 99 non leaf nodes, 1.46 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      39 (V: 53.96%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      24 (V: 53.22%) (N: 13.79%) PV: D17 Q17 D4 C3
+stderr:  C16 ->      23 (V: 47.09%) (N: 13.40%) PV: C16 C4 Q16 R17 R16
+stderr:  Q16 ->      18 (V: 53.68%) (N:  9.42%) PV: Q16 D17 D4 R17
+stderr:   D4 ->      15 (V: 53.68%) (N:  8.09%) PV: D4 C16 Q16 R17
+stderr:   D3 ->      12 (V: 53.45%) (N:  6.98%) PV: D3 C16 Q16 R17
+stderr:  R16 ->      11 (V: 53.38%) (N:  6.28%) PV: R16 D17 D3 P17
+stderr:   C4 ->      10 (V: 53.44%) (N:  5.88%) PV: C4 D17 Q16 R17
+stderr:  Q17 ->      10 (V: 53.13%) (N:  5.78%) PV: Q17 D17 C4 R15
+stderr: 4.6 average depth, 13 max depth
+stderr: 107 non leaf nodes, 1.51 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      43 (V: 54.05%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      26 (V: 53.27%) (N: 13.79%) PV: D17 Q17 D4 C3 D3
+stderr:  C16 ->      25 (V: 53.20%) (N: 13.40%) PV: C16 C4 Q16 R17 R16
+stderr:  Q16 ->      19 (V: 46.39%) (N:  9.42%) PV: Q16 D17 D4 R17
+stderr:   D4 ->      17 (V: 53.72%) (N:  8.09%) PV: D4 D16 Q16 C3 C4
+stderr:   D3 ->      14 (V: 53.50%) (N:  6.98%) PV: D3 C16 Q16 R17
+stderr:  R16 ->      12 (V: 53.35%) (N:  6.28%) PV: R16 D17 D3 P17
+stderr:   C4 ->      11 (V: 53.42%) (N:  5.88%) PV: C4 D17 Q16 R17
+stderr:  Q17 ->      10 (V: 53.13%) (N:  5.78%) PV: Q17 D17 C4 R15
+stderr: 4.8 average depth, 13 max depth
+stderr: 118 non leaf nodes, 1.50 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      47 (V: 54.01%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      28 (V: 53.22%) (N: 13.79%) PV: D17 Q17 D4 C3 D3
+stderr:  C16 ->      27 (V: 47.88%) (N: 13.40%) PV: C16 C4 Q16 R17 R16
+stderr:  Q16 ->      21 (V: 53.72%) (N:  9.42%) PV: Q16 D17 D4 R17
+stderr:   D4 ->      18 (V: 53.68%) (N:  8.09%) PV: D4 C16 Q16 R17
+stderr:   D3 ->      15 (V: 53.49%) (N:  6.98%) PV: D3 C16 Q16 R17
+stderr:  R16 ->      13 (V: 53.30%) (N:  6.28%) PV: R16 D17 D4 C3
+stderr:   C4 ->      12 (V: 53.45%) (N:  5.88%) PV: C4 D17 Q16 R17
+stderr:  Q17 ->      12 (V: 53.19%) (N:  5.78%) PV: Q17 D17 D4 C3
+stderr: 4.8 average depth, 13 max depth
+stderr: 128 non leaf nodes, 1.51 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      51 (V: 54.07%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      30 (V: 53.17%) (N: 13.79%) PV: D17 Q17 D4 C3 D3
+stderr:  C16 ->      29 (V: 48.24%) (N: 13.40%) PV: C16 C4 Q16 R17 R16
+stderr:  Q16 ->      23 (V: 53.66%) (N:  9.42%) PV: Q16 D17 D4 R17
+stderr:   D4 ->      19 (V: 53.67%) (N:  8.09%) PV: D4 C16 Q16 R17
+stderr:   D3 ->      16 (V: 53.52%) (N:  6.98%) PV: D3 C16 Q16 R17 R16
+stderr:  R16 ->      14 (V: 53.24%) (N:  6.28%) PV: R16 D17 D4 C3
+stderr:   C4 ->      13 (V: 53.48%) (N:  5.88%) PV: C4 D17 Q16 R17
+stderr:  Q17 ->      12 (V: 53.19%) (N:  5.78%) PV: Q17 D17 D4 C3
+stderr: 4.9 average depth, 13 max depth
+stderr: 136 non leaf nodes, 1.52 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      55 (V: 54.08%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      32 (V: 53.19%) (N: 13.79%) PV: D17 Q17 D4 C3 D3
+stderr:  C16 ->      31 (V: 53.22%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17
+stderr:  Q16 ->      24 (V: 47.76%) (N:  9.42%) PV: Q16 D17 D4 R17
+stderr:   D4 ->      21 (V: 53.63%) (N:  8.09%) PV: D4 D16 Q16 C3 C4
+stderr:   D3 ->      17 (V: 53.47%) (N:  6.98%) PV: D3 C16 Q16 R17 R16
+stderr:  R16 ->      15 (V: 53.32%) (N:  6.28%) PV: R16 D17 D4 C3
+stderr:   C4 ->      14 (V: 53.40%) (N:  5.88%) PV: C4 D17 Q16 R17
+stderr:  Q17 ->      13 (V: 53.20%) (N:  5.78%) PV: Q17 D17 D4 C3
+stderr: 5.0 average depth, 13 max depth
+stderr: 146 non leaf nodes, 1.52 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      58 (V: 51.41%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      34 (V: 53.23%) (N: 13.79%) PV: D17 Q17 D4 C3 D3
+stderr:  C16 ->      33 (V: 53.20%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17
+stderr:  Q16 ->      27 (V: 53.78%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      22 (V: 53.67%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      18 (V: 53.48%) (N:  6.98%) PV: D3 C16 Q16 R17 R16
+stderr:  R16 ->      16 (V: 53.36%) (N:  6.28%) PV: R16 D17 D4 C3
+stderr:   C4 ->      15 (V: 53.41%) (N:  5.88%) PV: C4 D17 Q16 R17
+stderr:  Q17 ->      14 (V: 53.16%) (N:  5.78%) PV: Q17 D17 D4 C3
+stderr: 5.0 average depth, 13 max depth
+stderr: 155 non leaf nodes, 1.53 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      62 (V: 51.54%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      37 (V: 53.23%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4
+stderr:  C16 ->      36 (V: 53.19%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17
+stderr:  Q16 ->      29 (V: 53.80%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      24 (V: 53.79%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      19 (V: 53.39%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17
+stderr:  R16 ->      17 (V: 53.29%) (N:  6.28%) PV: R16 D17 D4 C3
+stderr:   C4 ->      16 (V: 53.31%) (N:  5.88%) PV: C4 D17 Q16 R17
+stderr:  Q17 ->      15 (V: 53.17%) (N:  5.78%) PV: Q17 D17 D4 C3
+stderr: 5.1 average depth, 13 max depth
+stderr: 167 non leaf nodes, 1.53 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      66 (V: 51.67%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      39 (V: 53.23%) (N: 13.79%) PV: D17 Q17 D3 C15 F16
+stderr:  C16 ->      38 (V: 53.18%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17
+stderr:  Q16 ->      30 (V: 53.77%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      26 (V: 53.82%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      20 (V: 53.37%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17
+stderr:  R16 ->      18 (V: 53.34%) (N:  6.28%) PV: R16 D17 D4 C3
+stderr:   C4 ->      17 (V: 53.32%) (N:  5.88%) PV: C4 D17 Q16 R17
+stderr:  Q17 ->      16 (V: 53.17%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.1 average depth, 13 max depth
+stderr: 177 non leaf nodes, 1.53 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      70 (V: 54.04%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      41 (V: 53.21%) (N: 13.79%) PV: D17 Q17 D3 C15 F16
+stderr:  C16 ->      39 (V: 53.17%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17
+stderr:  Q16 ->      31 (V: 49.02%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      27 (V: 53.79%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      21 (V: 53.33%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17
+stderr:  R16 ->      19 (V: 53.34%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      17 (V: 53.32%) (N:  5.88%) PV: C4 D17 Q16 R17
+stderr:  Q17 ->      17 (V: 53.16%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.2 average depth, 13 max depth
+stderr: 186 non leaf nodes, 1.52 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      74 (V: 54.00%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      43 (V: 53.20%) (N: 13.79%) PV: D17 Q17 D3 C15 F16
+stderr:  C16 ->      42 (V: 53.21%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17
+stderr:  Q16 ->      33 (V: 49.26%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      29 (V: 53.74%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      22 (V: 53.36%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17
+stderr:  R16 ->      20 (V: 53.32%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      18 (V: 53.27%) (N:  5.88%) PV: C4 D17 Q16 R17
+stderr:  Q17 ->      18 (V: 53.19%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.1 average depth, 13 max depth
+stderr: 198 non leaf nodes, 1.51 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      77 (V: 53.97%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      45 (V: 53.21%) (N: 13.79%) PV: D17 Q17 D3 C15 F16
+stderr:  C16 ->      44 (V: 53.22%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17
+stderr:  Q16 ->      36 (V: 53.82%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      30 (V: 53.70%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17
+stderr:   D3 ->      23 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16 R17 R16
+stderr:  R16 ->      21 (V: 53.29%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:  Q17 ->      19 (V: 53.17%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr:   C4 ->      19 (V: 46.06%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr: 5.1 average depth, 13 max depth
+stderr: 206 non leaf nodes, 1.52 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      81 (V: 52.04%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      48 (V: 53.19%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4
+stderr:  C16 ->      46 (V: 53.22%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17
+stderr:  Q16 ->      38 (V: 53.82%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      32 (V: 53.75%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17
+stderr:   D3 ->      24 (V: 53.28%) (N:  6.98%) PV: D3 C16 Q16 R17 R16
+stderr:  R16 ->      22 (V: 53.30%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      20 (V: 53.29%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      19 (V: 53.17%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.2 average depth, 13 max depth
+stderr: 215 non leaf nodes, 1.53 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      86 (V: 53.96%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  C16 ->      49 (V: 53.22%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17
+stderr:  D17 ->      49 (V: 50.10%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4
+stderr:  Q16 ->      40 (V: 53.83%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      34 (V: 53.72%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      25 (V: 53.27%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17 R16
+stderr:  R16 ->      23 (V: 53.31%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      22 (V: 53.30%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      20 (V: 53.15%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.2 average depth, 13 max depth
+stderr: 227 non leaf nodes, 1.53 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      89 (V: 53.93%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      52 (V: 53.17%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4
+stderr:  C16 ->      51 (V: 53.22%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17
+stderr:  Q16 ->      42 (V: 53.78%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      35 (V: 53.69%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      27 (V: 53.28%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17 R16
+stderr:  R16 ->      24 (V: 53.30%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      22 (V: 46.91%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      21 (V: 53.14%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.2 average depth, 13 max depth
+stderr: 239 non leaf nodes, 1.52 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      94 (V: 52.28%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      54 (V: 53.16%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4
+stderr:  C16 ->      53 (V: 53.22%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17
+stderr:  Q16 ->      43 (V: 53.76%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      36 (V: 53.69%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      28 (V: 53.24%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17 R16
+stderr:  R16 ->      25 (V: 53.29%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      23 (V: 53.29%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      22 (V: 53.12%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.2 average depth, 13 max depth
+stderr: 249 non leaf nodes, 1.52 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->      99 (V: 53.95%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      57 (V: 53.18%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4
+stderr:  C16 ->      55 (V: 50.46%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17
+stderr:  Q16 ->      46 (V: 53.77%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      38 (V: 53.69%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      29 (V: 53.25%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17 R16
+stderr:  R16 ->      26 (V: 53.30%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      25 (V: 53.34%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      23 (V: 53.16%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.3 average depth, 13 max depth
+stderr: 266 non leaf nodes, 1.50 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     103 (V: 52.42%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      59 (V: 53.19%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4
+stderr:  C16 ->      57 (V: 53.19%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17
+stderr:  Q16 ->      48 (V: 53.77%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      40 (V: 53.67%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      30 (V: 53.24%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17 R16
+stderr:  R16 ->      28 (V: 53.34%) (N:  6.28%) PV: R16 D17 D4 C3 D3
+stderr:   C4 ->      26 (V: 53.33%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      24 (V: 53.14%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.3 average depth, 13 max depth
+stderr: 278 non leaf nodes, 1.49 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     107 (V: 52.44%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      61 (V: 53.16%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4
+stderr:  C16 ->      59 (V: 53.17%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17
+stderr:  Q16 ->      49 (V: 53.73%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      41 (V: 53.65%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      31 (V: 53.24%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      29 (V: 53.32%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      27 (V: 53.33%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      25 (V: 53.17%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.4 average depth, 13 max depth
+stderr: 289 non leaf nodes, 1.48 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     111 (V: 53.89%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      63 (V: 53.17%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4
+stderr:  C16 ->      61 (V: 50.67%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17
+stderr:  Q16 ->      51 (V: 53.73%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      43 (V: 53.66%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      32 (V: 53.23%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17 R16
+stderr:  R16 ->      30 (V: 53.34%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      28 (V: 53.32%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      27 (V: 53.24%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.4 average depth, 13 max depth
+stderr: 302 non leaf nodes, 1.48 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     114 (V: 53.87%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      65 (V: 50.83%) (N: 13.79%) PV: D17 Q17 D3 C15 F16 C5
+stderr:  C16 ->      64 (V: 53.20%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17
+stderr:  Q16 ->      53 (V: 53.73%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      45 (V: 53.69%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      33 (V: 53.23%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17 R16
+stderr:  R16 ->      31 (V: 53.33%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      29 (V: 53.31%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      28 (V: 53.23%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.4 average depth, 13 max depth
+stderr: 312 non leaf nodes, 1.48 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     118 (V: 53.86%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      67 (V: 53.15%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5
+stderr:  C16 ->      66 (V: 53.18%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17
+stderr:  Q16 ->      55 (V: 53.71%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      46 (V: 53.67%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      35 (V: 53.22%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      32 (V: 48.80%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      30 (V: 53.30%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      29 (V: 53.24%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.4 average depth, 13 max depth
+stderr: 325 non leaf nodes, 1.47 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     123 (V: 53.88%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6
+stderr:  D17 ->      69 (V: 50.94%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5
+stderr:  C16 ->      68 (V: 53.18%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17
+stderr:  Q16 ->      56 (V: 53.70%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      48 (V: 53.71%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      36 (V: 53.23%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17 R16
+stderr:  R16 ->      33 (V: 53.36%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      31 (V: 53.33%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      30 (V: 53.27%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.5 average depth, 13 max depth
+stderr: 339 non leaf nodes, 1.46 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     126 (V: 52.62%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      71 (V: 53.13%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5
+stderr:  C16 ->      70 (V: 53.16%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17
+stderr:  Q16 ->      58 (V: 53.73%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17
+stderr:   D4 ->      50 (V: 53.72%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      37 (V: 53.23%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      34 (V: 53.34%) (N:  6.28%) PV: R16 D17 D3 P17 Q14
+stderr:   C4 ->      32 (V: 53.33%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      31 (V: 53.27%) (N:  5.78%) PV: Q17 D17 C4 R15 O16
+stderr: 5.5 average depth, 14 max depth
+stderr: 348 non leaf nodes, 1.46 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     131 (V: 52.66%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      73 (V: 53.11%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5
+stderr:  C16 ->      72 (V: 53.14%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      61 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 C3 C4
+stderr:   D4 ->      52 (V: 53.71%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      38 (V: 53.24%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      35 (V: 53.34%) (N:  6.28%) PV: R16 D17 D4 C3 D3
+stderr:   C4 ->      33 (V: 53.34%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      32 (V: 53.27%) (N:  5.78%) PV: Q17 D17 C4 E3 D6
+stderr: 5.6 average depth, 14 max depth
+stderr: 361 non leaf nodes, 1.46 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     136 (V: 53.87%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      75 (V: 53.10%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5
+stderr:  C16 ->      74 (V: 53.12%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      64 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 C3 C4
+stderr:   D4 ->      53 (V: 53.70%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      40 (V: 53.25%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      36 (V: 49.23%) (N:  6.28%) PV: R16 D17 D4 C3 D3
+stderr:   C4 ->      34 (V: 53.34%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      33 (V: 53.24%) (N:  5.78%) PV: Q17 D17 C4 E3 D6
+stderr: 5.6 average depth, 14 max depth
+stderr: 373 non leaf nodes, 1.46 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     140 (V: 53.86%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      77 (V: 51.12%) (N: 13.79%) PV: D17 Q17 D3 C15 F16 C5 F4
+stderr:  C16 ->      75 (V: 53.11%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      66 (V: 53.78%) (N:  9.42%) PV: Q16 D17 D4 C3 C4
+stderr:   D4 ->      55 (V: 53.70%) (N:  8.09%) PV: D4 C16 Q16 R17 R16
+stderr:   D3 ->      41 (V: 53.25%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      37 (V: 53.33%) (N:  6.28%) PV: R16 D17 D3 C5 F4
+stderr:   C4 ->      36 (V: 53.36%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      33 (V: 53.24%) (N:  5.78%) PV: Q17 D17 C4 E3 D6
+stderr: 5.7 average depth, 14 max depth
+stderr: 386 non leaf nodes, 1.45 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     144 (V: 53.85%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      80 (V: 53.09%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->      78 (V: 53.10%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      68 (V: 53.77%) (N:  9.42%) PV: Q16 D17 D4 C3 C4
+stderr:   D4 ->      58 (V: 53.75%) (N:  8.09%) PV: D4 D17 Q16 C3 C4
+stderr:   D3 ->      42 (V: 49.73%) (N:  6.98%) PV: D3 D17 Q16 R17 Q17 R16
+stderr:  R16 ->      39 (V: 53.31%) (N:  6.28%) PV: R16 D17 D3 C5 F4
+stderr:   C4 ->      37 (V: 53.35%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      34 (V: 53.20%) (N:  5.78%) PV: Q17 D17 C4 E3 D6
+stderr: 5.7 average depth, 14 max depth
+stderr: 401 non leaf nodes, 1.45 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     149 (V: 53.81%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      82 (V: 53.09%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->      80 (V: 53.09%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      70 (V: 51.56%) (N:  9.42%) PV: Q16 D17 D4 C3 C4
+stderr:   D4 ->      60 (V: 53.75%) (N:  8.09%) PV: D4 D17 Q16 C3 C4
+stderr:   D3 ->      44 (V: 53.29%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      40 (V: 53.30%) (N:  6.28%) PV: R16 D17 D3 C5 F4
+stderr:   C4 ->      38 (V: 53.33%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      35 (V: 53.19%) (N:  5.78%) PV: Q17 D17 C4 E3 D6
+stderr: 5.7 average depth, 14 max depth
+stderr: 414 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     152 (V: 53.81%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      84 (V: 53.09%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->      81 (V: 51.19%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      73 (V: 53.76%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      62 (V: 53.76%) (N:  8.09%) PV: D4 D17 Q16 C3 C4
+stderr:   D3 ->      46 (V: 53.32%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      41 (V: 53.29%) (N:  6.28%) PV: R16 D17 D3 C5 F4
+stderr:   C4 ->      39 (V: 53.33%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      36 (V: 53.18%) (N:  5.78%) PV: Q17 D17 C4 E3 D6
+stderr: 5.7 average depth, 14 max depth
+stderr: 426 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     156 (V: 52.80%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      86 (V: 53.08%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->      84 (V: 53.10%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      75 (V: 53.76%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      64 (V: 53.75%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      47 (V: 53.35%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      42 (V: 53.27%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      40 (V: 53.31%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      37 (V: 53.21%) (N:  5.78%) PV: Q17 D17 C4 E3 D6
+stderr: 5.8 average depth, 14 max depth
+stderr: 437 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     160 (V: 52.82%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      88 (V: 53.09%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->      86 (V: 53.10%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      77 (V: 53.74%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      65 (V: 53.74%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      49 (V: 53.36%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      42 (V: 53.27%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      40 (V: 53.31%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      38 (V: 53.20%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3
+stderr: 5.8 average depth, 14 max depth
+stderr: 445 non leaf nodes, 1.45 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     164 (V: 53.81%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      90 (V: 53.09%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->      88 (V: 53.10%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      77 (V: 51.72%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      66 (V: 53.74%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      50 (V: 53.36%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      43 (V: 53.28%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      41 (V: 53.32%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      39 (V: 53.21%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3
+stderr: 5.8 average depth, 14 max depth
+stderr: 456 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     168 (V: 53.82%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      92 (V: 53.10%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->      89 (V: 51.37%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      79 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      68 (V: 53.73%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      51 (V: 53.35%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      44 (V: 53.26%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      42 (V: 53.29%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      40 (V: 53.22%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3
+stderr: 5.9 average depth, 14 max depth
+stderr: 468 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     173 (V: 53.81%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      95 (V: 53.11%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->      92 (V: 51.44%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      82 (V: 53.74%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      70 (V: 53.73%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      52 (V: 53.34%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      45 (V: 53.26%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      43 (V: 53.29%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      41 (V: 53.23%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3
+stderr: 5.9 average depth, 14 max depth
+stderr: 480 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     178 (V: 53.81%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->      97 (V: 51.51%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->      95 (V: 53.12%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      85 (V: 53.76%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      71 (V: 53.71%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      53 (V: 53.33%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17
+stderr:  R16 ->      47 (V: 53.29%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      44 (V: 53.28%) (N:  5.88%) PV: C4 D17 Q16 R17 R16
+stderr:  Q17 ->      42 (V: 53.23%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3
+stderr: 5.9 average depth, 14 max depth
+stderr: 493 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     181 (V: 52.91%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->     100 (V: 53.12%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->      99 (V: 53.16%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      87 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      73 (V: 53.68%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17
+stderr:   D3 ->      55 (V: 53.35%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      48 (V: 53.29%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      45 (V: 53.26%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      44 (V: 53.25%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3
+stderr: 6.0 average depth, 14 max depth
+stderr: 506 non leaf nodes, 1.45 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     187 (V: 53.80%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15
+stderr:  D17 ->     103 (V: 53.14%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->     100 (V: 53.15%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      88 (V: 53.74%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      74 (V: 53.68%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17
+stderr:   D3 ->      56 (V: 53.33%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      49 (V: 53.26%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      46 (V: 53.26%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      44 (V: 49.85%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3
+stderr: 6.0 average depth, 14 max depth
+stderr: 519 non leaf nodes, 1.44 average children
+stderr: ~end
+Lizzie: name
+stderr: 
+stderr:  D16 ->     191 (V: 53.81%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     104 (V: 53.13%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->     102 (V: 53.16%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18
+stderr:  Q16 ->      90 (V: 53.74%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      76 (V: 53.67%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17
+stderr:   D3 ->      57 (V: 53.34%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      50 (V: 53.25%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      46 (V: 53.26%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      45 (V: 53.23%) (N:  5.78%) PV: Q17 D17 C4 E3 D6 R15
+stderr: 6.0 average depth, 14 max depth
+stderr: 528 non leaf nodes, 1.44 average children
+stderr: 
+stderr: 762 visits, 271257 nodes
+stderr: 
+STDOUT: = Leela Zero
+STDOUT: 
+Lizzie: name
+STDOUT: = Leela Zero
+STDOUT: 
+Lizzie: time_left b 0 0
+STDOUT: = 
+STDOUT: 
+stderr: ~begin
+stderr:  D16 ->     193 (V: 53.80%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     106 (V: 53.14%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->     104 (V: 51.69%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 O17 P17
+stderr:  Q16 ->      91 (V: 53.72%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      76 (V: 53.67%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17
+stderr:   D3 ->      57 (V: 53.34%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      50 (V: 53.25%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      47 (V: 53.26%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      46 (V: 53.21%) (N:  5.78%) PV: Q17 D17 C4 E3 D6 R15
+stderr: 6.0 average depth, 14 max depth
+stderr: 536 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     197 (V: 53.79%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     108 (V: 53.12%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->     107 (V: 53.19%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 O17 P17
+stderr:  Q16 ->      92 (V: 53.71%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      78 (V: 53.66%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      58 (V: 50.71%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      51 (V: 53.27%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      48 (V: 53.26%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      46 (V: 53.21%) (N:  5.78%) PV: Q17 D17 C4 E3 D6 R15
+stderr: 6.0 average depth, 15 max depth
+stderr: 546 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     200 (V: 53.00%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     109 (V: 53.11%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5
+stderr:  C16 ->     108 (V: 53.18%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 O17 P17
+stderr:  Q16 ->      95 (V: 53.73%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      79 (V: 53.66%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17
+stderr:   D3 ->      59 (V: 53.33%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      52 (V: 53.25%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      49 (V: 53.26%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      47 (V: 53.21%) (N:  5.78%) PV: Q17 D17 C4 E3 D6 R15
+stderr: 6.1 average depth, 15 max depth
+stderr: 554 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     204 (V: 53.01%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     111 (V: 53.11%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C6 C5
+stderr:  C16 ->     110 (V: 53.17%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18
+stderr:  Q16 ->      97 (V: 53.72%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      80 (V: 53.64%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17
+stderr:   D3 ->      61 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      53 (V: 53.25%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      50 (V: 53.26%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      48 (V: 53.20%) (N:  5.78%) PV: Q17 D17 C4 E3 D6 R15
+stderr: 6.1 average depth, 15 max depth
+stderr: 565 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     211 (V: 53.06%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     114 (V: 53.12%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C6 C5
+stderr:  C16 ->     113 (V: 53.17%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18
+stderr:  Q16 ->     100 (V: 53.74%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      82 (V: 53.64%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17
+stderr:   D3 ->      62 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      54 (V: 53.25%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      51 (V: 53.26%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      49 (V: 53.19%) (N:  5.78%) PV: Q17 D17 C4 E3 D6 R15
+stderr: 6.1 average depth, 15 max depth
+stderr: 581 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     216 (V: 53.80%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     116 (V: 53.10%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C6 C5
+stderr:  C16 ->     115 (V: 53.17%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18
+stderr:  Q16 ->     104 (V: 53.78%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      84 (V: 53.64%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17
+stderr:   D3 ->      63 (V: 53.30%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      55 (V: 53.26%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      52 (V: 53.26%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      49 (V: 50.12%) (N:  5.78%) PV: Q17 D17 C4 E3 D6 R15
+stderr: 6.2 average depth, 15 max depth
+stderr: 593 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     221 (V: 53.80%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  C16 ->     118 (V: 53.17%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18
+stderr:  D17 ->     118 (V: 53.11%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C6 C5
+stderr:  Q16 ->     106 (V: 53.77%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      87 (V: 53.67%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17
+stderr:   D3 ->      64 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      56 (V: 53.23%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      53 (V: 53.28%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      50 (V: 50.17%) (N:  5.78%) PV: Q17 D17 C4 E3 D6 R15
+stderr: 6.2 average depth, 15 max depth
+stderr: 607 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     225 (V: 53.79%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     121 (V: 51.85%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C6 C5
+stderr:  C16 ->     119 (V: 53.16%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18
+stderr:  Q16 ->     107 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      89 (V: 53.68%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17
+stderr:   D3 ->      65 (V: 53.30%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      57 (V: 53.23%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5
+stderr:   C4 ->      54 (V: 53.26%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      51 (V: 53.18%) (N:  5.78%) PV: Q17 D17 C4 E3 D6 R15
+stderr: 6.2 average depth, 16 max depth
+stderr: 618 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     228 (V: 53.08%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     124 (V: 53.13%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C6 C5
+stderr:  C16 ->     121 (V: 53.15%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18
+stderr:  Q16 ->     111 (V: 53.77%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      91 (V: 53.68%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17 O17
+stderr:   D3 ->      67 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      59 (V: 53.23%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5 P3
+stderr:   C4 ->      55 (V: 53.23%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      52 (V: 53.18%) (N:  5.78%) PV: Q17 D17 C4 E3 D6 R15
+stderr: 6.3 average depth, 16 max depth
+stderr: 632 non leaf nodes, 1.44 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     234 (V: 53.79%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     125 (V: 51.88%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C6 C5
+stderr:  C16 ->     123 (V: 53.16%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18
+stderr:  Q16 ->     112 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      92 (V: 53.67%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17 O17
+stderr:   D3 ->      68 (V: 53.32%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      59 (V: 53.23%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5 P3
+stderr:   C4 ->      55 (V: 53.23%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      53 (V: 53.17%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.3 average depth, 16 max depth
+stderr: 644 non leaf nodes, 1.43 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     238 (V: 53.78%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     128 (V: 53.13%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C6 C5
+stderr:  C16 ->     125 (V: 53.15%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18
+stderr:  Q16 ->     114 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      94 (V: 53.67%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17 O17
+stderr:   D3 ->      69 (V: 51.10%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      60 (V: 53.22%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5 P3
+stderr:   C4 ->      56 (V: 53.23%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      54 (V: 53.16%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.3 average depth, 17 max depth
+stderr: 659 non leaf nodes, 1.42 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     241 (V: 53.77%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     130 (V: 53.13%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6
+stderr:  C16 ->     127 (V: 53.13%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     117 (V: 53.76%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      95 (V: 53.66%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17 O17
+stderr:   D3 ->      71 (V: 53.33%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17
+stderr:  R16 ->      61 (V: 53.23%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5 P3
+stderr:   C4 ->      57 (V: 50.58%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      55 (V: 53.16%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.3 average depth, 17 max depth
+stderr: 674 non leaf nodes, 1.42 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     246 (V: 53.77%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     132 (V: 53.13%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6
+stderr:  C16 ->     128 (V: 51.92%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     119 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->      97 (V: 53.66%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17 O17
+stderr:   D3 ->      72 (V: 53.32%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      62 (V: 53.23%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5 P3
+stderr:   C4 ->      58 (V: 53.23%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      56 (V: 53.16%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.4 average depth, 17 max depth
+stderr: 688 non leaf nodes, 1.41 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     250 (V: 53.77%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 C3 Q5
+stderr:  D17 ->     134 (V: 53.12%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6
+stderr:  C16 ->     131 (V: 53.13%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     121 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     100 (V: 53.68%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17 O17
+stderr:   D3 ->      73 (V: 53.32%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      63 (V: 53.22%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5 P3
+stderr:   C4 ->      59 (V: 53.22%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      56 (V: 50.45%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.4 average depth, 17 max depth
+stderr: 699 non leaf nodes, 1.41 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     254 (V: 53.15%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     136 (V: 53.12%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6
+stderr:  C16 ->     132 (V: 53.11%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     123 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     103 (V: 53.69%) (N:  8.09%) PV: D4 C16 Q16 R17 R16 Q17 O17
+stderr:   D3 ->      74 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      64 (V: 53.19%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5 P3
+stderr:   C4 ->      60 (V: 53.22%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      58 (V: 53.18%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.4 average depth, 17 max depth
+stderr: 712 non leaf nodes, 1.41 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     260 (V: 53.17%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     138 (V: 53.12%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6
+stderr:  C16 ->     133 (V: 53.11%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     126 (V: 53.76%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     104 (V: 53.68%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      75 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      65 (V: 53.20%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5 P3
+stderr:   C4 ->      61 (V: 53.22%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      59 (V: 53.20%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.4 average depth, 17 max depth
+stderr: 725 non leaf nodes, 1.41 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     266 (V: 53.79%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     140 (V: 53.11%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6
+stderr:  C16 ->     135 (V: 53.11%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     128 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     106 (V: 53.69%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      76 (V: 53.30%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      65 (V: 50.85%) (N:  6.28%) PV: R16 D17 D3 P17 Q14 C5 P3
+stderr:   C4 ->      62 (V: 53.23%) (N:  5.88%) PV: C4 D17 Q16 R17 R16 Q17
+stderr:  Q17 ->      60 (V: 53.20%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.5 average depth, 17 max depth
+stderr: 738 non leaf nodes, 1.41 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     271 (V: 53.79%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     141 (V: 53.09%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:  C16 ->     137 (V: 53.12%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     129 (V: 53.75%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     107 (V: 53.68%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      77 (V: 53.30%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      66 (V: 50.89%) (N:  6.28%) PV: R16 D17 D3 C5 F4 P17
+stderr:   C4 ->      63 (V: 53.23%) (N:  5.88%) PV: C4 C16 Q16 E3 D6 R17
+stderr:  Q17 ->      61 (V: 53.19%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.5 average depth, 18 max depth
+stderr: 748 non leaf nodes, 1.41 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     276 (V: 53.79%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     142 (V: 53.09%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:  C16 ->     139 (V: 53.10%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     131 (V: 53.74%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     109 (V: 53.69%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      78 (V: 51.33%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      68 (V: 53.19%) (N:  6.28%) PV: R16 D17 D3 C5 F4 P17
+stderr:   C4 ->      64 (V: 53.22%) (N:  5.88%) PV: C4 C16 Q16 E3 D6 R17
+stderr:  Q17 ->      62 (V: 53.20%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.5 average depth, 18 max depth
+stderr: 759 non leaf nodes, 1.41 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     281 (V: 53.80%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     144 (V: 53.09%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:  C16 ->     140 (V: 51.99%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     133 (V: 53.73%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     110 (V: 53.69%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      81 (V: 53.34%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      68 (V: 53.19%) (N:  6.28%) PV: R16 D17 D3 C5 F4 P17
+stderr:   C4 ->      64 (V: 53.22%) (N:  5.88%) PV: C4 C16 Q16 E3 D6 R17
+stderr:  Q17 ->      62 (V: 53.20%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.5 average depth, 18 max depth
+stderr: 771 non leaf nodes, 1.40 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     285 (V: 53.80%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     146 (V: 53.09%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:  C16 ->     142 (V: 52.01%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     134 (V: 53.73%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     112 (V: 53.69%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      82 (V: 53.33%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      69 (V: 53.19%) (N:  6.28%) PV: R16 D17 D3 C5 F4 P17
+stderr:   C4 ->      65 (V: 53.22%) (N:  5.88%) PV: C4 C16 Q16 E3 D6 R17
+stderr:  Q17 ->      64 (V: 53.22%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 D6
+stderr: 6.5 average depth, 18 max depth
+stderr: 781 non leaf nodes, 1.41 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     298 (V: 53.29%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     150 (V: 53.08%) (N: 13.79%) PV: D17 Q17 D3 C15 F16 C5 F4 O3
+stderr:  C16 ->     146 (V: 53.13%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->     137 (V: 53.72%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     116 (V: 53.68%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      83 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      71 (V: 53.18%) (N:  6.28%) PV: R16 D17 D3 C5 F4 P17
+stderr:   C4 ->      67 (V: 53.18%) (N:  5.88%) PV: C4 C16 Q16 E3 D6 R17
+stderr:  Q17 ->      66 (V: 53.22%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 C15
+stderr: 6.6 average depth, 18 max depth
+stderr: 805 non leaf nodes, 1.41 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     302 (V: 53.82%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     152 (V: 53.10%) (N: 13.79%) PV: D17 Q17 D3 C15 F16 C5 F4 O3
+stderr:  C16 ->     150 (V: 52.10%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->     139 (V: 53.72%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     117 (V: 53.68%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      84 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      72 (V: 53.19%) (N:  6.28%) PV: R16 D17 D3 C5 F4 P17
+stderr:  Q17 ->      67 (V: 53.21%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 C15
+stderr:   C4 ->      67 (V: 53.18%) (N:  5.88%) PV: C4 C16 Q16 E3 D6 R17
+stderr: 6.6 average depth, 18 max depth
+stderr: 816 non leaf nodes, 1.41 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D16 ->     307 (V: 53.31%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     155 (V: 53.10%) (N: 13.79%) PV: D17 Q17 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:  C16 ->     152 (V: 53.15%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->     140 (V: 53.71%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16
+stderr:   D4 ->     118 (V: 53.68%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      85 (V: 53.31%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      73 (V: 53.20%) (N:  6.28%) PV: R16 D17 D3 C5 F4 P17
+stderr:  Q17 ->      67 (V: 53.21%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 C15
+stderr:   C4 ->      67 (V: 53.18%) (N:  5.88%) PV: C4 C16 Q16 E3 D6 R17
+stderr: 6.6 average depth, 18 max depth
+stderr: 828 non leaf nodes, 1.41 average children
+stderr: ~end
+Lizzie: play W D16
+Lizzie: name
+stderr: ~begin
+stderr:  D16 ->     313 (V: 53.83%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     156 (V: 53.10%) (N: 13.79%) PV: D17 Q17 D3 C15 F16 C5 F4 O3
+stderr:  C16 ->     155 (V: 53.14%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->     143 (V: 53.72%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16 R14
+stderr:   D4 ->     119 (V: 52.35%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      86 (V: 53.30%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      74 (V: 53.18%) (N:  6.28%) PV: R16 D17 D3 C5 F4 P17
+stderr:  Q17 ->      68 (V: 53.22%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 C15
+stderr:   C4 ->      68 (V: 53.18%) (N:  5.88%) PV: C4 C16 Q16 E3 D6 R17
+stderr: 6.7 average depth, 18 max depth
+stderr: 844 non leaf nodes, 1.40 average children
+stderr: ~end
+stderr: 
+stderr:  D16 ->     313 (V: 53.83%) (N: 19.28%) PV: D16 C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  D17 ->     157 (V: 53.10%) (N: 13.79%) PV: D17 Q17 D3 C15 F16 C5 F4 O3
+stderr:  C16 ->     155 (V: 53.14%) (N: 13.40%) PV: C16 C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->     143 (V: 53.72%) (N:  9.42%) PV: Q16 D17 D4 R17 Q17 R16 R14
+stderr:   D4 ->     121 (V: 53.70%) (N:  8.09%) PV: D4 D17 Q16 R17 Q17 R16
+stderr:   D3 ->      86 (V: 53.30%) (N:  6.98%) PV: D3 C16 Q16 R17 R16 Q17 P17 P18
+stderr:  R16 ->      74 (V: 53.18%) (N:  6.28%) PV: R16 D17 D3 C5 F4 P17
+stderr:   C4 ->      69 (V: 53.18%) (N:  5.88%) PV: C4 D17 Q16 R17 Q17 R16
+stderr:  Q17 ->      68 (V: 53.22%) (N:  5.78%) PV: Q17 D17 C4 R15 O16 E3 C15
+stderr: 6.7 average depth, 18 max depth
+stderr: 845 non leaf nodes, 1.40 average children
+stderr: 
+stderr: 1187 visits, 421748 nodes
+stderr: 
+STDOUT: = 
+STDOUT: 
+STDOUT: = Leela Zero
+STDOUT: 
+Lizzie: time_left b 0 0
+STDOUT: = 
+STDOUT: 
+stderr: ~begin
+stderr:  C17 ->     171 (V: 45.05%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  Q17 ->      33 (V: 46.49%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:   C4 ->      32 (V: 46.29%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  R16 ->      26 (V: 46.44%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5
+stderr:   D3 ->      26 (V: 46.42%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18
+stderr:  Q16 ->      19 (V: 46.98%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5
+stderr:   D4 ->      16 (V: 47.04%) (N:  3.54%) PV: D4 Q16 C17 C16 D17
+stderr: 7.8 average depth, 17 max depth
+stderr: 234 non leaf nodes, 1.38 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     177 (V: 45.06%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  Q17 ->      35 (V: 46.46%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   C4 ->      33 (V: 46.28%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:   D3 ->      27 (V: 46.44%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  R16 ->      27 (V: 46.41%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6
+stderr:  Q16 ->      20 (V: 47.01%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5
+stderr:   D4 ->      17 (V: 46.92%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3
+stderr: 7.9 average depth, 17 max depth
+stderr: 247 non leaf nodes, 1.36 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     183 (V: 45.08%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  Q17 ->      36 (V: 46.46%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   C4 ->      34 (V: 46.25%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  R16 ->      29 (V: 46.46%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D3 ->      28 (V: 46.42%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->      21 (V: 47.03%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5
+stderr:   D4 ->      17 (V: 46.92%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3
+stderr: 8.0 average depth, 17 max depth
+stderr: 257 non leaf nodes, 1.35 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     189 (V: 45.10%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16
+stderr:  Q17 ->      37 (V: 46.45%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   C4 ->      36 (V: 46.27%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  R16 ->      29 (V: 46.46%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D3 ->      29 (V: 46.44%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->      23 (V: 47.08%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5
+stderr:   D4 ->      17 (V: 46.92%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3
+stderr: 8.0 average depth, 17 max depth
+stderr: 266 non leaf nodes, 1.35 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     195 (V: 45.11%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      38 (V: 46.43%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   C4 ->      37 (V: 46.24%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:   D3 ->      30 (V: 46.45%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  R16 ->      30 (V: 46.40%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5
+stderr:  Q16 ->      24 (V: 47.07%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      18 (V: 46.88%) (N:  3.54%) PV: D4 Q16 C17 C16 D17 E17
+stderr: 8.1 average depth, 17 max depth
+stderr: 275 non leaf nodes, 1.35 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     201 (V: 45.13%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      39 (V: 46.38%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   C4 ->      38 (V: 46.23%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  R16 ->      32 (V: 46.50%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5
+stderr:   D3 ->      31 (V: 46.41%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->      25 (V: 47.05%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      18 (V: 46.88%) (N:  3.54%) PV: D4 Q16 C17 C16 D17 E17
+stderr: 8.1 average depth, 17 max depth
+stderr: 283 non leaf nodes, 1.36 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     207 (V: 45.16%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      40 (V: 46.35%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   C4 ->      39 (V: 46.21%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  R16 ->      33 (V: 46.50%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5
+stderr:   D3 ->      33 (V: 46.40%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->      25 (V: 47.05%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      19 (V: 46.89%) (N:  3.54%) PV: D4 Q16 C17 C16 D17 E17
+stderr: 8.0 average depth, 17 max depth
+stderr: 293 non leaf nodes, 1.35 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     214 (V: 45.19%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      41 (V: 46.36%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   C4 ->      40 (V: 46.24%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  R16 ->      35 (V: 46.52%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:   D3 ->      33 (V: 46.40%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17
+stderr:  Q16 ->      26 (V: 47.05%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      20 (V: 46.86%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3
+stderr: 8.0 average depth, 17 max depth
+stderr: 303 non leaf nodes, 1.35 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     220 (V: 45.23%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      42 (V: 46.37%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   C4 ->      42 (V: 46.28%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  R16 ->      36 (V: 46.50%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   D3 ->      34 (V: 46.40%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->      28 (V: 47.05%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      20 (V: 46.86%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3
+stderr: 8.1 average depth, 17 max depth
+stderr: 313 non leaf nodes, 1.35 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     226 (V: 45.23%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      44 (V: 46.34%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   C4 ->      43 (V: 46.29%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  R16 ->      37 (V: 46.47%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   D3 ->      35 (V: 46.36%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->      28 (V: 47.05%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      21 (V: 46.90%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3
+stderr: 8.2 average depth, 18 max depth
+stderr: 323 non leaf nodes, 1.34 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     233 (V: 45.25%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      45 (V: 46.40%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   C4 ->      45 (V: 46.30%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  R16 ->      37 (V: 46.47%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   D3 ->      36 (V: 46.34%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->      29 (V: 47.08%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      22 (V: 46.92%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3
+stderr: 8.2 average depth, 18 max depth
+stderr: 334 non leaf nodes, 1.34 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     239 (V: 45.27%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      47 (V: 46.46%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7
+stderr:   C4 ->      45 (V: 46.30%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  R16 ->      38 (V: 46.49%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6
+stderr:   D3 ->      37 (V: 46.30%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->      30 (V: 47.07%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      23 (V: 46.95%) (N:  3.54%) PV: D4 Q16 C17 C16 D17 E17 E18
+stderr: 8.3 average depth, 18 max depth
+stderr: 341 non leaf nodes, 1.35 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     246 (V: 45.27%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      49 (V: 46.49%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7
+stderr:   C4 ->      47 (V: 46.29%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  R16 ->      39 (V: 46.48%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   D3 ->      37 (V: 46.30%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->      31 (V: 47.06%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      24 (V: 46.97%) (N:  3.54%) PV: D4 Q16 C17 C16 D17 E17 E18
+stderr: 8.3 average depth, 18 max depth
+stderr: 352 non leaf nodes, 1.34 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     252 (V: 45.30%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      51 (V: 46.49%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7
+stderr:   C4 ->      48 (V: 46.29%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  R16 ->      40 (V: 46.47%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   D3 ->      38 (V: 46.29%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->      32 (V: 47.06%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      25 (V: 46.93%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3
+stderr: 8.3 average depth, 18 max depth
+stderr: 363 non leaf nodes, 1.34 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     258 (V: 45.32%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      52 (V: 46.46%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7
+stderr:   C4 ->      50 (V: 46.34%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18
+stderr:  R16 ->      42 (V: 46.47%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   D3 ->      39 (V: 46.32%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16
+stderr:  Q16 ->      33 (V: 47.04%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      25 (V: 46.93%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3
+stderr: 8.4 average depth, 18 max depth
+stderr: 372 non leaf nodes, 1.34 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     264 (V: 45.34%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      53 (V: 46.45%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7
+stderr:   C4 ->      51 (V: 46.32%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18
+stderr:  R16 ->      42 (V: 46.47%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   D3 ->      41 (V: 46.38%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18
+stderr:  Q16 ->      34 (V: 47.00%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6
+stderr:   D4 ->      26 (V: 46.92%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3
+stderr: 8.4 average depth, 18 max depth
+stderr: 382 non leaf nodes, 1.34 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     272 (V: 45.35%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      55 (V: 46.40%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4
+stderr:   C4 ->      54 (V: 46.33%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18
+stderr:  R16 ->      44 (V: 46.43%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17
+stderr:   D3 ->      43 (V: 46.30%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18
+stderr:  Q16 ->      36 (V: 47.08%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:   D4 ->      27 (V: 46.94%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3
+stderr: 8.5 average depth, 19 max depth
+stderr: 400 non leaf nodes, 1.33 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     278 (V: 45.36%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      56 (V: 46.40%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4
+stderr:   C4 ->      55 (V: 46.33%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18
+stderr:  R16 ->      45 (V: 46.44%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17
+stderr:   D3 ->      43 (V: 46.30%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18
+stderr:  Q16 ->      38 (V: 47.13%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:   D4 ->      28 (V: 46.94%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4
+stderr: 8.5 average depth, 19 max depth
+stderr: 408 non leaf nodes, 1.33 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     285 (V: 45.38%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      57 (V: 46.42%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4
+stderr:   C4 ->      56 (V: 46.33%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18
+stderr:  R16 ->      46 (V: 46.44%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17
+stderr:   D3 ->      44 (V: 46.33%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18
+stderr:  Q16 ->      39 (V: 47.12%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:   D4 ->      29 (V: 46.93%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4
+stderr: 8.5 average depth, 19 max depth
+stderr: 418 non leaf nodes, 1.33 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     291 (V: 45.37%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      58 (V: 46.41%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4
+stderr:   C4 ->      57 (V: 46.34%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18
+stderr:  R16 ->      47 (V: 46.47%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7
+stderr:   D3 ->      46 (V: 46.34%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18
+stderr:  Q16 ->      40 (V: 47.08%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:   D4 ->      29 (V: 46.93%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4
+stderr: 8.6 average depth, 19 max depth
+stderr: 429 non leaf nodes, 1.32 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     299 (V: 45.38%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      59 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4
+stderr:   C4 ->      58 (V: 46.33%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18
+stderr:  R16 ->      49 (V: 46.47%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7
+stderr:   D3 ->      47 (V: 46.34%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18
+stderr:  Q16 ->      40 (V: 47.08%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:   D4 ->      30 (V: 46.94%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4
+stderr: 8.6 average depth, 19 max depth
+stderr: 440 non leaf nodes, 1.32 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     305 (V: 45.39%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      61 (V: 46.44%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   C4 ->      59 (V: 46.30%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18
+stderr:  R16 ->      50 (V: 46.43%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17
+stderr:   D3 ->      48 (V: 46.34%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18
+stderr:  Q16 ->      41 (V: 47.09%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:   D4 ->      31 (V: 46.93%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4
+stderr: 8.6 average depth, 19 max depth
+stderr: 452 non leaf nodes, 1.32 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     311 (V: 45.41%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      63 (V: 46.42%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   C4 ->      61 (V: 46.33%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19
+stderr:  R16 ->      50 (V: 46.43%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17
+stderr:   D3 ->      49 (V: 46.36%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18
+stderr:  Q16 ->      42 (V: 47.06%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6
+stderr:   D4 ->      32 (V: 46.93%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4
+stderr: 8.7 average depth, 19 max depth
+stderr: 464 non leaf nodes, 1.31 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     317 (V: 45.43%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      64 (V: 46.40%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   C4 ->      63 (V: 46.37%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19
+stderr:  R16 ->      52 (V: 46.44%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17
+stderr:   D3 ->      50 (V: 46.34%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18
+stderr:  Q16 ->      43 (V: 47.06%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   D4 ->      32 (V: 46.93%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4
+stderr: 8.7 average depth, 19 max depth
+stderr: 475 non leaf nodes, 1.31 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     322 (V: 45.44%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      65 (V: 46.40%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   C4 ->      65 (V: 46.34%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19
+stderr:  R16 ->      53 (V: 46.42%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17
+stderr:   D3 ->      51 (V: 46.31%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18
+stderr:  Q16 ->      45 (V: 47.10%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   D4 ->      33 (V: 46.93%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4
+stderr: 8.8 average depth, 19 max depth
+stderr: 485 non leaf nodes, 1.31 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     329 (V: 45.44%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      66 (V: 46.40%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   C4 ->      66 (V: 46.36%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19
+stderr:  R16 ->      54 (V: 46.42%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4
+stderr:   D3 ->      52 (V: 46.35%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19
+stderr:  Q16 ->      46 (V: 47.10%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   D4 ->      34 (V: 46.90%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2
+stderr: 8.8 average depth, 19 max depth
+stderr: 495 non leaf nodes, 1.31 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     336 (V: 45.43%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      68 (V: 46.41%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3
+stderr:   C4 ->      67 (V: 46.33%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19
+stderr:  R16 ->      55 (V: 46.38%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:   D3 ->      54 (V: 46.37%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19
+stderr:  Q16 ->      47 (V: 47.08%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5
+stderr:   D4 ->      34 (V: 46.90%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2
+stderr: 8.8 average depth, 19 max depth
+stderr: 505 non leaf nodes, 1.31 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     343 (V: 45.45%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18
+stderr:  Q17 ->      70 (V: 46.41%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3
+stderr:   C4 ->      68 (V: 46.34%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19
+stderr:   D3 ->      55 (V: 46.39%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19
+stderr:  R16 ->      55 (V: 46.38%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      48 (V: 47.11%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7
+stderr:   D4 ->      35 (V: 46.89%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2
+stderr: 8.8 average depth, 19 max depth
+stderr: 516 non leaf nodes, 1.31 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     350 (V: 45.45%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:  Q17 ->      70 (V: 46.41%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3
+stderr:   C4 ->      69 (V: 46.34%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19
+stderr:   D3 ->      56 (V: 46.39%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:  R16 ->      56 (V: 46.37%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      50 (V: 47.11%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13
+stderr:   D4 ->      36 (V: 46.90%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2
+stderr: 8.9 average depth, 19 max depth
+stderr: 526 non leaf nodes, 1.31 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     358 (V: 45.47%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:  Q17 ->      71 (V: 46.38%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3
+stderr:   C4 ->      71 (V: 46.37%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:   D3 ->      58 (V: 46.43%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:  R16 ->      57 (V: 46.33%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      51 (V: 47.10%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13
+stderr:   D4 ->      36 (V: 46.90%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2
+stderr: 8.9 average depth, 20 max depth
+stderr: 539 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     364 (V: 45.48%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:   C4 ->      74 (V: 46.38%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:  Q17 ->      72 (V: 46.36%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3
+stderr:   D3 ->      60 (V: 46.36%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:  R16 ->      57 (V: 46.33%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      52 (V: 47.10%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13
+stderr:   D4 ->      38 (V: 46.87%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2
+stderr: 8.9 average depth, 20 max depth
+stderr: 550 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     371 (V: 45.50%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:   C4 ->      75 (V: 46.37%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:  Q17 ->      74 (V: 46.37%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3
+stderr:   D3 ->      60 (V: 46.36%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:  R16 ->      59 (V: 46.32%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:  Q16 ->      53 (V: 47.06%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7
+stderr:   D4 ->      38 (V: 46.87%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2
+stderr: 9.0 average depth, 20 max depth
+stderr: 560 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     377 (V: 45.50%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:   C4 ->      77 (V: 46.39%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4
+stderr:  Q17 ->      76 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3
+stderr:   D3 ->      61 (V: 46.36%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:  R16 ->      59 (V: 46.32%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:  Q16 ->      54 (V: 47.05%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13
+stderr:   D4 ->      39 (V: 46.84%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3
+stderr: 9.0 average depth, 20 max depth
+stderr: 570 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     384 (V: 45.52%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:   C4 ->      79 (V: 46.37%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4
+stderr:  Q17 ->      77 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14
+stderr:   D3 ->      61 (V: 46.36%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:  R16 ->      61 (V: 46.35%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:  Q16 ->      55 (V: 47.04%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13
+stderr:   D4 ->      39 (V: 46.84%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3
+stderr: 9.0 average depth, 20 max depth
+stderr: 582 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     392 (V: 45.51%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:  Q17 ->      79 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14
+stderr:   C4 ->      79 (V: 46.37%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4
+stderr:   D3 ->      62 (V: 46.35%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:  R16 ->      62 (V: 46.33%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      55 (V: 47.04%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13
+stderr:   D4 ->      41 (V: 46.89%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3
+stderr: 9.1 average depth, 20 max depth
+stderr: 591 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     400 (V: 45.51%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:  Q17 ->      81 (V: 46.42%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14
+stderr:   C4 ->      80 (V: 46.37%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4
+stderr:   D3 ->      63 (V: 46.35%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18
+stderr:  R16 ->      63 (V: 46.30%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      56 (V: 47.04%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4
+stderr:   D4 ->      42 (V: 46.90%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3
+stderr: 9.1 average depth, 20 max depth
+stderr: 603 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     406 (V: 45.52%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:  Q17 ->      83 (V: 46.41%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14
+stderr:   C4 ->      82 (V: 46.34%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4
+stderr:   D3 ->      65 (V: 46.36%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6
+stderr:  R16 ->      63 (V: 46.30%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      57 (V: 47.03%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4
+stderr:   D4 ->      43 (V: 46.91%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3
+stderr: 9.1 average depth, 20 max depth
+stderr: 614 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     413 (V: 45.52%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:  Q17 ->      85 (V: 46.40%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14
+stderr:   C4 ->      83 (V: 46.32%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4
+stderr:   D3 ->      67 (V: 46.34%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6
+stderr:  R16 ->      65 (V: 46.28%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      60 (V: 46.98%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4
+stderr:   D4 ->      44 (V: 46.88%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3
+stderr: 9.2 average depth, 20 max depth
+stderr: 626 non leaf nodes, 1.31 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     420 (V: 45.54%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4
+stderr:  Q17 ->      86 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4
+stderr:   C4 ->      84 (V: 46.31%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3
+stderr:   D3 ->      68 (V: 46.34%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3
+stderr:  R16 ->      67 (V: 46.28%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3
+stderr:  Q16 ->      60 (V: 46.98%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4
+stderr:   D4 ->      45 (V: 46.86%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2
+stderr: 9.2 average depth, 20 max depth
+stderr: 635 non leaf nodes, 1.31 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     426 (V: 45.54%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->      87 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4
+stderr:   C4 ->      86 (V: 46.32%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3
+stderr:   D3 ->      70 (V: 46.37%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3
+stderr:  R16 ->      67 (V: 46.28%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3
+stderr:  Q16 ->      62 (V: 46.99%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13 B16
+stderr:   D4 ->      45 (V: 46.86%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2
+stderr: 9.3 average depth, 20 max depth
+stderr: 647 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     432 (V: 45.53%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->      88 (V: 46.40%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4
+stderr:   C4 ->      88 (V: 46.34%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3
+stderr:   D3 ->      71 (V: 46.37%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3
+stderr:  R16 ->      68 (V: 46.25%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      62 (V: 46.99%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13 B16
+stderr:   D4 ->      46 (V: 46.87%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2
+stderr: 9.3 average depth, 20 max depth
+stderr: 656 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     438 (V: 45.53%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->      91 (V: 46.40%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4
+stderr:   C4 ->      89 (V: 46.33%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3
+stderr:   D3 ->      71 (V: 46.37%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3
+stderr:  R16 ->      68 (V: 46.25%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      63 (V: 47.00%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      48 (V: 46.93%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2
+stderr: 9.3 average depth, 20 max depth
+stderr: 667 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     445 (V: 45.84%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->      91 (V: 46.40%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4
+stderr:   C4 ->      89 (V: 44.82%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3
+stderr:   D3 ->      73 (V: 46.39%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6
+stderr:  R16 ->      69 (V: 46.30%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      64 (V: 46.99%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      50 (V: 46.94%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2
+stderr: 9.4 average depth, 20 max depth
+stderr: 677 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     450 (V: 45.53%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->      93 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3
+stderr:   C4 ->      91 (V: 46.33%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3
+stderr:   D3 ->      74 (V: 46.37%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6
+stderr:  R16 ->      71 (V: 46.29%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      66 (V: 46.99%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      50 (V: 46.94%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2
+stderr: 9.4 average depth, 21 max depth
+stderr: 689 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     458 (V: 45.53%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->      94 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3
+stderr:   C4 ->      93 (V: 46.33%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3
+stderr:   D3 ->      76 (V: 46.37%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6
+stderr:  R16 ->      72 (V: 46.30%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      66 (V: 46.99%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      51 (V: 46.93%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2
+stderr: 9.4 average depth, 21 max depth
+stderr: 701 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     463 (V: 45.84%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->      95 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3
+stderr:   C4 ->      94 (V: 46.34%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6
+stderr:   D3 ->      76 (V: 46.37%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6
+stderr:  R16 ->      73 (V: 44.48%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 O16
+stderr:  Q16 ->      67 (V: 46.99%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      52 (V: 46.91%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2
+stderr: 9.5 average depth, 21 max depth
+stderr: 709 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     470 (V: 45.84%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->      96 (V: 44.98%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3
+stderr:   C4 ->      95 (V: 46.32%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6
+stderr:   D3 ->      78 (V: 46.38%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6
+stderr:  R16 ->      75 (V: 46.28%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      68 (V: 46.98%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      52 (V: 46.91%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2
+stderr: 9.5 average depth, 21 max depth
+stderr: 719 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     475 (V: 45.55%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->      98 (V: 46.37%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3
+stderr:   C4 ->      97 (V: 46.31%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6
+stderr:   D3 ->      79 (V: 46.37%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6
+stderr:  R16 ->      75 (V: 46.28%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      69 (V: 46.97%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      54 (V: 46.91%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2 D2
+stderr: 9.5 average depth, 21 max depth
+stderr: 729 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     481 (V: 45.56%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->      99 (V: 46.38%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3
+stderr:   C4 ->      98 (V: 46.30%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6
+stderr:   D3 ->      80 (V: 46.36%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6 M3
+stderr:  R16 ->      76 (V: 46.28%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      71 (V: 46.99%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13 B16 A14
+stderr:   D4 ->      54 (V: 46.91%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2 D2
+stderr: 9.6 average depth, 21 max depth
+stderr: 738 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     487 (V: 45.56%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->     101 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3
+stderr:   C4 ->      99 (V: 46.29%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6
+stderr:   D3 ->      81 (V: 46.36%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6 M3
+stderr:  R16 ->      77 (V: 46.27%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 O16 P4
+stderr:  Q16 ->      72 (V: 46.98%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13 B16 A14
+stderr:   D4 ->      55 (V: 46.91%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2 D2
+stderr: 9.6 average depth, 21 max depth
+stderr: 748 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     493 (V: 45.56%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->     103 (V: 46.39%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3 O3
+stderr:   C4 ->      99 (V: 46.29%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6
+stderr:   D3 ->      81 (V: 46.36%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6 M3
+stderr:  R16 ->      78 (V: 46.27%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 O16 P4
+stderr:  Q16 ->      73 (V: 46.96%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      56 (V: 46.87%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2 D2 G2
+stderr: 9.6 average depth, 21 max depth
+stderr: 758 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     499 (V: 45.57%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->     104 (V: 46.38%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3 O3
+stderr:   C4 ->     101 (V: 46.32%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6
+stderr:   D3 ->      83 (V: 46.37%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6 M3
+stderr:  R16 ->      79 (V: 46.27%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 O16 P4
+stderr:  Q16 ->      73 (V: 46.96%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      56 (V: 46.87%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2 D2 G2
+stderr: 9.6 average depth, 21 max depth
+stderr: 766 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     505 (V: 45.56%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->     105 (V: 46.38%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3 O3
+stderr:   C4 ->     103 (V: 46.31%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6 M3
+stderr:   D3 ->      84 (V: 46.37%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6 M3
+stderr:  R16 ->      80 (V: 46.25%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 O16 P4
+stderr:  Q16 ->      74 (V: 46.95%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      56 (V: 46.87%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2 D2 G2
+stderr: 9.7 average depth, 21 max depth
+stderr: 774 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     511 (V: 45.83%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->     106 (V: 46.37%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3 O3
+stderr:   C4 ->     105 (V: 46.32%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6 M3
+stderr:   D3 ->      85 (V: 46.35%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6 M3
+stderr:  R16 ->      80 (V: 44.58%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 O16 P4
+stderr:  Q16 ->      75 (V: 46.94%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6
+stderr:   D4 ->      57 (V: 46.86%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2 D2 G2
+stderr: 9.7 average depth, 21 max depth
+stderr: 783 non leaf nodes, 1.30 average children
+stderr: ~end
+stderr: ~begin
+stderr:  C17 ->     519 (V: 45.82%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->     108 (V: 46.38%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3 O3
+stderr:   C4 ->     107 (V: 46.32%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6 M3
+stderr:   D3 ->      86 (V: 46.32%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6 M3
+stderr:  R16 ->      81 (V: 46.24%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      76 (V: 46.93%) (N:  4.41%) PV: Q16 D4 C17 D17 C16 C15 B15 B14 C14 D15 B13 B16 A14 B17
+stderr:   D4 ->      58 (V: 44.56%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2 D2 G2
+stderr: 9.7 average depth, 21 max depth
+stderr: 797 non leaf nodes, 1.30 average children
+stderr: ~end
+Lizzie: play B C17
+Lizzie: name
+stderr: 
+stderr:  C17 ->     523 (V: 45.83%) (N: 52.36%) PV: C17 D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  Q17 ->     109 (V: 46.37%) (N:  8.58%) PV: Q17 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3 Q14 P4 P3 O3
+stderr:   C4 ->     108 (V: 46.31%) (N:  8.71%) PV: C4 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 F4 P3 Q6 M3
+stderr:   D3 ->      86 (V: 46.32%) (N:  6.93%) PV: D3 Q16 R17 R16 Q17 P17 P18 O18 O17 P16 N18 Q18 O19 R18 D6 P3 Q6 M3
+stderr:  R16 ->      82 (V: 46.23%) (N:  6.91%) PV: R16 D4 C3 D3 C4 C6 C5 D5 B6 P17 C17 Q15
+stderr:  Q16 ->      78 (V: 46.94%) (N:  4.41%) PV: Q16 D4 C3 D3 C4 C5 B5 B6 C6 D5 B7 B4 A6 B3
+stderr:   D4 ->      59 (V: 46.86%) (N:  3.54%) PV: D4 Q16 O4 C3 C4 D3 F3 E3 E4 F2 B3 B2 E2 D2 G2
+stderr: 9.7 average depth, 21 max depth
+stderr: 803 non leaf nodes, 1.30 average children
+stderr: 
+stderr: 1046 visits, 367409 nodes
+stderr: 
+STDOUT: = 
+STDOUT: 
+STDOUT: = Leela Zero
+STDOUT: 
+Lizzie: time_left b 0 0
+STDOUT: = 
+STDOUT: 
+stderr: ~begin
+stderr:  D17 ->     225 (V: 53.57%) (N: 36.25%) PV: D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  C16 ->     192 (V: 54.19%) (N: 31.68%) PV: C16 D17 F17 E17 E16 F18 Q16 C4 P3 Q6 E3 D6 B17 B18 G18 F16
+stderr:  Q16 ->      34 (V: 54.14%) (N:  5.81%) PV: Q16 D17 E16 C16 D4 D14 P3
+stderr:   D4 ->      32 (V: 54.10%) (N:  5.61%) PV: D4 C16 Q16 C3 C4
+stderr:   C4 ->      13 (V: 53.79%) (N:  2.49%) PV: C4 C16 D15 D17 Q16
+stderr:   D3 ->      12 (V: 53.61%) (N:  2.48%) PV: D3 C16 D15 D17 Q16
+stderr:  R16 ->      11 (V: 53.56%) (N:  2.27%) PV: R16 D17 E16 C16 D4
+stderr:  Q17 ->      10 (V: 53.79%) (N:  1.93%) PV: Q17 D17 E16 C16 D4
+stderr: 10.2 average depth, 20 max depth
+stderr: 384 non leaf nodes, 1.38 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D17 ->     231 (V: 53.58%) (N: 36.25%) PV: D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  C16 ->     197 (V: 54.19%) (N: 31.68%) PV: C16 D17 F17 E17 E16 F18 Q16 C4 P3 Q6 E3 D6 B17 B18 G18 F16
+stderr:  Q16 ->      35 (V: 54.16%) (N:  5.81%) PV: Q16 D17 E16 C16 D4 D14 P3
+stderr:   D4 ->      34 (V: 54.17%) (N:  5.61%) PV: D4 C16 Q16 C3 C4
+stderr:   C4 ->      13 (V: 53.79%) (N:  2.49%) PV: C4 C16 D15 D17 Q16
+stderr:   D3 ->      13 (V: 53.68%) (N:  2.48%) PV: D3 C16 D15 D17 Q16
+stderr:  R16 ->      11 (V: 53.56%) (N:  2.27%) PV: R16 D17 E16 C16 D4
+stderr:  Q17 ->      10 (V: 53.79%) (N:  1.93%) PV: Q17 D17 E16 C16 D4
+stderr: 10.2 average depth, 20 max depth
+stderr: 396 non leaf nodes, 1.37 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D17 ->     237 (V: 54.28%) (N: 36.25%) PV: D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  C16 ->     201 (V: 53.42%) (N: 31.68%) PV: C16 D17 F17 E17 E16 F18 Q16 C4 P3 Q6 E3 D6 B17 B18 G18 F16
+stderr:  Q16 ->      36 (V: 54.18%) (N:  5.81%) PV: Q16 D17 D4 C3 D3
+stderr:   D4 ->      35 (V: 54.19%) (N:  5.61%) PV: D4 C16 D15 D17 Q16 F16 P3 Q6
+stderr:   C4 ->      13 (V: 53.79%) (N:  2.49%) PV: C4 C16 D15 D17 Q16
+stderr:   D3 ->      13 (V: 53.68%) (N:  2.48%) PV: D3 C16 D15 D17 Q16
+stderr:  R16 ->      11 (V: 53.56%) (N:  2.27%) PV: R16 D17 E16 C16 D4
+stderr:  Q17 ->      10 (V: 53.79%) (N:  1.93%) PV: Q17 D17 E16 C16 D4
+stderr: 10.3 average depth, 20 max depth
+stderr: 407 non leaf nodes, 1.37 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D17 ->     241 (V: 54.27%) (N: 36.25%) PV: D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  C16 ->     206 (V: 53.45%) (N: 31.68%) PV: C16 D17 F17 E17 E16 F18 Q16 C4 P3 Q6 E3 D6 B17 B18 G18 F16
+stderr:  Q16 ->      37 (V: 54.19%) (N:  5.81%) PV: Q16 D17 D4 C3 D3
+stderr:   D4 ->      36 (V: 54.21%) (N:  5.61%) PV: D4 C16 D15 D17 Q16 F16 P3 Q6
+stderr:   C4 ->      14 (V: 53.77%) (N:  2.49%) PV: C4 C16 D15 D17 Q16 R17
+stderr:   D3 ->      13 (V: 53.68%) (N:  2.48%) PV: D3 C16 D15 D17 Q16
+stderr:  R16 ->      12 (V: 53.64%) (N:  2.27%) PV: R16 D17 D4 P17 E16
+stderr:  Q17 ->      10 (V: 53.79%) (N:  1.93%) PV: Q17 D17 E16 C16 D4
+stderr: 10.3 average depth, 20 max depth
+stderr: 418 non leaf nodes, 1.36 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D17 ->     246 (V: 54.27%) (N: 36.25%) PV: D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  C16 ->     213 (V: 53.49%) (N: 31.68%) PV: C16 D17 F17 E17 E16 F18 Q16 C4 P3 Q6 E3 D6 B17 B18 G18 F16
+stderr:  Q16 ->      38 (V: 54.18%) (N:  5.81%) PV: Q16 D17 D4 C3 D3
+stderr:   D4 ->      37 (V: 54.20%) (N:  5.61%) PV: D4 C16 Q16 C3 C4
+stderr:   C4 ->      14 (V: 53.77%) (N:  2.49%) PV: C4 C16 D15 D17 Q16 R17
+stderr:   D3 ->      13 (V: 53.68%) (N:  2.48%) PV: D3 C16 D15 D17 Q16
+stderr:  R16 ->      12 (V: 53.64%) (N:  2.27%) PV: R16 D17 D4 P17 E16
+stderr:  Q17 ->      11 (V: 53.80%) (N:  1.93%) PV: Q17 D17 E16 C16 D4
+stderr: 10.4 average depth, 20 max depth
+stderr: 431 non leaf nodes, 1.35 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D17 ->     252 (V: 54.26%) (N: 36.25%) PV: D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 O16 C18 B18
+stderr:  C16 ->     218 (V: 53.50%) (N: 31.68%) PV: C16 D17 F17 E17 E16 F18 Q16 C4 P3 Q6 E3 D6 B17 B18 G18 F16
+stderr:  Q16 ->      39 (V: 54.18%) (N:  5.81%) PV: Q16 D17 E16 C16 D4 D14 P3
+stderr:   D4 ->      38 (V: 54.20%) (N:  5.61%) PV: D4 C16 D15 D17 Q16 F16 P3 Q6
+stderr:   C4 ->      14 (V: 53.77%) (N:  2.49%) PV: C4 C16 D15 D17 Q16 R17
+stderr:   D3 ->      14 (V: 53.74%) (N:  2.48%) PV: D3 C16 D15 D17 Q16
+stderr:  R16 ->      12 (V: 53.64%) (N:  2.27%) PV: R16 D17 D4 P17 E16
+stderr:  Q17 ->      11 (V: 53.80%) (N:  1.93%) PV: Q17 D17 E16 C16 D4
+stderr: 10.4 average depth, 20 max depth
+stderr: 440 non leaf nodes, 1.36 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D17 ->     257 (V: 53.65%) (N: 36.25%) PV: D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4 D3
+stderr:  C16 ->     223 (V: 54.23%) (N: 31.68%) PV: C16 D17 F17 E17 E16 F18 Q16 C4 P3 Q6 E3 D6 B17 B18 G18 F16 G17
+stderr:  Q16 ->      40 (V: 54.18%) (N:  5.81%) PV: Q16 D17 E16 C16 D4 D14 P3
+stderr:   D4 ->      39 (V: 54.19%) (N:  5.61%) PV: D4 C16 D15 D17 Q16 F16 P3 Q6
+stderr:   C4 ->      15 (V: 53.78%) (N:  2.49%) PV: C4 C16 D15 D17 Q16 R17
+stderr:   D3 ->      14 (V: 53.74%) (N:  2.48%) PV: D3 C16 D15 D17 Q16
+stderr:  R16 ->      13 (V: 53.64%) (N:  2.27%) PV: R16 D17 D4 P17 E16
+stderr:  Q17 ->      11 (V: 53.80%) (N:  1.93%) PV: Q17 D17 E16 C16 D4
+stderr: 10.4 average depth, 20 max depth
+stderr: 451 non leaf nodes, 1.36 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D17 ->     263 (V: 53.67%) (N: 36.25%) PV: D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4 D3
+stderr:  C16 ->     226 (V: 54.22%) (N: 31.68%) PV: C16 D17 F17 E17 E16 F18 Q16 C4 P3 Q6 E3 D6 B17 B18 G18 F16 G17
+stderr:  Q16 ->      41 (V: 54.15%) (N:  5.81%) PV: Q16 D17 D4 C3 D3 C4
+stderr:   D4 ->      39 (V: 54.19%) (N:  5.61%) PV: D4 C16 D15 D17 Q16 F16 P3 Q6
+stderr:   D3 ->      15 (V: 53.84%) (N:  2.48%) PV: D3 C16 D15 D17 Q16 R17
+stderr:   C4 ->      15 (V: 53.78%) (N:  2.49%) PV: C4 C16 D15 D17 Q16 R17
+stderr:  R16 ->      13 (V: 53.64%) (N:  2.27%) PV: R16 D17 D4 P17 E16
+stderr:  Q17 ->      12 (V: 53.77%) (N:  1.93%) PV: Q17 D17 E16 C16 D4
+stderr: 10.5 average depth, 20 max depth
+stderr: 456 non leaf nodes, 1.37 average children
+stderr: ~end
+stderr: ~begin
+stderr:  D17 ->     269 (V: 53.69%) (N: 36.25%) PV: D17 C16 C14 C15 D15 B14 D4 Q17 P3 Q6 R15 C3 C4 D3
+stderr:  C16 ->     231 (V: 54.20%) (N: 31.68%) PV: C16 D17 F17 E17 E16 F18 Q16 C4 P3 Q6 E3 D6 B17 B18 G18 F16 G17
+stderr:  Q16 ->      41 (V: 54.15%) (N:  5.81%) PV: Q16 D17 D4 C3 D3 C4
+stderr:   D4 ->      40 (V: 54.17%) (N:  5.61%) PV: D4 C16 Q16 C3 C4 D3
+stderr:   D3 ->      15 (V: 53.84%) (N:  2.48%) PV: D3 C16 D15 D17 Q16 R17
+stderr:   C4 ->      15 (V: 53.78%) (N:  2.49%) PV: C4 C16 D15 D17 Q16 R17
+stderr:  R16 ->      13 (V: 53.64%) (N:  2.27%) PV: R16 D17 D4 P17 E16
+stderr:  Q17 ->      12 (V: 53.77%) (N:  1.93%) PV: Q17 D17 E16 C16 D4
+stderr: 10.5 average depth, 20 max depth
+stderr: 465 non leaf nodes, 1.37 average children
+stderr: ~end
