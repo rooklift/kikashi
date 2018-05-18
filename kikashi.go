@@ -826,7 +826,8 @@ func (self *App) InitSDL() {
 
 	fmt.Printf("CreateWindow...\n")
 
-	self.Window, err = sdl.CreateWindow(TITLE, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, self.PixelWidth, self.PixelHeight, sdl.WINDOW_SHOWN)
+	self.Window, err = sdl.CreateWindow(
+		TITLE, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, self.PixelWidth, self.PixelHeight, sdl.WINDOW_SHOWN)
 	if err != nil {
 		panic(err)
 	}
@@ -898,7 +899,7 @@ func (self *App) AllHoshi() []Point {
 
 func (self *App) DrawGrid() {
 
-	self.Cls(210, 175, 120)
+	self.Cls(208, 172, 114)
 
 	self.Renderer.SetDrawColor(0, 0, 0, 255)
 
