@@ -57,10 +57,15 @@ type Move struct {
 func (self *Move) String() string {
 
 	if self.OK == false {
-		return "(none)"
+		return "(none.)"
 	}
 
-	return fmt.Sprintf("(%s %s)", COLMAP[self.Colour], human_string_from_point(self.X, self.Y, self.Size))
+	hs := human_string_from_point(self.X, self.Y, self.Size)
+	if len(hs) == 2 {
+		hs += " "
+	}
+
+	return fmt.Sprintf("(%s %s)", COLMAP[self.Colour], hs)
 }
 
 // -------------------------------------------------------------------------
