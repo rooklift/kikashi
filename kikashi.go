@@ -1120,12 +1120,18 @@ func (self *App) DrawBoard(movelist *MoveList, show_starts bool) {
 	}
 
 	if show_starts {
-		for _, variation := range self.Variations {
+		for i, variation := range self.Variations {
 			if len(variation.List) > 0 {
 				if variation.List[0].OK && variation.List[0].Pass == false {
 					x1, y1 := self.PixelXY(variation.List[0].X, variation.List[0].Y)
-					self.Circle(x1, y1, self.CellWidth / 2, 255, 0, 0)
-					self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 0, 0)
+
+					if i == 0 {
+						self.Circle(x1, y1, self.CellWidth / 2, 0, 128, 255)
+						self.Circle(x1, y1, self.CellWidth / 2 - 1, 0, 128, 255)
+					} else {
+						self.Circle(x1, y1, self.CellWidth / 2, 255, 0, 0)
+						self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 0, 0)
+					}
 				}
 			}
 		}
@@ -1325,6 +1331,27 @@ func (self *App) Poll() {
 					self.Node = self.Node.TryPass(self.Node.NextColour())
 					self.Sync()
 
+				case sdl.K_RETURN:
+
+					if len(self.Variations) > 0 {
+
+						if len(self.Variations[0].List) > 0 {
+
+							mv := self.Variations[0].List[0]
+
+							if mv.OK && mv.Pass == false {
+
+								new_node, err := self.Node.TryMove(self.Node.NextColour(), mv.X, mv.Y)
+								if err != nil {
+									// fmt.Printf("%v\n", err)
+								} else {
+									self.Node = new_node
+									self.Sync()
+								}
+							}
+						}
+					}
+
 				case sdl.K_m:
 
 					fmt.Printf("--------------------\n")
@@ -1423,8 +1450,9 @@ func (self *App) Run() {
 			self.DrawBoard(nil, true)
 		}
 
-		// FIXME: some sleep?
-		// FIXME: consume stdout
+		self.LZ_Stdout_Buffer.Dump()
+
+		// FIXME: sleep?
 	}
 }
 
