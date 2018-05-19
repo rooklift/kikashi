@@ -73,13 +73,13 @@ func (self *Move) String() string {
 	return fmt.Sprintf("(%s %s)", COLMAP[self.Colour], hs)
 }
 
-type MoveList struct {
+type Variation struct {
 	Rank		int
 	Score		float64
 	List		[]Move
 }
 
-func (self MoveList) String() string {
+func (self Variation) String() string {
 
 	if len(self.List) == 0 {
 		return ""
@@ -910,8 +910,8 @@ type App struct {
 	LZ_Stdout_Buffer	LineBuffer
 	LZ_Stderr_Buffer	LineBuffer
 
-	Variations			[]*MoveList
-	VariationsNext		[]*MoveList
+	Variations			[]*Variation
+	VariationsNext		[]*Variation
 
 	NextAccept			time.Time
 
@@ -1060,7 +1060,7 @@ func (self *App) DrawGrid() {
 }
 
 
-func (self *App) DrawBoard(movelist *MoveList, show_starts bool) {
+func (self *App) DrawBoard(v *Variation, show_starts bool) {
 
 	self.DrawGrid()
 
@@ -1099,9 +1099,9 @@ func (self *App) DrawBoard(movelist *MoveList, show_starts bool) {
 
 	// Draw the variation we've been give, if any...
 
-	if movelist != nil {
+	if v != nil {
 
-		for _, mv := range movelist.List {
+		for _, mv := range v.List {
 
 			if mv.OK && mv.Pass == false {
 
@@ -1436,16 +1436,16 @@ func (self *App) Run() {
 		self.Poll()
 		self.Analyse()
 
-		var movelist *MoveList
+		var v *Variation
 
 		for _, variation := range self.Variations {
 			if len(variation.List) > 0 && variation.List[0].X == self.MouseX && variation.List[0].Y == self.MouseY {
-				movelist = variation
+				v = variation
 			}
 		}
 
-		if movelist != nil {
-			self.DrawBoard(movelist, false)
+		if v != nil {
+			self.DrawBoard(v, false)
 		} else {
 			self.DrawBoard(nil, true)
 		}
@@ -1682,14 +1682,14 @@ func opposite_colour(c Colour) Colour {
 }
 
 
-func pv_from_line(s string, next_colour Colour, size int32) *MoveList {
+func pv_from_line(s string, next_colour Colour, size int32) *Variation {
 
 	tokens := strings.Fields(s)
 
-	movelist := new(MoveList)
+	v := new(Variation)
 
 	if len(tokens) < 9 || tokens[7] != "PV:" {
-		return movelist		// Zeroed
+		return v		// Zeroed
 	}
 
 	for _, t := range tokens[8:] {
@@ -1723,10 +1723,10 @@ func pv_from_line(s string, next_colour Colour, size int32) *MoveList {
 		}
 
 		if mv.OK {
-			movelist.List = append(movelist.List, mv)
+			v.List = append(v.List, mv)
 			next_colour = opposite_colour(next_colour)
 		}
 	}
 
-	return movelist
+	return v
 }
