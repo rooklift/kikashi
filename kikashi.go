@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -42,6 +43,23 @@ type Move struct {
 	Colour			Colour
 	X				int32
 	Y				int32
+}
+
+// -------------------------------------------------------------------------
+
+type LineBuffer struct {
+	sync.Mutex
+	Reader			io.Reader
+	Lines			[]string
+}
+
+func (self *LineBuffer) Loop() {
+	scanner := bufio.NewScanner(self.Reader)
+	for scanner.Scan() {
+		self.Lock()
+		self.Lines = append(self.Lines, scanner.Text())
+		self.Unlock()
+	}
 }
 
 // -------------------------------------------------------------------------
@@ -780,14 +798,18 @@ func load_sgf(sgf string) (*Node, error) {
 // -------------------------------------------------------------------------
 
 type App struct {
-	Window			*sdl.Window
-	Renderer		*sdl.Renderer
-	PixelWidth		int32
-	PixelHeight		int32
-	CellWidth		int32
-	Margin			int32
-	Offset			int32
-	Node			*Node
+	Window				*sdl.Window
+	Renderer			*sdl.Renderer
+	PixelWidth			int32
+	PixelHeight			int32
+	CellWidth			int32
+	Margin				int32
+	Offset				int32
+	Node				*Node
+
+	LZ_Stdin			io.Writer
+	LZ_Stdout_Buffer	LineBuffer
+	LZ_Stderr_Buffer	LineBuffer
 }
 
 
@@ -807,6 +829,17 @@ func NewApp(SZ, cell_width, margin int32) *App {
 
 	self.DrawGrid()
 	self.Flip()
+
+	exec_command := exec.Command("./leelaz.exe", "--gtp", "-w", "network")
+
+	self.LZ_Stdin, _ = exec_command.StdinPipe()
+	self.LZ_Stdout_Buffer.Reader, _ = exec_command.StdoutPipe()
+	self.LZ_Stderr_Buffer.Reader, _ = exec_command.StderrPipe()
+
+	exec_command.Start()
+
+	go self.LZ_Stdout_Buffer.Loop()
+	go self.LZ_Stderr_Buffer.Loop()
 
 	return self
 }
@@ -1380,15 +1413,15 @@ func pv_from_line(s string, next_colour Colour, size int32) []Move {
 
 			x, y, ok := point_from_human_string(t, size)
 
-			if !ok {
-				panic("pv_from_line(): ok == false when calling point_from_human_string()")
-			}
-
-			mv = Move{
-				OK: true,
-				Colour: next_colour,
-				X: x,
-				Y: y,
+			if ok {
+				mv = Move{
+					OK: true,
+					Colour: next_colour,
+					X: x,
+					Y: y,
+				}
+			} else {
+				fmt.Printf("Warning: point_from_human_string() returned ok: false")
 			}
 		}
 

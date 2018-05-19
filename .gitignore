@@ -1,2 +1,5 @@
 *.exe
 *.sgf
+*.dll
+leelaz_opencl_tuning
+network
