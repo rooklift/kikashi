@@ -805,11 +805,15 @@ type App struct {
 	CellWidth			int32
 	Margin				int32
 	Offset				int32
+
 	Node				*Node
 
 	LZ_Stdin			io.Writer
 	LZ_Stdout_Buffer	LineBuffer
 	LZ_Stderr_Buffer	LineBuffer
+
+	Variations			map[Point][]Move
+	VariationsNext		map[Point][]Move
 }
 
 
@@ -829,6 +833,9 @@ func NewApp(SZ, cell_width, margin int32) *App {
 
 	self.DrawGrid()
 	self.Flip()
+
+	self.Variations = make(map[Point][]Move)
+	self.VariationsNext = make(map[Point][]Move)
 
 	exec_command := exec.Command("./leelaz.exe", "--gtp", "-w", "network")
 
@@ -1204,17 +1211,56 @@ func (self *App) Poll() {
 			}
 		}
 	}
+}
 
-	self.Flip()
+
+func (self *App) GetNewStderrLines() []string {
+
+	var new_lines []string
+
+	self.LZ_Stderr_Buffer.Lock()
+	for _, line := range self.LZ_Stderr_Buffer.Lines {
+		new_lines = append(new_lines, line)
+	}
+	self.LZ_Stderr_Buffer.Lines = nil
+	self.LZ_Stderr_Buffer.Unlock()
+
+	return new_lines
+}
+
+
+func (self *App) Analyse() {
+
+	new_lines := self.GetNewStderrLines()
+
+	for _, line := range new_lines {
+
+		if line == "~end" {
+			self.Variations = self.VariationsNext
+			self.VariationsNext = make(map[Point][]Move)
+		}
+
+		fmt.Printf("%s\n", line)
+	}
+}
+
+
+func (self *App) Run() {
+	self.LZ_Stdin.Write([]byte("time_left B 0 0\n"))
+	for {
+		self.Poll()
+		self.Analyse()
+		self.Flip()
+		// FIXME: some sleep
+		// FIXME: consume stdout
+	}
 }
 
 // -------------------------------------------------------------------------
 
 func main() {
 	app := NewApp(DEFAULT_SIZE, 36, 20)
-	for {
-		app.Poll()
-	}
+	app.Run()
 }
 
 
@@ -1391,7 +1437,7 @@ func pv_from_line(s string, next_colour Colour, size int32) []Move {
 
 	tokens := strings.Fields(s)
 
-	if tokens[7] != "PV:" {
+	if len(tokens) < 9 || tokens[7] != "PV:" {
 		return nil
 	}
 
