@@ -72,11 +72,15 @@ func (self *Move) String() string {
 	return fmt.Sprintf("(%s %s)", COLMAP[self.Colour], hs)
 }
 
-type MoveList []Move
+type MoveList struct {
+	Rank		int
+	Score		float64
+	List		[]Move
+}
 
 func (self MoveList) String() string {
 
-	if len(self) == 0 {
+	if len(self.List) == 0 {
 		return ""
 	}
 
@@ -93,12 +97,12 @@ func (self MoveList) String() string {
 
 		for len(lines[len(lines) - 1]) < 70 {
 
-			mv := self[i]
+			mv := self.List[i]
 
 			lines[len(lines) - 1] += fmt.Sprintf("%v ", &mv)
 
 			i++
-			if i >= len(self) {
+			if i >= len(self.List) {
 				return strings.Join(lines, "\n")
 			}
 		}
@@ -901,8 +905,8 @@ type App struct {
 	LZ_Stdout_Buffer	LineBuffer
 	LZ_Stderr_Buffer	LineBuffer
 
-	Variations			map[Point]MoveList
-	VariationsNext		map[Point]MoveList
+	Variations			[]MoveList
+	VariationsNext		[]MoveList
 }
 
 
@@ -919,9 +923,6 @@ func NewApp(SZ, cell_width, margin int32) *App {
 	self.PixelHeight = self.PixelWidth
 
 	self.InitSDL()
-
-	self.Variations = make(map[Point]MoveList)
-	self.VariationsNext = make(map[Point]MoveList)
 
 	self.LZ_Cmd = exec.Command("./leelaz.exe", "--gtp", "-w", "network")
 
@@ -1321,18 +1322,13 @@ func (self *App) Analyse() {
 
 		if line == "~end" {
 			self.Variations = self.VariationsNext
-			self.VariationsNext = make(map[Point]MoveList)
+			self.VariationsNext = nil
 		} else {
 			pv := pv_from_line(line, self.Node.NextColour(), self.Node.Size())
 
-			if len(pv) > 0 {
-
-				point := Point{
-					X: pv[0].X,
-					Y: pv[0].Y,
-				}
-
-				self.VariationsNext[point] = pv
+			if len(pv.List) > 0 {
+				self.VariationsNext = append(self.VariationsNext, pv)
+				pv.Rank = len(self.VariationsNext)						// 1 being the best
 			}
 		}
 
@@ -1587,11 +1583,11 @@ func pv_from_line(s string, next_colour Colour, size int32) MoveList {
 
 	tokens := strings.Fields(s)
 
-	if len(tokens) < 9 || tokens[7] != "PV:" {
-		return nil
-	}
+	var movelist MoveList
 
-	var moves MoveList
+	if len(tokens) < 9 || tokens[7] != "PV:" {
+		return movelist		// Zeroed
+	}
 
 	for _, t := range tokens[8:] {
 
@@ -1624,10 +1620,10 @@ func pv_from_line(s string, next_colour Colour, size int32) MoveList {
 		}
 
 		if mv.OK {
-			moves = append(moves, mv)
+			movelist.List = append(movelist.List, mv)
 			next_colour = opposite_colour(next_colour)
 		}
 	}
 
-	return moves
+	return movelist
 }
