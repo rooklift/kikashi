@@ -714,6 +714,8 @@ func (self *Node) StepGTP() []string {
 		x, y, ok := point_from_SGF_string(foo, sz)
 		if ok {
 			commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
+		} else {
+			commands = append(commands, fmt.Sprintf("play B pass"))
 		}
 	}
 
@@ -721,6 +723,8 @@ func (self *Node) StepGTP() []string {
 		x, y, ok := point_from_SGF_string(foo, sz)
 		if ok {
 			commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
+		} else {
+			commands = append(commands, fmt.Sprintf("play W pass"))
 		}
 	}
 
@@ -906,10 +910,13 @@ type App struct {
 	LZ_Stdout_Buffer	LineBuffer
 	LZ_Stderr_Buffer	LineBuffer
 
-	Variations			[]MoveList
-	VariationsNext		[]MoveList
+	Variations			[]*MoveList
+	VariationsNext		[]*MoveList
 
 	NextAccept			time.Time
+
+	MouseX				int32
+	MouseY				int32
 }
 
 
@@ -998,7 +1005,7 @@ func (self *App) PixelXY(x, y int32) (int32, int32) {
 }
 
 
-func (self *App) BoardXY(x1, y1 int32) (int32, int32) {
+func (self *App) BoardXY(x1, y1 int32, clamp bool) (int32, int32) {
 
 	min := self.Offset + self.Margin - (self.CellWidth / 2)
 	max := ((self.Node.Size() - 1) * self.CellWidth) + self.Offset + self.Margin + (self.CellWidth / 2)
@@ -1011,10 +1018,12 @@ func (self *App) BoardXY(x1, y1 int32) (int32, int32) {
 	retx := int32(math.Floor(retx_f))
 	rety := int32(math.Floor(rety_f))
 
-	if retx < 0 { retx = 0 }
-	if retx >= self.Node.Size() { retx = self.Node.Size() - 1 }
-	if rety < 0 { rety = 0 }
-	if rety >= self.Node.Size() { rety = self.Node.Size() - 1 }
+	if clamp {
+		if retx < 0 { retx = 0 }
+		if retx >= self.Node.Size() { retx = self.Node.Size() - 1 }
+		if rety < 0 { rety = 0 }
+		if rety >= self.Node.Size() { rety = self.Node.Size() - 1 }
+	}
 
 	return retx, rety
 }
@@ -1051,9 +1060,11 @@ func (self *App) DrawGrid() {
 }
 
 
-func (self *App) DrawBoard(movelist *MoveList) {
+func (self *App) DrawBoard(movelist *MoveList, show_starts bool) {
 
 	self.DrawGrid()
+
+	// Draw known stones in the board (includes stones from B, W, AB, AW
 
 	for x := int32(0); x < self.Node.Size(); x++ {
 
@@ -1072,6 +1083,8 @@ func (self *App) DrawBoard(movelist *MoveList) {
 			}
 		}
 	}
+
+	// Draw a marker on this node's move...
 
 	move_info := self.Node.MoveInfo()
 
@@ -1096,24 +1109,29 @@ func (self *App) DrawBoard(movelist *MoveList) {
 
 				if self.Node.Board[mv.X][mv.Y] == EMPTY {
 					if mv.Colour == BLACK {
-						self.Fcircle(x1, y1, self.CellWidth / 2, 208, 172, 114)
-						self.Circle(x1, y1, self.CellWidth / 2, 0, 0, 0)
-						self.Circle(x1, y1, self.CellWidth / 2 - 1, 0, 0, 0)
+						self.Fcircle(x1, y1, self.CellWidth / 2, 0, 0, 0)
 					} else {
-						self.Fcircle(x1, y1, self.CellWidth / 2, 208, 172, 114)
-						self.Circle(x1, y1, self.CellWidth / 2, 255, 255, 255)
-						self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 255, 255)
+						self.Fcircle(x1, y1, self.CellWidth / 2, 255, 255, 255)
+						self.Circle(x1, y1, self.CellWidth / 2, 0, 0, 0)
 					}
 				}
 			}
 		}
+	}
 
-		if len(movelist.List) > 0 {
-			x1, y1 := self.PixelXY(movelist.List[0].X, movelist.List[0].Y)
-			self.Circle(x1, y1, self.CellWidth / 2, 255, 0, 0)
-			self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 0, 0)
+	if show_starts {
+		for _, variation := range self.Variations {
+			if len(variation.List) > 0 {
+				if variation.List[0].OK && variation.List[0].Pass == false {
+					x1, y1 := self.PixelXY(variation.List[0].X, variation.List[0].Y)
+					self.Circle(x1, y1, self.CellWidth / 2, 255, 0, 0)
+					self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 0, 0)
+				}
+			}
 		}
 	}
+
+	self.Flip()
 }
 
 
@@ -1196,7 +1214,7 @@ func (self *App) Poll() {
 
 			if event.Type == sdl.MOUSEBUTTONDOWN {
 
-				x, y := self.BoardXY(event.X, event.Y)
+				x, y := self.BoardXY(event.X, event.Y, true)
 
 				new_node, err := self.Node.TryMove(self.Node.NextColour(), x, y)
 				if err != nil {
@@ -1224,6 +1242,10 @@ func (self *App) Poll() {
 					self.Sync()
 				}
 			}
+
+		case *sdl.MouseMotionEvent:
+
+			self.MouseX, self.MouseY = self.BoardXY(event.X, event.Y, false)		// OK to be outside 0-18
 
 		case *sdl.KeyboardEvent:
 
@@ -1381,25 +1403,27 @@ func (self *App) Run() {
 
 	self.SendToEngine("time_left B 0 0")
 
-	self.DrawBoard(nil)
-	self.Flip()
+	self.DrawBoard(nil, true)
 
 	for {
-		node := self.Node
 		self.Poll()
 		self.Analyse()
-		if self.Node != node {
-			// Something?
+
+		var movelist *MoveList
+
+		for _, variation := range self.Variations {
+			if len(variation.List) > 0 && variation.List[0].X == self.MouseX && variation.List[0].Y == self.MouseY {
+				movelist = variation
+			}
 		}
 
-		if len(self.Variations) > 0 {
-			self.DrawBoard(&self.Variations[0])
+		if movelist != nil {
+			self.DrawBoard(movelist, false)
 		} else {
-			self.DrawBoard(nil)
+			self.DrawBoard(nil, true)
 		}
-		self.Flip()
 
-		// FIXME: some sleep
+		// FIXME: some sleep?
 		// FIXME: consume stdout
 	}
 }
@@ -1630,11 +1654,11 @@ func opposite_colour(c Colour) Colour {
 }
 
 
-func pv_from_line(s string, next_colour Colour, size int32) MoveList {
+func pv_from_line(s string, next_colour Colour, size int32) *MoveList {
 
 	tokens := strings.Fields(s)
 
-	var movelist MoveList
+	movelist := new(MoveList)
 
 	if len(tokens) < 9 || tokens[7] != "PV:" {
 		return movelist		// Zeroed
