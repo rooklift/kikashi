@@ -62,6 +62,20 @@ func (self *LineBuffer) Loop() {
 	}
 }
 
+func (self *LineBuffer) Dump() []string {
+
+	var new_lines []string
+
+	self.Lock()
+	for _, line := range self.Lines {
+		new_lines = append(new_lines, line)
+	}
+	self.Lines = nil
+	self.Unlock()
+
+	return new_lines
+}
+
 // -------------------------------------------------------------------------
 // Nodes in an SGF tree...
 
@@ -831,9 +845,6 @@ func NewApp(SZ, cell_width, margin int32) *App {
 
 	self.InitSDL()
 
-	self.DrawGrid()
-	self.Flip()
-
 	self.Variations = make(map[Point][]Move)
 	self.VariationsNext = make(map[Point][]Move)
 
@@ -1080,7 +1091,6 @@ func (self *App) Poll() {
 					// fmt.Printf("%v\n", err)
 				} else {
 					self.Node = new_node
-					self.DrawBoard()
 				}
 			}
 
@@ -1091,7 +1101,6 @@ func (self *App) Poll() {
 				if self.Node.Parent != nil {
 
 					self.Node = self.Node.Parent
-					self.DrawBoard()
 				}
 			}
 
@@ -1100,7 +1109,6 @@ func (self *App) Poll() {
 				if len(self.Node.Children) > 0 {
 
 					self.Node = self.Node.Children[0]
-					self.DrawBoard()
 				}
 			}
 
@@ -1120,9 +1128,7 @@ func (self *App) Poll() {
 					result_chan := make(chan string)
 					go file_dialog(true, result_chan)
 
-					// SDL is healthier when it's constantly getting polled.
-					// Therefore, while we await the dialog, continue to poll
-					// for events (but just ignore them).
+					// Keep consuming events and stderr...
 
 					for !dialog_done {
 
@@ -1133,6 +1139,7 @@ func (self *App) Poll() {
 
 						default:
 							self.PollNoAction()
+							self.Analyse()			// Keep consuming stderr
 						}
 					}
 
@@ -1150,9 +1157,7 @@ func (self *App) Poll() {
 					result_chan := make(chan string)
 					go file_dialog(false, result_chan)
 
-					// SDL is healthier when it's constantly getting polled.
-					// Therefore, while we await the dialog, continue to poll
-					// for events (but just ignore most of them).
+					// Keep consuming events and stderr...
 
 					for !dialog_done {
 
@@ -1163,6 +1168,7 @@ func (self *App) Poll() {
 
 						default:
 							self.PollNoAction()
+							self.Analyse()			// Keep consuming stderr
 						}
 					}
 
@@ -1177,35 +1183,29 @@ func (self *App) Poll() {
 					}
 
 					self.Node = new_root
-					self.DrawBoard()
 
 				case sdl.K_p:
 
 					self.Node = self.Node.TryPass(self.Node.NextColour())
-					self.DrawBoard()
 
 				case sdl.K_END:
 
 					self.Node = self.Node.GetEnd()
-					self.DrawBoard()
 
 				case sdl.K_HOME:
 
 					self.Node = self.Node.GetRoot()
-					self.DrawBoard()
 
 				case sdl.K_DOWN:
 
 					if len(self.Node.Children) > 0 {
 						self.Node = self.Node.Children[0]
-						self.DrawBoard()
 					}
 
 				case sdl.K_UP:
 
 					if self.Node.Parent != nil {
 						self.Node = self.Node.Parent
-						self.DrawBoard()
 					}
 				}
 			}
@@ -1214,24 +1214,9 @@ func (self *App) Poll() {
 }
 
 
-func (self *App) GetNewStderrLines() []string {
-
-	var new_lines []string
-
-	self.LZ_Stderr_Buffer.Lock()
-	for _, line := range self.LZ_Stderr_Buffer.Lines {
-		new_lines = append(new_lines, line)
-	}
-	self.LZ_Stderr_Buffer.Lines = nil
-	self.LZ_Stderr_Buffer.Unlock()
-
-	return new_lines
-}
-
-
 func (self *App) Analyse() {
 
-	new_lines := self.GetNewStderrLines()
+	new_lines := self.LZ_Stderr_Buffer.Dump()
 
 	for _, line := range new_lines {
 
@@ -1246,11 +1231,20 @@ func (self *App) Analyse() {
 
 
 func (self *App) Run() {
+
 	self.LZ_Stdin.Write([]byte("time_left B 0 0\n"))
+
+	self.DrawBoard()
+	self.Flip()
+
 	for {
+		node := self.Node
 		self.Poll()
 		self.Analyse()
-		self.Flip()
+		if self.Node != node {
+			self.DrawBoard()
+			self.Flip()
+		}
 		// FIXME: some sleep
 		// FIXME: consume stdout
 	}
