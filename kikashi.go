@@ -22,6 +22,12 @@ const DEFAULT_SIZE = 19
 
 var MUTORS = []string{"B", "W", "AB", "AW", "AE"}
 
+var COLMAP = map[Colour]string{
+	EMPTY: "?",
+	BLACK: "B",
+	WHITE: "W",
+}
+
 // -------------------------------------------------------------------------
 
 type Colour int
@@ -37,12 +43,24 @@ type Point struct {
 	Y				int32
 }
 
+// -------------------------------------------------------------------------
+
 type Move struct {
 	OK				bool
 	Pass			bool
 	Colour			Colour
 	X				int32
 	Y				int32
+	Size			int32
+}
+
+func (self *Move) String() string {
+
+	if self.OK == false {
+		return "(none)"
+	}
+
+	return fmt.Sprintf("(%s %s)", COLMAP[self.Colour], human_string_from_point(self.X, self.Y, self.Size))
 }
 
 // -------------------------------------------------------------------------
@@ -198,6 +216,7 @@ func (self *Node) MoveInfo() Move {
 			Colour: BLACK,
 			X: x,
 			Y: y,
+			Size: sz,
 		}
 
 		if valid == false {
@@ -216,6 +235,7 @@ func (self *Node) MoveInfo() Move {
 			Colour: WHITE,
 			X: x,
 			Y: y,
+			Size: sz,
 		}
 
 		if valid == false {
@@ -457,6 +477,7 @@ func (self *Node) TryMove(colour Colour, x, y int32) (*Node, error) {
 		Colour: colour,
 		X: x,
 		Y: y,
+		Size: sz,
 	}
 
 	for _, child := range self.Children {
@@ -822,6 +843,8 @@ type App struct {
 
 	Node				*Node
 
+	LZ_Cmd				*exec.Cmd
+
 	LZ_Stdin			io.Writer
 	LZ_Stdout_Buffer	LineBuffer
 	LZ_Stderr_Buffer	LineBuffer
@@ -848,13 +871,13 @@ func NewApp(SZ, cell_width, margin int32) *App {
 	self.Variations = make(map[Point][]Move)
 	self.VariationsNext = make(map[Point][]Move)
 
-	exec_command := exec.Command("./leelaz.exe", "--gtp", "-w", "network")
+	self.LZ_Cmd = exec.Command("./leelaz.exe", "--gtp", "-w", "network")
 
-	self.LZ_Stdin, _ = exec_command.StdinPipe()
-	self.LZ_Stdout_Buffer.Reader, _ = exec_command.StdoutPipe()
-	self.LZ_Stderr_Buffer.Reader, _ = exec_command.StderrPipe()
+	self.LZ_Stdin, _ = self.LZ_Cmd.StdinPipe()
+	self.LZ_Stdout_Buffer.Reader, _ = self.LZ_Cmd.StdoutPipe()
+	self.LZ_Stderr_Buffer.Reader, _ = self.LZ_Cmd.StderrPipe()
 
-	exec_command.Start()
+	self.LZ_Cmd.Start()
 
 	go self.LZ_Stdout_Buffer.Loop()
 	go self.LZ_Stderr_Buffer.Loop()
@@ -890,6 +913,8 @@ func (self *App) InitSDL() {
 
 
 func (self *App) Shutdown() {
+	fmt.Printf("Kill...\n")
+	self.LZ_Cmd.Process.Kill()
 	fmt.Printf("Destroy...\n")
 	self.Renderer.Destroy()
 	fmt.Printf("Destroy...\n")
@@ -1188,6 +1213,15 @@ func (self *App) Poll() {
 
 					self.Node = self.Node.TryPass(self.Node.NextColour())
 
+				case sdl.K_m:
+
+					for _, v := range self.Variations {
+						for _, mv := range v {
+							fmt.Printf("%v ", &mv)
+						}
+						fmt.Printf("\n")
+					}
+
 				case sdl.K_END:
 
 					self.Node = self.Node.GetEnd()
@@ -1216,6 +1250,8 @@ func (self *App) Poll() {
 
 func (self *App) Analyse() {
 
+	// Just updates the self.Variations and self.VariationsNext maps.
+
 	new_lines := self.LZ_Stderr_Buffer.Dump()
 
 	for _, line := range new_lines {
@@ -1223,9 +1259,21 @@ func (self *App) Analyse() {
 		if line == "~end" {
 			self.Variations = self.VariationsNext
 			self.VariationsNext = make(map[Point][]Move)
+		} else {
+			pv := pv_from_line(line, self.Node.NextColour(), self.Node.Size())
+
+			if len(pv) > 0 {
+
+				point := Point{
+					X: pv[0].X,
+					Y: pv[0].Y,
+				}
+
+				self.VariationsNext[point] = pv
+			}
 		}
 
-		fmt.Printf("%s\n", line)
+		// fmt.Printf("%s\n", line)
 	}
 }
 
@@ -1447,6 +1495,7 @@ func pv_from_line(s string, next_colour Colour, size int32) []Move {
 				OK: true,
 				Pass: true,
 				Colour: next_colour,
+				Size: size,
 			}
 
 		} else {
@@ -1459,6 +1508,7 @@ func pv_from_line(s string, next_colour Colour, size int32) []Move {
 					Colour: next_colour,
 					X: x,
 					Y: y,
+					Size: size,
 				}
 			} else {
 				fmt.Printf("Warning: point_from_human_string() returned ok: false")
