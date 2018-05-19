@@ -1087,24 +1087,31 @@ func (self *App) DrawBoard(movelist *MoveList) {
 	// Draw the variation we've been give, if any...
 
 	if movelist != nil {
-		for i, mv := range movelist.List {
+
+		for _, mv := range movelist.List {
+
 			if mv.OK && mv.Pass == false {
+
 				x1, y1 := self.PixelXY(mv.X, mv.Y)
 
-				if i == 0 {
-					self.Fcircle(x1, y1, self.CellWidth / 2, 208, 172, 114)
-					self.Circle(x1, y1, self.CellWidth / 2, 255, 0, 0)
-					self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 0, 0)
-				} else if mv.Colour == BLACK {
-					self.Fcircle(x1, y1, self.CellWidth / 2, 208, 172, 114)
-					self.Circle(x1, y1, self.CellWidth / 2, 0, 0, 0)
-					self.Circle(x1, y1, self.CellWidth / 2 - 1, 0, 0, 0)
-				} else {
-					self.Fcircle(x1, y1, self.CellWidth / 2, 208, 172, 114)
-					self.Circle(x1, y1, self.CellWidth / 2, 255, 255, 255)
-					self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 255, 255)
+				if self.Node.Board[mv.X][mv.Y] == EMPTY {
+					if mv.Colour == BLACK {
+						self.Fcircle(x1, y1, self.CellWidth / 2, 208, 172, 114)
+						self.Circle(x1, y1, self.CellWidth / 2, 0, 0, 0)
+						self.Circle(x1, y1, self.CellWidth / 2 - 1, 0, 0, 0)
+					} else {
+						self.Fcircle(x1, y1, self.CellWidth / 2, 208, 172, 114)
+						self.Circle(x1, y1, self.CellWidth / 2, 255, 255, 255)
+						self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 255, 255)
+					}
 				}
 			}
+		}
+
+		if len(movelist.List) > 0 {
+			x1, y1 := self.PixelXY(movelist.List[0].X, movelist.List[0].Y)
+			self.Circle(x1, y1, self.CellWidth / 2, 255, 0, 0)
+			self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 0, 0)
 		}
 	}
 }
