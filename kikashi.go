@@ -60,6 +60,10 @@ func (self *Move) String() string {
 		return "(none.)"
 	}
 
+	if self.Pass {
+		return fmt.Sprintf("(%spass)", COLMAP[self.Colour])
+	}
+
 	hs := human_string_from_point(self.X, self.Y, self.Size)
 	if len(hs) == 2 {
 		hs += " "
