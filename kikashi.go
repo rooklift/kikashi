@@ -12,6 +12,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -907,6 +908,8 @@ type App struct {
 
 	Variations			[]MoveList
 	VariationsNext		[]MoveList
+
+	NextAccept			time.Time
 }
 
 
@@ -1342,6 +1345,12 @@ func (self *App) Analyse() {
 
 	new_lines := self.LZ_Stderr_Buffer.Dump()
 
+	// Ignore for a little while after Syncing so we don't get old info...
+
+	if time.Now().Before(self.NextAccept) {
+		return
+	}
+
 	for _, line := range new_lines {
 
 		if line == "~end" {
@@ -1430,6 +1439,10 @@ func (self *App) Sync() {
 
 	self.EngineNode = self.Node
 	self.SendToEngine("time_left B 0 0")
+
+	self.Variations = nil
+	self.VariationsNext = nil
+	self.NextAccept = time.Now().Add(100 * time.Millisecond)
 }
 
 
