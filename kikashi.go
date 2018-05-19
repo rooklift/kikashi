@@ -137,9 +137,6 @@ func (self *Node) SetValue(key, value string) {
 }
 
 
-// FIXME: Get needs unescaping...
-
-
 func (self *Node) GetValue(key string) (value string, ok bool) {
 
 	// Get the value for the key, on the assumption that there's only 1 value.
@@ -162,7 +159,7 @@ func (self *Node) MoveInfo() Move {
 
 	for _, foo := range self.Props["B"] {
 
-		x, y, valid := point_from_string(foo, sz)
+		x, y, valid := point_from_SGF_string(foo, sz)
 
 		ret := Move{
 			OK: true,
@@ -180,7 +177,7 @@ func (self *Node) MoveInfo() Move {
 
 	for _, foo := range self.Props["W"] {
 
-		x, y, valid := point_from_string(foo, sz)
+		x, y, valid := point_from_SGF_string(foo, sz)
 
 		ret := Move{
 			OK: true,
@@ -281,29 +278,29 @@ func (self *Node) make_board() {
 	// Now fix the board using the properties...
 
 	for _, foo := range self.Props["AB"] {
-		x, y, ok := point_from_string(foo, sz)
+		x, y, ok := point_from_SGF_string(foo, sz)
 		if ok { self.Board[x][y] = BLACK }
 	}
 
 	for _, foo := range self.Props["AW"] {
-		x, y, ok := point_from_string(foo, sz)
+		x, y, ok := point_from_SGF_string(foo, sz)
 		if ok { self.Board[x][y] = WHITE }
 	}
 
 	for _, foo := range self.Props["AE"] {
-		x, y, ok := point_from_string(foo, sz)
+		x, y, ok := point_from_SGF_string(foo, sz)
 		if ok { self.Board[x][y] = EMPTY }
 	}
 
 	// Play move: B / W
 
 	for _, foo := range self.Props["B"] {
-		x, y, ok := point_from_string(foo, sz)
+		x, y, ok := point_from_SGF_string(foo, sz)
 		if ok { self.handle_move(BLACK, x, y) }
 	}
 
 	for _, foo := range self.Props["W"] {
-		x, y, ok := point_from_string(foo, sz)
+		x, y, ok := point_from_SGF_string(foo, sz)
 		if ok { self.handle_move(WHITE, x, y) }
 	}
 }
@@ -621,14 +618,14 @@ func (self *Node) FullGTP() []string {
 		node = nodes[n]
 
 		for _, foo := range node.Props["AB"] {
-			x, y, ok := point_from_string(foo, sz)
+			x, y, ok := point_from_SGF_string(foo, sz)
 			if ok {
 				commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
 			}
 		}
 
 		for _, foo := range node.Props["AW"] {
-			x, y, ok := point_from_string(foo, sz)
+			x, y, ok := point_from_SGF_string(foo, sz)
 			if ok {
 				commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
 			}
@@ -637,14 +634,14 @@ func (self *Node) FullGTP() []string {
 		// Play move: B / W
 
 		for _, foo := range node.Props["B"] {
-			x, y, ok := point_from_string(foo, sz)
+			x, y, ok := point_from_SGF_string(foo, sz)
 			if ok {
 				commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
 			}
 		}
 
 		for _, foo := range node.Props["W"] {
-			x, y, ok := point_from_string(foo, sz)
+			x, y, ok := point_from_SGF_string(foo, sz)
 			if ok {
 				commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
 			}
@@ -1187,7 +1184,8 @@ func main() {
 	}
 }
 
-func point_from_string(s string, size int32) (x int32, y int32, ok bool) {
+
+func point_from_SGF_string(s string, size int32) (x int32, y int32, ok bool) {
 
 	// If ok == false, that means the move was a pass.
 
@@ -1207,10 +1205,42 @@ func point_from_string(s string, size int32) (x int32, y int32, ok bool) {
 	return x, y, ok
 }
 
+
 func human_string_from_point(x, y, size int32) string {
 	const letters = "ABCDEFGHJKLMNOPQRSTUVWXYZ"
 	return fmt.Sprintf("%c%v", letters[x], size - y)
 }
+
+
+func point_from_human_string(s string, size int32) (x int32, y int32, ok bool) {
+
+	if len(s) < 2 || len(s) > 3 {
+		return 0, 0, false
+	}
+
+	if s[0] < 'A' || s[0] > 'Z' {
+		return 0, 0, false
+	}
+
+	if s[1] < '0' || s[1] > '9' {
+		return 0, 0, false
+	}
+
+	if len(s) == 3 && (s[2] < '0' || s[2] > '9') {
+		return 0, 0, false
+	}
+
+	x = int32(s[0]) - 65
+	if x >= 8 {
+		x--
+	}
+
+	y_int, _ := strconv.Atoi(s[1:])
+	y = size - int32(y_int)
+
+	return x, y, true
+}
+
 
 func adjacent_points(x, y, size int32) []Point {
 
@@ -1234,6 +1264,7 @@ func adjacent_points(x, y, size int32) []Point {
 	return ret
 }
 
+
 func escape_string(s string) string {
 
 	// Treating the input as a byte sequence, not a sequence of code points. Meh.
@@ -1249,6 +1280,7 @@ func escape_string(s string) string {
 
 	return string(new_s)
 }
+
 
 func unescape_string(s string) string {
 
@@ -1277,6 +1309,7 @@ func unescape_string(s string) string {
 
 	return string(new_s)
 }
+
 
 func file_dialog(save bool, result_chan chan string) {
 
@@ -1307,4 +1340,63 @@ func file_dialog(save bool, result_chan chan string) {
 	}
 
 	result_chan <- s
+}
+
+
+func opposite_colour(c Colour) Colour {
+	if c == EMPTY {
+		return EMPTY
+	} else if c == BLACK {
+		return WHITE
+	} else {
+		return BLACK
+	}
+}
+
+
+func pv_from_line(s string, next_colour Colour, size int32) []Move {
+
+	tokens := strings.Fields(s)
+
+	if tokens[7] != "PV:" {
+		return nil
+	}
+
+	var moves []Move
+
+	for _, t := range tokens[8:] {
+
+		var mv Move
+
+		if t == "pass" {
+
+			mv = Move{
+				OK: true,
+				Pass: true,
+				Colour: next_colour,
+			}
+
+		} else {
+
+			x, y, ok := point_from_human_string(t, size)
+
+			if !ok {
+				panic("pv_from_line(): ok == false when calling point_from_human_string()")
+			}
+
+			mv = Move{
+				OK: true,
+				Colour: next_colour,
+				X: x,
+				Y: y,
+			}
+		}
+
+		if mv.OK {
+			moves = append(moves, mv)
+			next_colour = opposite_colour(next_colour)
+		}
+	}
+
+	return moves
 }
