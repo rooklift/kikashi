@@ -72,6 +72,19 @@ func (self *Move) String() string {
 	return fmt.Sprintf("(%s %s)", COLMAP[self.Colour], hs)
 }
 
+type MoveList []Move
+
+func (self MoveList) String() string {
+
+	var elements []string
+
+	for _, mv := range self {
+		elements = append(elements, fmt.Sprintf("%v", &mv))
+	}
+
+	return strings.Join(elements, " ")
+}
+
 // -------------------------------------------------------------------------
 
 type LineBuffer struct {
@@ -650,18 +663,59 @@ func (self *Node) WriteTree(outfile io.Writer) {		// Relies on values already be
 }
 
 
+func (self *Node) StepGTP() []string {
+
+	var commands []string
+
+	sz := self.Size()
+
+	// Return list of GTP commands to get to this position from the parent.
+
+	for _, foo := range self.Props["AB"] {
+		x, y, ok := point_from_SGF_string(foo, sz)
+		if ok {
+			commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
+		}
+	}
+
+	for _, foo := range self.Props["AW"] {
+		x, y, ok := point_from_SGF_string(foo, sz)
+		if ok {
+			commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
+		}
+	}
+
+	// Play move: B / W
+
+	for _, foo := range self.Props["B"] {
+		x, y, ok := point_from_SGF_string(foo, sz)
+		if ok {
+			commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
+		}
+	}
+
+	for _, foo := range self.Props["W"] {
+		x, y, ok := point_from_SGF_string(foo, sz)
+		if ok {
+			commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
+		}
+	}
+
+	return commands
+}
+
+
 func (self *Node) FullGTP() []string {
 
 	// Return a full list of GTP commands to recreate this position.
 	// Doesn't work if "AE" properties are present anywhere in the line.
 
-	var nodes []*Node
 	var commands []string
-
-	sz := self.Size()
-	node := self
+	var nodes []*Node
 
 	// Make a list of relevant nodes, in reverse order...
+
+	node := self
 
 	for {
 		nodes = append(nodes, node)
@@ -672,42 +726,12 @@ func (self *Node) FullGTP() []string {
 		}
 	}
 
-	commands = append(commands, fmt.Sprintf("boardsize %v", sz))
+	commands = append(commands, fmt.Sprintf("boardsize %v", node.Size()))
 	commands = append(commands, "clear_board")
 
 	for n := len(nodes) - 1; n >= 0; n-- {
-
 		node = nodes[n]
-
-		for _, foo := range node.Props["AB"] {
-			x, y, ok := point_from_SGF_string(foo, sz)
-			if ok {
-				commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
-			}
-		}
-
-		for _, foo := range node.Props["AW"] {
-			x, y, ok := point_from_SGF_string(foo, sz)
-			if ok {
-				commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
-			}
-		}
-
-		// Play move: B / W
-
-		for _, foo := range node.Props["B"] {
-			x, y, ok := point_from_SGF_string(foo, sz)
-			if ok {
-				commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
-			}
-		}
-
-		for _, foo := range node.Props["W"] {
-			x, y, ok := point_from_SGF_string(foo, sz)
-			if ok {
-				commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
-			}
-		}
+		commands = append(commands, node.StepGTP()...)
 	}
 
 	return commands
@@ -858,8 +882,8 @@ type App struct {
 	LZ_Stdout_Buffer	LineBuffer
 	LZ_Stderr_Buffer	LineBuffer
 
-	Variations			map[Point][]Move
-	VariationsNext		map[Point][]Move
+	Variations			map[Point]MoveList
+	VariationsNext		map[Point]MoveList
 }
 
 
@@ -877,8 +901,8 @@ func NewApp(SZ, cell_width, margin int32) *App {
 
 	self.InitSDL()
 
-	self.Variations = make(map[Point][]Move)
-	self.VariationsNext = make(map[Point][]Move)
+	self.Variations = make(map[Point]MoveList)
+	self.VariationsNext = make(map[Point]MoveList)
 
 	self.LZ_Cmd = exec.Command("./leelaz.exe", "--gtp", "-w", "network")
 
@@ -1224,11 +1248,15 @@ func (self *App) Poll() {
 
 				case sdl.K_m:
 
+					fmt.Printf("--------------------\n")
 					for _, v := range self.Variations {
-						for _, mv := range v {
-							fmt.Printf("%v ", &mv)
-						}
-						fmt.Printf("\n")
+						fmt.Printf("%v\n", v)
+					}
+
+				case sdl.K_g:
+
+					for _, c := range self.Node.FullGTP() {
+						fmt.Printf("%s\n", c)
 					}
 
 				case sdl.K_END:
@@ -1267,7 +1295,7 @@ func (self *App) Analyse() {
 
 		if line == "~end" {
 			self.Variations = self.VariationsNext
-			self.VariationsNext = make(map[Point][]Move)
+			self.VariationsNext = make(map[Point]MoveList)
 		} else {
 			pv := pv_from_line(line, self.Node.NextColour(), self.Node.Size())
 
@@ -1484,7 +1512,7 @@ func opposite_colour(c Colour) Colour {
 }
 
 
-func pv_from_line(s string, next_colour Colour, size int32) []Move {
+func pv_from_line(s string, next_colour Colour, size int32) MoveList {
 
 	tokens := strings.Fields(s)
 
@@ -1492,7 +1520,7 @@ func pv_from_line(s string, next_colour Colour, size int32) []Move {
 		return nil
 	}
 
-	var moves []Move
+	var moves MoveList
 
 	for _, t := range tokens[8:] {
 
