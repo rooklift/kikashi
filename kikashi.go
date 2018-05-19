@@ -76,13 +76,33 @@ type MoveList []Move
 
 func (self MoveList) String() string {
 
-	var elements []string
-
-	for _, mv := range self {
-		elements = append(elements, fmt.Sprintf("%v", &mv))
+	if len(self) == 0 {
+		return ""
 	}
 
-	return strings.Join(elements, " ")
+	var lines []string
+	var i int
+
+	for {
+
+		if len(lines) == 0 {
+			lines = append(lines, "")
+		} else {
+			lines = append(lines, "        ")
+		}
+
+		for len(lines[len(lines) - 1]) < 70 {
+
+			mv := self[i]
+
+			lines[len(lines) - 1] += fmt.Sprintf("%v ", &mv)
+
+			i++
+			if i >= len(self) {
+				return strings.Join(lines, "\n")
+			}
+		}
+	}
 }
 
 // -------------------------------------------------------------------------
@@ -665,11 +685,11 @@ func (self *Node) WriteTree(outfile io.Writer) {		// Relies on values already be
 
 func (self *Node) StepGTP() []string {
 
+	// Return list of GTP commands to get to this position from the parent.
+
 	var commands []string
 
 	sz := self.Size()
-
-	// Return list of GTP commands to get to this position from the parent.
 
 	for _, foo := range self.Props["AB"] {
 		x, y, ok := point_from_SGF_string(foo, sz)
@@ -684,8 +704,6 @@ func (self *Node) StepGTP() []string {
 			commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
 		}
 	}
-
-	// Play move: B / W
 
 	for _, foo := range self.Props["B"] {
 		x, y, ok := point_from_SGF_string(foo, sz)
@@ -1149,6 +1167,7 @@ func (self *App) Poll() {
 					// fmt.Printf("%v\n", err)
 				} else {
 					self.Node = new_node
+					self.SyncDescent()
 				}
 			}
 
@@ -1157,7 +1176,7 @@ func (self *App) Poll() {
 			if event.Y > 0 {
 
 				if self.Node.Parent != nil {
-
+					self.UndoSyncDescent()				// HAS TO COME FIRST!
 					self.Node = self.Node.Parent
 				}
 			}
@@ -1165,8 +1184,8 @@ func (self *App) Poll() {
 			if event.Y < 0 {		// Ideally we'd remember which line of the game we've been in.
 
 				if len(self.Node.Children) > 0 {
-
 					self.Node = self.Node.Children[0]
+					self.SyncDescent()
 				}
 			}
 
@@ -1241,10 +1260,12 @@ func (self *App) Poll() {
 					}
 
 					self.Node = new_root
+					self.SyncFull()
 
 				case sdl.K_p:
 
 					self.Node = self.Node.TryPass(self.Node.NextColour())
+					self.SyncDescent()
 
 				case sdl.K_m:
 
@@ -1262,20 +1283,24 @@ func (self *App) Poll() {
 				case sdl.K_END:
 
 					self.Node = self.Node.GetEnd()
+					self.SyncFull()
 
 				case sdl.K_HOME:
 
 					self.Node = self.Node.GetRoot()
+					self.SyncFull()
 
 				case sdl.K_DOWN:
 
 					if len(self.Node.Children) > 0 {
 						self.Node = self.Node.Children[0]
+						self.SyncDescent()
 					}
 
 				case sdl.K_UP:
 
 					if self.Node.Parent != nil {
+						self.UndoSyncDescent()
 						self.Node = self.Node.Parent
 					}
 				}
@@ -1317,7 +1342,7 @@ func (self *App) Analyse() {
 
 func (self *App) Run() {
 
-	self.LZ_Stdin.Write([]byte("time_left B 0 0\n"))
+	self.SendToEngine("time_left B 0 0")
 
 	self.DrawBoard()
 	self.Flip()
@@ -1334,6 +1359,39 @@ func (self *App) Run() {
 		// FIXME: consume stdout
 	}
 }
+
+
+func (self *App) SendToEngine(cmd string) {
+	cmd = strings.TrimSpace(cmd)
+	self.LZ_Stdin.Write([]byte(cmd))
+	self.LZ_Stdin.Write([]byte{'\n'})
+	fmt.Printf("%s\n", string(cmd))
+}
+
+
+func (self *App) SyncFull() {
+	for _, cmd := range self.Node.FullGTP() {
+		self.SendToEngine(cmd)
+	}
+	self.SendToEngine("time_left B 0 0")
+}
+
+
+func (self *App) SyncDescent() {
+	for _, cmd := range self.Node.StepGTP() {
+		self.SendToEngine(cmd)
+	}
+	self.SendToEngine("time_left B 0 0")
+}
+
+
+func (self *App) UndoSyncDescent() {						// Must be called BEFORE self.Node is changed!
+	for _, _ = range self.Node.StepGTP() {
+		self.SendToEngine("undo")
+	}
+	self.SendToEngine("time_left B 0 0")
+}
+
 
 // -------------------------------------------------------------------------
 
