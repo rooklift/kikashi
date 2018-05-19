@@ -1048,7 +1048,7 @@ func (self *App) DrawGrid() {
 }
 
 
-func (self *App) DrawBoard() {
+func (self *App) DrawBoard(movelist *MoveList) {
 
 	self.DrawGrid()
 
@@ -1074,10 +1074,34 @@ func (self *App) DrawBoard() {
 
 	if move_info.OK && move_info.Pass == false {
 		x1, y1 := self.PixelXY(move_info.X, move_info.Y)
-		if self.Node.Board[move_info.X][move_info.Y] == WHITE {
+		if move_info.Colour == WHITE {
 			self.Fcircle(x1, y1, self.CellWidth / 8, 0, 0, 0)
 		} else {
 			self.Fcircle(x1, y1, self.CellWidth / 8, 255, 255, 255)
+		}
+	}
+
+	// Draw the variation we've been give, if any...
+
+	if movelist != nil {
+		for i, mv := range movelist.List {
+			if mv.OK && mv.Pass == false {
+				x1, y1 := self.PixelXY(mv.X, mv.Y)
+
+				if i == 0 {
+					self.Fcircle(x1, y1, self.CellWidth / 2, 208, 172, 114)
+					self.Circle(x1, y1, self.CellWidth / 2, 255, 0, 0)
+					self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 0, 0)
+				} else if mv.Colour == BLACK {
+					self.Fcircle(x1, y1, self.CellWidth / 2, 208, 172, 114)
+					self.Circle(x1, y1, self.CellWidth / 2, 0, 0, 0)
+					self.Circle(x1, y1, self.CellWidth / 2 - 1, 0, 0, 0)
+				} else {
+					self.Fcircle(x1, y1, self.CellWidth / 2, 208, 172, 114)
+					self.Circle(x1, y1, self.CellWidth / 2, 255, 255, 255)
+					self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 255, 255)
+				}
+			}
 		}
 	}
 }
@@ -1341,7 +1365,7 @@ func (self *App) Run() {
 
 	self.SendToEngine("time_left B 0 0")
 
-	self.DrawBoard()
+	self.DrawBoard(nil)
 	self.Flip()
 
 	for {
@@ -1349,9 +1373,16 @@ func (self *App) Run() {
 		self.Poll()
 		self.Analyse()
 		if self.Node != node {
-			self.DrawBoard()
-			self.Flip()
+			// Something?
 		}
+
+		if len(self.Variations) > 0 {
+			self.DrawBoard(&self.Variations[0])
+		} else {
+			self.DrawBoard(nil)
+		}
+		self.Flip()
+
 		// FIXME: some sleep
 		// FIXME: consume stdout
 	}
