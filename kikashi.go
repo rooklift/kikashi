@@ -893,6 +893,7 @@ type App struct {
 	Offset				int32
 
 	Node				*Node
+	EngineNode			*Node
 
 	LZ_Cmd				*exec.Cmd
 
@@ -1167,7 +1168,7 @@ func (self *App) Poll() {
 					// fmt.Printf("%v\n", err)
 				} else {
 					self.Node = new_node
-					self.SyncDescent()
+					self.Sync()
 				}
 			}
 
@@ -1176,8 +1177,8 @@ func (self *App) Poll() {
 			if event.Y > 0 {
 
 				if self.Node.Parent != nil {
-					self.UndoSyncDescent()				// HAS TO COME FIRST!
 					self.Node = self.Node.Parent
+					self.Sync()
 				}
 			}
 
@@ -1185,7 +1186,7 @@ func (self *App) Poll() {
 
 				if len(self.Node.Children) > 0 {
 					self.Node = self.Node.Children[0]
-					self.SyncDescent()
+					self.Sync()
 				}
 			}
 
@@ -1260,12 +1261,12 @@ func (self *App) Poll() {
 					}
 
 					self.Node = new_root
-					self.SyncFull()
+					self.Sync()
 
 				case sdl.K_p:
 
 					self.Node = self.Node.TryPass(self.Node.NextColour())
-					self.SyncDescent()
+					self.Sync()
 
 				case sdl.K_m:
 
@@ -1283,25 +1284,25 @@ func (self *App) Poll() {
 				case sdl.K_END:
 
 					self.Node = self.Node.GetEnd()
-					self.SyncFull()
+					self.Sync()
 
 				case sdl.K_HOME:
 
 					self.Node = self.Node.GetRoot()
-					self.SyncFull()
+					self.Sync()
 
 				case sdl.K_DOWN:
 
 					if len(self.Node.Children) > 0 {
 						self.Node = self.Node.Children[0]
-						self.SyncDescent()
+						self.Sync()
 					}
 
 				case sdl.K_UP:
 
 					if self.Node.Parent != nil {
-						self.UndoSyncDescent()
 						self.Node = self.Node.Parent
+						self.Sync()
 					}
 				}
 			}
@@ -1369,26 +1370,38 @@ func (self *App) SendToEngine(cmd string) {
 }
 
 
-func (self *App) SyncFull() {
-	for _, cmd := range self.Node.FullGTP() {
-		self.SendToEngine(cmd)
+func (self *App) Sync() {
+
+	if self.Node == self.EngineNode {
+		return
 	}
-	self.SendToEngine("time_left B 0 0")
-}
 
+	if self.EngineNode != nil && self.EngineNode.Parent == self.Node {
 
-func (self *App) SyncDescent() {
-	for _, cmd := range self.Node.StepGTP() {
-		self.SendToEngine(cmd)
+		// We went up...
+
+		for _, _ = range self.EngineNode.StepGTP() {
+			self.SendToEngine("undo")
+		}
+
+	} else if self.Node != nil && self.Node.Parent == self.EngineNode {
+
+		// We went down...
+
+		for _, cmd := range self.Node.StepGTP() {
+			self.SendToEngine(cmd)
+		}
+
+	} else {
+
+		// We got lost...
+
+		for _, cmd := range self.Node.FullGTP() {
+			self.SendToEngine(cmd)
+		}
 	}
-	self.SendToEngine("time_left B 0 0")
-}
 
-
-func (self *App) UndoSyncDescent() {						// Must be called BEFORE self.Node is changed!
-	for _, _ = range self.Node.StepGTP() {
-		self.SendToEngine("undo")
-	}
+	self.EngineNode = self.Node
 	self.SendToEngine("time_left B 0 0")
 }
 
