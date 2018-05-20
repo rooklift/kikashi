@@ -85,7 +85,7 @@ type Node struct {
 	Children		[]*Node
 	Parent			*Node
 	Board			[][]Colour		// Created immediately by NewNode().
-	SZ_cache		int			// Cached value. 0 means not cached yet.
+	SZ_cache		int				// Cached value. 0 means not cached yet.
 }
 
 
@@ -97,7 +97,7 @@ func NewNode(parent *Node, props map[string][]string) *Node {
 
 	for key, _ := range props {
 		for _, s := range props[key] {
-			node.Props[key] = append(node.Props[key], s)
+			node.Props[key] = append(node.Props[key], escape_string(s))
 		}
 	}
 
