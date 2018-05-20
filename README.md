@@ -2,6 +2,11 @@
 
 Kikashi is a Go / Baduk / Weiqi library for Golang. In particular, it deals with SGF.
 
+## Notes
+
+* Coordinates are zeroth indexed, from top left (0,0).
+* Changing a board-altering property (B, W, AB, AW, AE) is not allowed after node creation.
+
 ## Example
 
 ```Golang
