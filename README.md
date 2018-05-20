@@ -25,8 +25,8 @@ func main() {
     // In this example, we create the ancient Chinese pattern.
 
     properties := make(map[string][]string)
-    properties["AB"] = []string{"pp", "dd"}
-    properties["AW"] = []string{"pd", "dp"}
+    properties["AB"] = []string{k.SGFStringFromPoint(3, 3), k.SGFStringFromPoint(15, 15)}	// ["dd", "pp"]
+    properties["AW"] = []string{k.SGFStringFromPoint(15, 3), k.SGFStringFromPoint(3, 15)}	// ["pd", "dp"]
     properties["SZ"] = []string{"19"}
 
     node := k.NewNode(nil, properties)          // nil means this node has no parent (it's the root)
