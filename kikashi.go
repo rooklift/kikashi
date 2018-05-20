@@ -121,6 +121,8 @@ func NewTree(size int32) *Node {
 	properties := make(map[string][]string)
 	size_string := fmt.Sprintf("%d", size)
 	properties["SZ"] = []string{size_string}
+	properties["GM"] = []string{"1"}
+	properties["FF"] = []string{"4"}
 
 	return NewNode(nil, properties)
 }
@@ -772,7 +774,7 @@ func (self *Node) FullGTP() []string {
 
 // -------------------------------------------------------------------------
 
-func LoadFile(filename string) (*Node, error) {
+func Load(filename string) (*Node, error) {
 
 	sgf_bytes, err := ioutil.ReadFile(filename)
 
@@ -916,6 +918,11 @@ func PointFromSGFString(s string, size int32) (x int32, y int32, ok bool) {
 	}
 
 	return x, y, ok
+}
+
+
+func SGFStringFromPoint(x, y int32) string {
+	return fmt.Sprintf("%c%c", ALPHA[x], ALPHA[y])
 }
 
 

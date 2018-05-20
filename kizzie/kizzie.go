@@ -121,7 +121,7 @@ type App struct {
 func NewApp(SZ, cell_width, margin int32) *App {
 
 	self := new(App)
-	self.Node = k.NewNode(nil, nil)
+	self.Node = k.NewTree(19)
 
 	self.CellWidth = cell_width
 	self.Offset = self.CellWidth / 2
@@ -519,7 +519,7 @@ func (self *App) Poll() {
 						break
 					}
 
-					new_root, err := k.LoadFile(string(filename))
+					new_root, err := k.Load(string(filename))
 					if err != nil {
 						fmt.Printf("%v\n", err)
 						break
