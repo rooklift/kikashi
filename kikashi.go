@@ -1,33 +1,26 @@
-package main
+package kikashi
 
 import (
 	"bufio"
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math"
 	"os"
-	"os/exec"
-	"path/filepath"
 	"strconv"
 	"strings"
-	"sync"
-	"time"
-
-	"github.com/veandco/go-sdl2/sdl"
 )
 
-const TITLE = "Kikashi"
-const ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+// -------------------------------------------------------------------------
+
+type Point struct {
+	X				int32
+	Y				int32
+}
+
 const DEFAULT_SIZE = 19
+const ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 var MUTORS = []string{"B", "W", "AB", "AW", "AE"}
-
-var COLMAP = map[Colour]string{
-	EMPTY: "?",
-	BLACK: "B",
-	WHITE: "W",
-}
 
 // -------------------------------------------------------------------------
 
@@ -39,9 +32,21 @@ const (
 	WHITE
 )
 
-type Point struct {
-	X				int32
-	Y				int32
+var COLMAP = map[Colour]string{
+	EMPTY: "?",
+	BLACK: "B",
+	WHITE: "W",
+}
+
+func (c Colour) Opposite() Colour {
+
+	if c == EMPTY {
+		return EMPTY
+	} else if c == BLACK {
+		return WHITE
+	} else {
+		return BLACK
+	}
 }
 
 // -------------------------------------------------------------------------
@@ -65,7 +70,7 @@ func (self *Move) String() string {
 		return fmt.Sprintf("(%spass)", COLMAP[self.Colour])
 	}
 
-	hs := human_string_from_point(self.X, self.Y, self.Size)
+	hs := HumanStringFromPoint(self.X, self.Y, self.Size)
 	if len(hs) == 2 {
 		hs += " "
 	}
@@ -73,76 +78,7 @@ func (self *Move) String() string {
 	return fmt.Sprintf("(%s %s)", COLMAP[self.Colour], hs)
 }
 
-type Variation struct {
-	Rank		int
-	Score		float64
-	List		[]Move
-}
-
-func (self Variation) String() string {
-
-	if len(self.List) == 0 {
-		return ""
-	}
-
-	var lines []string
-	var i int
-
-	for {
-
-		if len(lines) == 0 {
-			lines = append(lines, "")
-		} else {
-			lines = append(lines, "        ")
-		}
-
-		for len(lines[len(lines) - 1]) < 70 {
-
-			mv := self.List[i]
-
-			lines[len(lines) - 1] += fmt.Sprintf("%v ", &mv)
-
-			i++
-			if i >= len(self.List) {
-				return strings.Join(lines, "\n")
-			}
-		}
-	}
-}
-
 // -------------------------------------------------------------------------
-
-type LineBuffer struct {
-	sync.Mutex
-	Reader			io.Reader
-	Lines			[]string
-}
-
-func (self *LineBuffer) Loop() {
-	scanner := bufio.NewScanner(self.Reader)
-	for scanner.Scan() {
-		self.Lock()
-		self.Lines = append(self.Lines, scanner.Text())
-		self.Unlock()
-	}
-}
-
-func (self *LineBuffer) Dump() []string {
-
-	var new_lines []string
-
-	self.Lock()
-	for _, line := range self.Lines {
-		new_lines = append(new_lines, line)
-	}
-	self.Lines = nil
-	self.Unlock()
-
-	return new_lines
-}
-
-// -------------------------------------------------------------------------
-// Nodes in an SGF tree...
 
 type Node struct {
 	Props			map[string][]string
@@ -174,9 +110,25 @@ func NewNode(parent *Node, props map[string][]string) *Node {
 }
 
 
+func NewTree(size int32) *Node {
+
+	// Sizes over 25 are not recommended. But 52 is the hard limit for SGF.
+
+	if size < 1 || size > 52 {
+		panic(fmt.Sprintf("NewTree(): invalid size %v", size))
+	}
+
+	properties := make(map[string][]string)
+	size_string := fmt.Sprintf("%d", size)
+	properties["SZ"] = []string{size_string}
+
+	return NewNode(nil, properties)
+}
+
+
 func new_bare_node(parent *Node) *Node {
 
-	// Doesn't handle properties or make a board.
+	// Doesn't accept properties or make a board.
 	// Used only for file loading.
 
 	node := new(Node)
@@ -193,11 +145,11 @@ func new_bare_node(parent *Node) *Node {
 
 func (self *Node) AddValue(key, value string) {
 
-	// Disallow things that change the board...
+	// Disallow keys that change the board...
 
 	for _, s := range MUTORS {
 		if key == s {
-			panic("AddValue(): Board altering properties disallowed after creation")
+			panic("AddValue(): Can't change board-altering properties")
 		}
 	}
 
@@ -209,7 +161,7 @@ func (self *Node) add_value(key, value string) {			// Handles escaping
 
 	value = escape_string(value)
 
-	for i := 0; i < len(self.Props[key]); i++ {
+	for i := 0; i < len(self.Props[key]); i++ {				// Ignore if the value already exists
 		if self.Props[key][i] == value {
 			return
 		}
@@ -221,11 +173,11 @@ func (self *Node) add_value(key, value string) {			// Handles escaping
 
 func (self *Node) SetValue(key, value string) {
 
-	// Disallow things that change the board...
+	// Disallow keys that change the board...
 
 	for _, s := range MUTORS {
 		if key == s {
-			panic("SetValue(): Board altering properties disallowed after creation")
+			panic("SetValue(): Can't change board-altering properties")
 		}
 	}
 
@@ -248,6 +200,59 @@ func (self *Node) GetValue(key string) (value string, ok bool) {
 }
 
 
+func (self *Node) AllValues(key string) []string {
+
+	// Return all values for the key, possibly zero
+
+	list := self.Props[key]
+
+	if len(list) == 0 {
+		return nil
+	}
+
+	var ret []string
+
+	for _, s := range list {
+		ret = append(ret, unescape_string(s))
+	}
+
+	return ret
+}
+
+
+func (self *Node) DeleteValue(key, value string) {
+
+	// Disallow keys that change the board...
+
+	for _, s := range MUTORS {
+		if key == s {
+			panic("DeleteValue(): Can't change board-altering properties")
+		}
+	}
+
+	for i := len(self.Props[key]) - 1; i >= 0; i-- {
+		v := self.Props[key][i]
+		if v == value {
+			self.Props[key] = append(self.Props[key][:i], self.Props[key][i+1:]...)
+		}
+	}
+}
+
+
+func (self *Node) DeleteKey(key string) {
+
+	// Disallow keys that change the board...
+
+	for _, s := range MUTORS {
+		if key == s {
+			panic("DeleteKey(): Can't change board-altering properties")
+		}
+	}
+
+	delete(self.Props, key)
+}
+
+
 func (self *Node) MoveInfo() Move {
 
 	sz := self.Size()
@@ -256,7 +261,7 @@ func (self *Node) MoveInfo() Move {
 
 	for _, foo := range self.Props["B"] {
 
-		x, y, valid := point_from_SGF_string(foo, sz)
+		x, y, valid := PointFromSGFString(foo, sz)
 
 		ret := Move{
 			OK: true,
@@ -275,7 +280,7 @@ func (self *Node) MoveInfo() Move {
 
 	for _, foo := range self.Props["W"] {
 
-		x, y, valid := point_from_SGF_string(foo, sz)
+		x, y, valid := PointFromSGFString(foo, sz)
 
 		ret := Move{
 			OK: true,
@@ -377,29 +382,29 @@ func (self *Node) make_board() {
 	// Now fix the board using the properties...
 
 	for _, foo := range self.Props["AB"] {
-		x, y, ok := point_from_SGF_string(foo, sz)
+		x, y, ok := PointFromSGFString(foo, sz)
 		if ok { self.Board[x][y] = BLACK }
 	}
 
 	for _, foo := range self.Props["AW"] {
-		x, y, ok := point_from_SGF_string(foo, sz)
+		x, y, ok := PointFromSGFString(foo, sz)
 		if ok { self.Board[x][y] = WHITE }
 	}
 
 	for _, foo := range self.Props["AE"] {
-		x, y, ok := point_from_SGF_string(foo, sz)
+		x, y, ok := PointFromSGFString(foo, sz)
 		if ok { self.Board[x][y] = EMPTY }
 	}
 
 	// Play move: B / W
 
 	for _, foo := range self.Props["B"] {
-		x, y, ok := point_from_SGF_string(foo, sz)
+		x, y, ok := PointFromSGFString(foo, sz)
 		if ok { self.handle_move(BLACK, x, y) }
 	}
 
 	for _, foo := range self.Props["W"] {
-		x, y, ok := point_from_SGF_string(foo, sz)
+		x, y, ok := PointFromSGFString(foo, sz)
 		if ok { self.handle_move(WHITE, x, y) }
 	}
 }
@@ -502,6 +507,7 @@ func (self *Node) destroy_group(x, y int32) {
 func (self *Node) TryMove(colour Colour, x, y int32) (*Node, error) {
 
 	// Returns a new node on success.
+	// On failure, returns the original node.
 
 	if colour != BLACK && colour != WHITE {
 		panic("TryMove(): colour != BLACK && colour != WHITE")
@@ -510,10 +516,10 @@ func (self *Node) TryMove(colour Colour, x, y int32) (*Node, error) {
 	sz := self.Size()
 
 	if x < 0 || x >= sz || y < 0 || y >= sz {
-		return nil, fmt.Errorf("TryMove(): Off board")
+		return self, fmt.Errorf("TryMove(): Off board")
 	}
 	if self.Board[x][y] != EMPTY {
-		return nil, fmt.Errorf("TryMove(): Occupied point")
+		return self, fmt.Errorf("TryMove(): Occupied point")
 	}
 
 	// If the move already exists, just return the (first) relevant child...
@@ -542,12 +548,12 @@ func (self *Node) TryMove(colour Colour, x, y int32) (*Node, error) {
 
 	if new_node.SameBoard(self.Parent) {
 		self.RemoveChild(new_node)
-		return nil, fmt.Errorf("TryMove(): Ko")
+		return self, fmt.Errorf("TryMove(): Ko")
 	}
 
 	if new_node.Board[x][y] == EMPTY {
 		self.RemoveChild(new_node)
-		return nil, fmt.Errorf("TryMove(): Suicide")
+		return self, fmt.Errorf("TryMove(): Suicide")
 	}
 
 	return new_node, nil
@@ -697,32 +703,32 @@ func (self *Node) StepGTP() []string {
 	sz := self.Size()
 
 	for _, foo := range self.Props["AB"] {
-		x, y, ok := point_from_SGF_string(foo, sz)
+		x, y, ok := PointFromSGFString(foo, sz)
 		if ok {
-			commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
+			commands = append(commands, fmt.Sprintf("play B %v", HumanStringFromPoint(x, y, sz)))
 		}
 	}
 
 	for _, foo := range self.Props["AW"] {
-		x, y, ok := point_from_SGF_string(foo, sz)
+		x, y, ok := PointFromSGFString(foo, sz)
 		if ok {
-			commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
+			commands = append(commands, fmt.Sprintf("play W %v", HumanStringFromPoint(x, y, sz)))
 		}
 	}
 
 	for _, foo := range self.Props["B"] {
-		x, y, ok := point_from_SGF_string(foo, sz)
+		x, y, ok := PointFromSGFString(foo, sz)
 		if ok {
-			commands = append(commands, fmt.Sprintf("play B %v", human_string_from_point(x, y, sz)))
+			commands = append(commands, fmt.Sprintf("play B %v", HumanStringFromPoint(x, y, sz)))
 		} else {
 			commands = append(commands, fmt.Sprintf("play B pass"))
 		}
 	}
 
 	for _, foo := range self.Props["W"] {
-		x, y, ok := point_from_SGF_string(foo, sz)
+		x, y, ok := PointFromSGFString(foo, sz)
 		if ok {
-			commands = append(commands, fmt.Sprintf("play W %v", human_string_from_point(x, y, sz)))
+			commands = append(commands, fmt.Sprintf("play W %v", HumanStringFromPoint(x, y, sz)))
 		} else {
 			commands = append(commands, fmt.Sprintf("play W pass"))
 		}
@@ -892,628 +898,7 @@ func load_sgf(sgf string) (*Node, error) {
 
 // -------------------------------------------------------------------------
 
-type App struct {
-	Window				*sdl.Window
-	Renderer			*sdl.Renderer
-	PixelWidth			int32
-	PixelHeight			int32
-	CellWidth			int32
-	Margin				int32
-	Offset				int32
-
-	Node				*Node
-	EngineNode			*Node
-
-	LZ_Cmd				*exec.Cmd
-
-	LZ_Stdin			io.Writer
-	LZ_Stdout_Buffer	LineBuffer
-	LZ_Stderr_Buffer	LineBuffer
-
-	Variations			[]*Variation
-	VariationsNext		[]*Variation
-
-	NextAccept			time.Time
-
-	MouseX				int32
-	MouseY				int32
-}
-
-
-func NewApp(SZ, cell_width, margin int32) *App {
-
-	self := new(App)
-	self.Node = NewNode(nil, nil)
-
-	self.CellWidth = cell_width
-	self.Offset = self.CellWidth / 2
-	self.Margin = margin
-
-	self.PixelWidth = (self.CellWidth * self.Node.Size()) + (self.Margin * 2)
-	self.PixelHeight = self.PixelWidth
-
-	self.InitSDL()
-
-	self.LZ_Cmd = exec.Command("./leelaz.exe", "--gtp", "-w", "network")
-
-	self.LZ_Stdin, _ = self.LZ_Cmd.StdinPipe()
-	self.LZ_Stdout_Buffer.Reader, _ = self.LZ_Cmd.StdoutPipe()
-	self.LZ_Stderr_Buffer.Reader, _ = self.LZ_Cmd.StderrPipe()
-
-	self.LZ_Cmd.Start()
-
-	go self.LZ_Stdout_Buffer.Loop()
-	go self.LZ_Stderr_Buffer.Loop()
-
-	return self
-}
-
-
-func (self *App) InitSDL() {
-
-	fmt.Printf("Init...\n")
-
-	err := sdl.Init(sdl.INIT_EVERYTHING)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Printf("CreateWindow...\n")
-
-	self.Window, err = sdl.CreateWindow(
-		TITLE, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, self.PixelWidth, self.PixelHeight, sdl.WINDOW_SHOWN)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Printf("CreateRenderer...\n")
-
-	self.Renderer, err = sdl.CreateRenderer(self.Window, -1, sdl.RENDERER_ACCELERATED)
-	if err != nil {
-		panic(err)
-	}
-}
-
-
-func (self *App) Shutdown() {
-	fmt.Printf("Kill...\n")
-	self.LZ_Cmd.Process.Kill()
-	fmt.Printf("Destroy...\n")
-	self.Renderer.Destroy()
-	fmt.Printf("Destroy...\n")
-	self.Window.Destroy()
-	fmt.Printf("Quit...\n")
-	sdl.Quit()
-}
-
-
-func (self *App) Flip() {
-	self.Renderer.Present()
-}
-
-
-func (self *App) Cls(r, g, b uint8) {
-	self.Renderer.SetDrawColor(r, g, b, 255)
-	self.Renderer.FillRect(&sdl.Rect{0, 0, self.PixelWidth, self.PixelHeight})
-}
-
-
-func (self *App) PixelXY(x, y int32) (int32, int32) {
-	retx := x * self.CellWidth + self.Offset + self.Margin
-	rety := y * self.CellWidth + self.Offset + self.Margin
-	return retx, rety
-}
-
-
-func (self *App) BoardXY(x1, y1 int32, clamp bool) (int32, int32) {
-
-	min := self.Offset + self.Margin - (self.CellWidth / 2)
-	max := ((self.Node.Size() - 1) * self.CellWidth) + self.Offset + self.Margin + (self.CellWidth / 2)
-
-	diff := float64(max - min)
-
-	retx_f := (float64(x1 - min) / diff) * float64(self.Node.Size())
-	rety_f := (float64(y1 - min) / diff) * float64(self.Node.Size())
-
-	retx := int32(math.Floor(retx_f))
-	rety := int32(math.Floor(rety_f))
-
-	if clamp {
-		if retx < 0 { retx = 0 }
-		if retx >= self.Node.Size() { retx = self.Node.Size() - 1 }
-		if rety < 0 { rety = 0 }
-		if rety >= self.Node.Size() { rety = self.Node.Size() - 1 }
-	}
-
-	return retx, rety
-}
-
-
-func (self *App) AllHoshi() []Point {
-	// FIXME - generalise
-	return []Point{{3, 3}, {3, 9}, {3, 15}, {9, 3}, {9, 9}, {9, 15}, {15, 3}, {15, 9}, {15, 15}}
-}
-
-
-func (self *App) DrawGrid() {
-
-	self.Cls(208, 172, 114)
-
-	self.Renderer.SetDrawColor(0, 0, 0, 255)
-
-	for x := int32(0) ; x < self.Node.Size() ; x++ {
-		x1, y1 := self.PixelXY(x, 0)
-		x2, y2 := self.PixelXY(x, self.Node.Size() - 1)
-		self.Renderer.DrawLine(x1, y1, x2, y2)
-	}
-
-	for y := int32(0) ; y < self.Node.Size() ; y++ {
-		x1, y1 := self.PixelXY(0, y)
-		x2, y2 := self.PixelXY(self.Node.Size() - 1, y)
-		self.Renderer.DrawLine(x1, y1, x2, y2)
-	}
-
-	for _, hoshi := range self.AllHoshi() {
-		x, y := self.PixelXY(hoshi.X, hoshi.Y)
-		self.Renderer.DrawRect(&sdl.Rect{x - 1, y - 1, 3, 3})
-	}
-}
-
-
-func (self *App) DrawBoard(v *Variation, show_starts bool) {
-
-	self.DrawGrid()
-
-	// Draw known stones in the board (includes stones from B, W, AB, AW
-
-	for x := int32(0); x < self.Node.Size(); x++ {
-
-		for y := int32(0); y < self.Node.Size(); y++ {
-
-			if self.Node.Board[x][y] != EMPTY {
-
-				x1, y1 := self.PixelXY(x, y)
-
-				if self.Node.Board[x][y] == BLACK {
-					self.Fcircle(x1, y1, self.CellWidth / 2, 0, 0, 0)
-				} else if self.Node.Board[x][y] == WHITE {
-					self.Fcircle(x1, y1, self.CellWidth / 2, 255, 255, 255)
-					self.Circle(x1, y1, self.CellWidth / 2, 0, 0, 0)
-				}
-			}
-		}
-	}
-
-	// Draw a marker on this node's move...
-
-	move_info := self.Node.MoveInfo()
-
-	if move_info.OK && move_info.Pass == false {
-		x1, y1 := self.PixelXY(move_info.X, move_info.Y)
-		if move_info.Colour == WHITE {
-			self.Fcircle(x1, y1, self.CellWidth / 8, 0, 0, 0)
-		} else {
-			self.Fcircle(x1, y1, self.CellWidth / 8, 255, 255, 255)
-		}
-	}
-
-	// Draw the variation we've been give, if any...
-
-	if v != nil {
-
-		for _, mv := range v.List {
-
-			if mv.OK && mv.Pass == false {
-
-				x1, y1 := self.PixelXY(mv.X, mv.Y)
-
-				if self.Node.Board[mv.X][mv.Y] == EMPTY {
-					if mv.Colour == BLACK {
-						self.Fcircle(x1, y1, self.CellWidth / 2, 0, 0, 0)
-					} else {
-						self.Fcircle(x1, y1, self.CellWidth / 2, 255, 255, 255)
-						self.Circle(x1, y1, self.CellWidth / 2, 0, 0, 0)
-					}
-				}
-			}
-		}
-	}
-
-	if show_starts {
-		for i, variation := range self.Variations {
-			if len(variation.List) > 0 {
-				if variation.List[0].OK && variation.List[0].Pass == false {
-					x1, y1 := self.PixelXY(variation.List[0].X, variation.List[0].Y)
-
-					if i == 0 {
-						self.Circle(x1, y1, self.CellWidth / 2, 0, 128, 255)
-						self.Circle(x1, y1, self.CellWidth / 2 - 1, 0, 128, 255)
-					} else {
-						self.Circle(x1, y1, self.CellWidth / 2, 255, 0, 0)
-						self.Circle(x1, y1, self.CellWidth / 2 - 1, 255, 0, 0)
-					}
-				}
-			}
-		}
-	}
-
-	self.Flip()
-}
-
-
-func (self *App) Circle(x, y, radius int32, r, g, b uint8) {
-
-	self.Renderer.SetDrawColor(r, g, b, 255)
-
-	var pyth float64
-	var topline bool = true
-	var lastiplusone int32
-
-	for j := radius - 1; j >= 0; j-- {
-		for i := radius - 1; i >= 0; i-- {
-			pyth = math.Sqrt(math.Pow(float64(i), 2) + math.Pow(float64(j), 2))
-			if (pyth < float64(radius) - 0.5) {
-				if topline {                    // i.e. if we're on the top (and, with mirroring, bottom) lines
-					topline = false
-					self.Renderer.DrawLine(x - i - 1, y - j - 1, x + i, y - j - 1)
-					self.Renderer.DrawLine(x - i - 1, y + j, x + i, y + j)
-					lastiplusone = i + 1
-				} else {
-					if lastiplusone == i + 1 {
-						self.Renderer.DrawPoint(x - i - 1, y - j - 1)
-						self.Renderer.DrawPoint(x + i, y - j - 1)
-						self.Renderer.DrawPoint(x - i - 1, y + j)
-						self.Renderer.DrawPoint(x + i, y + j)
-					} else {
-						self.Renderer.DrawLine(x - i - 1, y - j - 1, x - lastiplusone - 1, y - j - 1)
-						self.Renderer.DrawLine(x + lastiplusone, y - j - 1, x + i, y - j - 1)
-						self.Renderer.DrawLine(x - i - 1, y + j, x - lastiplusone - 1, y + j)
-						self.Renderer.DrawLine(x + lastiplusone, y + j, x + i, y + j)
-						lastiplusone = i + 1
-					}
-				}
-				break
-			}
-		}
-	}
-}
-
-
-func (self *App) Fcircle(x, y, radius int32, r, g, b uint8) {
-
-	var pyth float64;
-
-	self.Renderer.SetDrawColor(r, g, b, 255)
-
-	for j := radius; j >= 0; j-- {
-		for i:= radius; i >= 0; i-- {
-			pyth = math.Sqrt(math.Pow(float64(i), 2) + math.Pow(float64(j), 2));
-			if (pyth < float64(radius) - 0.5) {
-				self.Renderer.DrawLine(x - i - 1, y - j - 1, x + i, y - j - 1)
-				self.Renderer.DrawLine(x - i - 1, y + j, x + i, y + j)
-				break
-			}
-		}
-	}
-}
-
-
-func (self *App) PollNoAction() {
-	for ev := sdl.PollEvent(); ev != nil; ev = sdl.PollEvent() {
-		// Take no action. SDL still cleans itself up I think.
-	}
-}
-
-
-func (self *App) Poll() {
-
-	for ev := sdl.PollEvent(); ev != nil; ev = sdl.PollEvent() {
-
-		switch event := ev.(type) {
-
-		case *sdl.QuitEvent:
-
-			self.Shutdown()
-			os.Exit(0)
-
-		case *sdl.MouseButtonEvent:
-
-			if event.Type == sdl.MOUSEBUTTONDOWN {
-
-				x, y := self.BoardXY(event.X, event.Y, true)
-
-				new_node, err := self.Node.TryMove(self.Node.NextColour(), x, y)
-				if err != nil {
-					// fmt.Printf("%v\n", err)
-				} else {
-					self.Node = new_node
-					self.Sync()
-				}
-			}
-
-		case *sdl.MouseWheelEvent:
-
-			if event.Y > 0 {
-
-				if self.Node.Parent != nil {
-					self.Node = self.Node.Parent
-					self.Sync()
-				}
-			}
-
-			if event.Y < 0 {		// Ideally we'd remember which line of the game we've been in.
-
-				if len(self.Node.Children) > 0 {
-					self.Node = self.Node.Children[0]
-					self.Sync()
-				}
-			}
-
-		case *sdl.MouseMotionEvent:
-
-			self.MouseX, self.MouseY = self.BoardXY(event.X, event.Y, false)		// OK to be outside 0-18
-
-		case *sdl.KeyboardEvent:
-
-			if event.Type == sdl.KEYDOWN {
-
-				switch event.Keysym.Sym {
-
-				// https://github.com/veandco/go-sdl2/blob/master/sdl/keycode.go
-
-				case sdl.K_s:
-
-					var filename string
-					var dialog_done bool
-
-					result_chan := make(chan string)
-					go file_dialog(true, result_chan)
-
-					// Keep consuming events and stderr...
-
-					for !dialog_done {
-
-						select {
-
-						case filename = <- result_chan:
-							dialog_done = true
-
-						default:
-							self.PollNoAction()
-							self.Analyse()			// Keep consuming stderr
-						}
-					}
-
-					if filename == "" {
-						break
-					}
-
-					self.Node.Save(filename)
-
-				case sdl.K_o:
-
-					var filename string
-					var dialog_done bool
-
-					result_chan := make(chan string)
-					go file_dialog(false, result_chan)
-
-					// Keep consuming events and stderr...
-
-					for !dialog_done {
-
-						select {
-
-						case filename = <- result_chan:
-							dialog_done = true
-
-						default:
-							self.PollNoAction()
-							self.Analyse()			// Keep consuming stderr
-						}
-					}
-
-					if filename == "" {
-						break
-					}
-
-					new_root, err := LoadFile(string(filename))
-					if err != nil {
-						fmt.Printf("%v\n", err)
-						break
-					}
-
-					self.Node = new_root
-					self.Sync()
-
-				case sdl.K_p:
-
-					self.Node = self.Node.TryPass(self.Node.NextColour())
-					self.Sync()
-
-				case sdl.K_RETURN:
-
-					if len(self.Variations) > 0 {
-
-						if len(self.Variations[0].List) > 0 {
-
-							mv := self.Variations[0].List[0]
-
-							if mv.OK && mv.Pass == false {
-
-								new_node, err := self.Node.TryMove(self.Node.NextColour(), mv.X, mv.Y)
-								if err != nil {
-									// fmt.Printf("%v\n", err)
-								} else {
-									self.Node = new_node
-									self.Sync()
-								}
-							}
-						}
-					}
-
-				case sdl.K_m:
-
-					fmt.Printf("--------------------\n")
-					for _, v := range self.Variations {
-						fmt.Printf("%v\n", v)
-					}
-
-				case sdl.K_g:
-
-					for _, c := range self.Node.FullGTP() {
-						fmt.Printf("%s\n", c)
-					}
-
-				case sdl.K_END:
-
-					self.Node = self.Node.GetEnd()
-					self.Sync()
-
-				case sdl.K_HOME:
-
-					self.Node = self.Node.GetRoot()
-					self.Sync()
-
-				case sdl.K_DOWN:
-
-					if len(self.Node.Children) > 0 {
-						self.Node = self.Node.Children[0]
-						self.Sync()
-					}
-
-				case sdl.K_UP:
-
-					if self.Node.Parent != nil {
-						self.Node = self.Node.Parent
-						self.Sync()
-					}
-				}
-			}
-		}
-	}
-}
-
-
-func (self *App) Analyse() {
-
-	// Just updates the self.Variations and self.VariationsNext maps.
-
-	new_lines := self.LZ_Stderr_Buffer.Dump()
-
-	// Ignore for a little while after Syncing so we don't get old info...
-
-	if time.Now().Before(self.NextAccept) {
-		return
-	}
-
-	for _, line := range new_lines {
-
-		if line == "~end" {
-			self.Variations = self.VariationsNext
-			self.VariationsNext = nil
-		} else {
-			pv := pv_from_line(line, self.Node.NextColour(), self.Node.Size())
-
-			if len(pv.List) > 0 {
-				self.VariationsNext = append(self.VariationsNext, pv)
-				pv.Rank = len(self.VariationsNext)						// 1 being the best
-			}
-		}
-
-		// fmt.Printf("%s\n", line)
-	}
-}
-
-
-func (self *App) Run() {
-
-	self.SendToEngine("time_left B 0 0")
-
-	self.DrawBoard(nil, true)
-
-	for {
-		self.Poll()
-		self.Analyse()
-
-		var v *Variation
-
-		for _, variation := range self.Variations {
-			if len(variation.List) > 0 && variation.List[0].X == self.MouseX && variation.List[0].Y == self.MouseY {
-				v = variation
-			}
-		}
-
-		if v != nil {
-			self.DrawBoard(v, false)
-		} else {
-			self.DrawBoard(nil, true)
-		}
-
-		self.LZ_Stdout_Buffer.Dump()
-
-		// FIXME: sleep?
-	}
-}
-
-
-func (self *App) SendToEngine(cmd string) {
-	cmd = strings.TrimSpace(cmd)
-	self.LZ_Stdin.Write([]byte(cmd))
-	self.LZ_Stdin.Write([]byte{'\n'})
-	fmt.Printf("%s\n", string(cmd))
-}
-
-
-func (self *App) Sync() {
-
-	if self.Node == self.EngineNode {
-		return
-	}
-
-	if self.EngineNode != nil && self.EngineNode.Parent == self.Node {
-
-		// We went up...
-
-		for _, _ = range self.EngineNode.StepGTP() {
-			self.SendToEngine("undo")
-		}
-
-	} else if self.Node != nil && self.Node.Parent == self.EngineNode {
-
-		// We went down...
-
-		for _, cmd := range self.Node.StepGTP() {
-			self.SendToEngine(cmd)
-		}
-
-	} else {
-
-		// We got lost...
-
-		for _, cmd := range self.Node.FullGTP() {
-			self.SendToEngine(cmd)
-		}
-	}
-
-	self.EngineNode = self.Node
-	self.SendToEngine("time_left B 0 0")
-
-	self.Variations = nil
-	self.VariationsNext = nil
-	self.NextAccept = time.Now().Add(100 * time.Millisecond)
-}
-
-
-// -------------------------------------------------------------------------
-
-func main() {
-	app := NewApp(DEFAULT_SIZE, 36, 20)
-	app.Run()
-}
-
-
-func point_from_SGF_string(s string, size int32) (x int32, y int32, ok bool) {
+func PointFromSGFString(s string, size int32) (x int32, y int32, ok bool) {
 
 	// If ok == false, that means the move was a pass.
 
@@ -1534,13 +919,13 @@ func point_from_SGF_string(s string, size int32) (x int32, y int32, ok bool) {
 }
 
 
-func human_string_from_point(x, y, size int32) string {
+func HumanStringFromPoint(x, y, size int32) string {
 	const letters = "ABCDEFGHJKLMNOPQRSTUVWXYZ"
 	return fmt.Sprintf("%c%v", letters[x], size - y)
 }
 
 
-func point_from_human_string(s string, size int32) (x int32, y int32, ok bool) {
+func PointFromHumanString(s string, size int32) (x int32, y int32, ok bool) {
 
 	if len(s) < 2 || len(s) > 3 {
 		return 0, 0, false
@@ -1636,97 +1021,4 @@ func unescape_string(s string) string {
 	}
 
 	return string(new_s)
-}
-
-
-func file_dialog(save bool, result_chan chan string) {
-
-	exe_dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
-	script_path := filepath.Join(exe_dir, "filedialog.py")
-
-	all_python_args := []string{script_path}
-
-	if save {
-		all_python_args = append(all_python_args, "save")
-	}
-
-	subprocess_output, err := exec.Command("python", all_python_args...).Output()
-
-	if err != nil {
-		fmt.Printf("file_dialog(): %v\n", err)
-		result_chan <- ""
-		return
-	}
-
-	s := string(subprocess_output)
-	s = strings.Replace(s, "\r", "", -1)
-	s = strings.Replace(s, "\n", "", -1)
-
-	if s == "" {
-		result_chan <- ""
-		return
-	}
-
-	result_chan <- s
-}
-
-
-func opposite_colour(c Colour) Colour {
-	if c == EMPTY {
-		return EMPTY
-	} else if c == BLACK {
-		return WHITE
-	} else {
-		return BLACK
-	}
-}
-
-
-func pv_from_line(s string, next_colour Colour, size int32) *Variation {
-
-	tokens := strings.Fields(s)
-
-	v := new(Variation)
-
-	if len(tokens) < 9 || tokens[7] != "PV:" {
-		return v		// Zeroed
-	}
-
-	for _, t := range tokens[8:] {
-
-		var mv Move
-
-		if t == "pass" {
-
-			mv = Move{
-				OK: true,
-				Pass: true,
-				Colour: next_colour,
-				Size: size,
-			}
-
-		} else {
-
-			x, y, ok := point_from_human_string(t, size)
-
-			if ok {
-				mv = Move{
-					OK: true,
-					Colour: next_colour,
-					X: x,
-					Y: y,
-					Size: size,
-				}
-			} else {
-				fmt.Printf("Warning: point_from_human_string() returned ok: false")
-			}
-		}
-
-		if mv.OK {
-			v.List = append(v.List, mv)
-			next_colour = opposite_colour(next_colour)
-		}
-	}
-
-	return v
 }
