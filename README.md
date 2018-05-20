@@ -2,6 +2,7 @@
 
 Kikashi is a Go / Baduk / Weiqi library for Golang. In particular, it deals with SGF.
 
+# Example
 
 ```Golang
 package main
