@@ -238,6 +238,10 @@ func (self *Node) DeleteValue(key, value string) {
 			self.Props[key] = append(self.Props[key][:i], self.Props[key][i+1:]...)
 		}
 	}
+
+	if len(self.Props[key]) == 0 {
+		delete(self.Props, key)
+	}
 }
 
 
