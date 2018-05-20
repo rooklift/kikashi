@@ -55,7 +55,7 @@ func main() {
     node.TryMove(k.WHITE, 16, 13)               // Create variation 3
     
     for i, child := range node.Children {
-        child.SetValue("C", fmt.Sprintf("Comment %d", i)
+        child.SetValue("C", fmt.Sprintf("Comment %d", i))
     }
 
     // And we can go down those variations if we wish.
