@@ -97,7 +97,7 @@ func NewNode(parent *Node, props map[string][]string) *Node {
 
 	for key, _ := range props {
 		for _, s := range props[key] {
-			node.Props[key] = append(node.Props[key], escape_string(s))
+			node.add_value(key, s)
 		}
 	}
 
