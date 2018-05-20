@@ -13,8 +13,8 @@ import (
 // -------------------------------------------------------------------------
 
 type Point struct {
-	X				int32
-	Y				int32
+	X				int
+	Y				int
 }
 
 const DEFAULT_SIZE = 19
@@ -55,9 +55,9 @@ type Move struct {
 	OK				bool
 	Pass			bool
 	Colour			Colour
-	X				int32
-	Y				int32
-	Size			int32
+	X				int
+	Y				int
+	Size			int
 }
 
 func (self *Move) String() string {
@@ -85,7 +85,7 @@ type Node struct {
 	Children		[]*Node
 	Parent			*Node
 	Board			[][]Colour		// Created immediately by NewNode().
-	SZ_cache		int32			// Cached value. 0 means not cached yet.
+	SZ_cache		int			// Cached value. 0 means not cached yet.
 }
 
 
@@ -110,7 +110,7 @@ func NewNode(parent *Node, props map[string][]string) *Node {
 }
 
 
-func NewTree(size int32) *Node {
+func NewTree(size int) *Node {
 
 	// Sizes over 25 are not recommended. But 52 is the hard limit for SGF.
 
@@ -303,7 +303,7 @@ func (self *Node) MoveInfo() Move {
 }
 
 
-func (self *Node) Size() int32 {
+func (self *Node) Size() int {
 
 	// Note that this line is NOT a check of the property SZ:
 
@@ -324,7 +324,7 @@ func (self *Node) Size() int32 {
 				if err == nil {
 
 					if val > 0 && val <= 52 {
-						self.SZ_cache = int32(val)
+						self.SZ_cache = int(val)
 					}
 				}
 			}
@@ -374,8 +374,8 @@ func (self *Node) make_board() {
 	}
 
 	if self.Parent != nil {
-		for x := int32(0); x < sz; x++ {
-			for y := int32(0); y < sz; y++ {
+		for x := int(0); x < sz; x++ {
+			for y := int(0); y < sz; y++ {
 				self.Board[x][y] = self.Parent.Board[x][y]
 			}
 		}
@@ -424,7 +424,7 @@ func (self *Node) make_board_recursive() {
 }
 
 
-func (self *Node) handle_move(colour Colour, x, y int32) {
+func (self *Node) handle_move(colour Colour, x, y int) {
 
 	// Additional changes to the board based on moves in the properties.
 	// No legality checking here.
@@ -457,14 +457,14 @@ func (self *Node) handle_move(colour Colour, x, y int32) {
 }
 
 
-func (self *Node) GroupHasLiberties(x, y int32) bool {
+func (self *Node) GroupHasLiberties(x, y int) bool {
 
 	touched := make(map[Point]bool)
 	return self.group_has_liberties(x, y, touched)
 }
 
 
-func (self *Node) group_has_liberties(x, y int32, touched map[Point]bool) bool {
+func (self *Node) group_has_liberties(x, y int, touched map[Point]bool) bool {
 
 	touched[Point{x, y}] = true
 
@@ -489,7 +489,7 @@ func (self *Node) group_has_liberties(x, y int32, touched map[Point]bool) bool {
 }
 
 
-func (self *Node) destroy_group(x, y int32) {
+func (self *Node) destroy_group(x, y int) {
 
 	colour := self.Board[x][y]
 	if colour != BLACK && colour != WHITE {
@@ -506,7 +506,7 @@ func (self *Node) destroy_group(x, y int32) {
 }
 
 
-func (self *Node) TryMove(colour Colour, x, y int32) (*Node, error) {
+func (self *Node) TryMove(colour Colour, x, y int) (*Node, error) {
 
 	// Returns a new node on success.
 	// On failure, returns the original node.
@@ -603,8 +603,8 @@ func (self *Node) SameBoard(other *Node) bool {
 
 	sz := self.Size()
 
-	for x := int32(0); x < sz; x++ {
-		for y := int32(0); y < sz; y++ {
+	for x := int(0); x < sz; x++ {
+		for y := int(0); y < sz; y++ {
 			if self.Board[x][y] != other.Board[x][y] {
 				return false
 			}
@@ -900,7 +900,7 @@ func load_sgf(sgf string) (*Node, error) {
 
 // -------------------------------------------------------------------------
 
-func PointFromSGFString(s string, size int32) (x int32, y int32, ok bool) {
+func PointFromSGFString(s string, size int) (x int, y int, ok bool) {
 
 	// If ok == false, that means the move was a pass.
 
@@ -908,8 +908,8 @@ func PointFromSGFString(s string, size int32) (x int32, y int32, ok bool) {
 		return 0, 0, false
 	}
 
-	x = int32(s[0]) - 97
-	y = int32(s[1]) - 97
+	x = int(s[0]) - 97
+	y = int(s[1]) - 97
 
 	ok = false
 
@@ -921,18 +921,18 @@ func PointFromSGFString(s string, size int32) (x int32, y int32, ok bool) {
 }
 
 
-func SGFStringFromPoint(x, y int32) string {
+func SGFStringFromPoint(x, y int) string {
 	return fmt.Sprintf("%c%c", ALPHA[x], ALPHA[y])
 }
 
 
-func HumanStringFromPoint(x, y, size int32) string {
+func HumanStringFromPoint(x, y, size int) string {
 	const letters = "ABCDEFGHJKLMNOPQRSTUVWXYZ"
 	return fmt.Sprintf("%c%v", letters[x], size - y)
 }
 
 
-func PointFromHumanString(s string, size int32) (x int32, y int32, ok bool) {
+func PointFromHumanString(s string, size int) (x int, y int, ok bool) {
 
 	if len(s) < 2 || len(s) > 3 {
 		return 0, 0, false
@@ -950,19 +950,19 @@ func PointFromHumanString(s string, size int32) (x int32, y int32, ok bool) {
 		return 0, 0, false
 	}
 
-	x = int32(s[0]) - 65
+	x = int(s[0]) - 65
 	if x >= 8 {
 		x--
 	}
 
 	y_int, _ := strconv.Atoi(s[1:])
-	y = size - int32(y_int)
+	y = size - int(y_int)
 
 	return x, y, true
 }
 
 
-func adjacent_points(x, y, size int32) []Point {
+func adjacent_points(x, y, size int) []Point {
 
 	var ret []Point
 

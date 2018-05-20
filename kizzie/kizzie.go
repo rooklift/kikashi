@@ -93,11 +93,11 @@ func (self *LineBuffer) Dump() []string {
 type App struct {
 	Window				*sdl.Window
 	Renderer			*sdl.Renderer
-	PixelWidth			int32
-	PixelHeight			int32
-	CellWidth			int32
-	Margin				int32
-	Offset				int32
+	PixelWidth			int
+	PixelHeight			int
+	CellWidth			int
+	Margin				int
+	Offset				int
 
 	Node				*k.Node
 	EngineNode			*k.Node
@@ -113,12 +113,12 @@ type App struct {
 
 	NextAccept			time.Time
 
-	MouseX				int32
-	MouseY				int32
+	MouseX				int
+	MouseY				int
 }
 
 
-func NewApp(SZ, cell_width, margin int32) *App {
+func NewApp(SZ, cell_width, margin int) *App {
 
 	self := new(App)
 	self.Node = k.NewTree(19)
@@ -163,7 +163,7 @@ func (self *App) InitSDL() {
 	fmt.Printf("CreateWindow...\n")
 
 	self.Window, err = sdl.CreateWindow(
-		TITLE, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, self.PixelWidth, self.PixelHeight, sdl.WINDOW_SHOWN)
+		TITLE, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, int32(self.PixelWidth), int32(self.PixelHeight), sdl.WINDOW_SHOWN)
 	if err != nil {
 		panic(err)
 	}
@@ -196,18 +196,18 @@ func (self *App) Flip() {
 
 func (self *App) Cls(r, g, b uint8) {
 	self.Renderer.SetDrawColor(r, g, b, 255)
-	self.Renderer.FillRect(&sdl.Rect{0, 0, self.PixelWidth, self.PixelHeight})
+	self.Renderer.FillRect(&sdl.Rect{0, 0, int32(self.PixelWidth), int32(self.PixelHeight)})
 }
 
 
-func (self *App) PixelXY(x, y int32) (int32, int32) {
+func (self *App) PixelXY(x, y int) (int, int) {
 	retx := x * self.CellWidth + self.Offset + self.Margin
 	rety := y * self.CellWidth + self.Offset + self.Margin
 	return retx, rety
 }
 
 
-func (self *App) BoardXY(x1, y1 int32, clamp bool) (int32, int32) {
+func (self *App) BoardXY(x1, y1 int, clamp bool) (int, int) {
 
 	min := self.Offset + self.Margin - (self.CellWidth / 2)
 	max := ((self.Node.Size() - 1) * self.CellWidth) + self.Offset + self.Margin + (self.CellWidth / 2)
@@ -217,8 +217,8 @@ func (self *App) BoardXY(x1, y1 int32, clamp bool) (int32, int32) {
 	retx_f := (float64(x1 - min) / diff) * float64(self.Node.Size())
 	rety_f := (float64(y1 - min) / diff) * float64(self.Node.Size())
 
-	retx := int32(math.Floor(retx_f))
-	rety := int32(math.Floor(rety_f))
+	retx := int(math.Floor(retx_f))
+	rety := int(math.Floor(rety_f))
 
 	if clamp {
 		if retx < 0 { retx = 0 }
@@ -243,21 +243,21 @@ func (self *App) DrawGrid() {
 
 	self.Renderer.SetDrawColor(0, 0, 0, 255)
 
-	for x := int32(0) ; x < self.Node.Size() ; x++ {
+	for x := 0 ; x < self.Node.Size() ; x++ {
 		x1, y1 := self.PixelXY(x, 0)
 		x2, y2 := self.PixelXY(x, self.Node.Size() - 1)
-		self.Renderer.DrawLine(x1, y1, x2, y2)
+		self.Renderer.DrawLine(int32(x1), int32(y1), int32(x2), int32(y2))
 	}
 
-	for y := int32(0) ; y < self.Node.Size() ; y++ {
+	for y := 0 ; y < self.Node.Size() ; y++ {
 		x1, y1 := self.PixelXY(0, y)
 		x2, y2 := self.PixelXY(self.Node.Size() - 1, y)
-		self.Renderer.DrawLine(x1, y1, x2, y2)
+		self.Renderer.DrawLine(int32(x1), int32(y1), int32(x2), int32(y2))
 	}
 
 	for _, hoshi := range self.AllHoshi() {
 		x, y := self.PixelXY(hoshi.X, hoshi.Y)
-		self.Renderer.DrawRect(&sdl.Rect{x - 1, y - 1, 3, 3})
+		self.Renderer.DrawRect(&sdl.Rect{int32(x - 1), int32(y - 1), int32(3), int32(3)})
 	}
 }
 
@@ -268,9 +268,9 @@ func (self *App) DrawBoard(v *Variation, show_starts bool) {
 
 	// Draw known stones in the board (includes stones from B, W, AB, AW
 
-	for x := int32(0); x < self.Node.Size(); x++ {
+	for x := 0; x < self.Node.Size(); x++ {
 
-		for y := int32(0); y < self.Node.Size(); y++ {
+		for y := 0; y < self.Node.Size(); y++ {
 
 			if self.Node.Board[x][y] != k.EMPTY {
 
@@ -343,13 +343,13 @@ func (self *App) DrawBoard(v *Variation, show_starts bool) {
 }
 
 
-func (self *App) Circle(x, y, radius int32, r, g, b uint8) {
+func (self *App) Circle(x, y, radius int, r, g, b uint8) {
 
 	self.Renderer.SetDrawColor(r, g, b, 255)
 
 	var pyth float64
 	var topline bool = true
-	var lastiplusone int32
+	var lastiplusone int
 
 	for j := radius - 1; j >= 0; j-- {
 		for i := radius - 1; i >= 0; i-- {
@@ -357,20 +357,20 @@ func (self *App) Circle(x, y, radius int32, r, g, b uint8) {
 			if (pyth < float64(radius) - 0.5) {
 				if topline {                    // i.e. if we're on the top (and, with mirroring, bottom) lines
 					topline = false
-					self.Renderer.DrawLine(x - i - 1, y - j - 1, x + i, y - j - 1)
-					self.Renderer.DrawLine(x - i - 1, y + j, x + i, y + j)
+					self.Renderer.DrawLine(int32(x - i - 1), int32(y - j - 1), int32(x + i), int32(y - j - 1))
+					self.Renderer.DrawLine(int32(x - i - 1), int32(y + j), int32(x + i), int32(y + j))
 					lastiplusone = i + 1
 				} else {
 					if lastiplusone == i + 1 {
-						self.Renderer.DrawPoint(x - i - 1, y - j - 1)
-						self.Renderer.DrawPoint(x + i, y - j - 1)
-						self.Renderer.DrawPoint(x - i - 1, y + j)
-						self.Renderer.DrawPoint(x + i, y + j)
+						self.Renderer.DrawPoint(int32(x - i - 1), int32(y - j - 1))
+						self.Renderer.DrawPoint(int32(x + i), int32(y - j - 1))
+						self.Renderer.DrawPoint(int32(x - i - 1), int32(y + j))
+						self.Renderer.DrawPoint(int32(x + i), int32(y + j))
 					} else {
-						self.Renderer.DrawLine(x - i - 1, y - j - 1, x - lastiplusone - 1, y - j - 1)
-						self.Renderer.DrawLine(x + lastiplusone, y - j - 1, x + i, y - j - 1)
-						self.Renderer.DrawLine(x - i - 1, y + j, x - lastiplusone - 1, y + j)
-						self.Renderer.DrawLine(x + lastiplusone, y + j, x + i, y + j)
+						self.Renderer.DrawLine(int32(x - i - 1), int32(y - j - 1), int32(x - lastiplusone - 1), int32(y - j - 1))
+						self.Renderer.DrawLine(int32(x + lastiplusone), int32(y - j - 1), int32(x + i), int32(y - j - 1))
+						self.Renderer.DrawLine(int32(x - i - 1), int32(y + j), int32(x - lastiplusone - 1), int32(y + j))
+						self.Renderer.DrawLine(int32(x + lastiplusone), int32(y + j), int32(x + i), int32(y + j))
 						lastiplusone = i + 1
 					}
 				}
@@ -381,7 +381,7 @@ func (self *App) Circle(x, y, radius int32, r, g, b uint8) {
 }
 
 
-func (self *App) Fcircle(x, y, radius int32, r, g, b uint8) {
+func (self *App) Fcircle(x, y, radius int, r, g, b uint8) {
 
 	var pyth float64;
 
@@ -391,8 +391,8 @@ func (self *App) Fcircle(x, y, radius int32, r, g, b uint8) {
 		for i:= radius; i >= 0; i-- {
 			pyth = math.Sqrt(math.Pow(float64(i), 2) + math.Pow(float64(j), 2));
 			if (pyth < float64(radius) - 0.5) {
-				self.Renderer.DrawLine(x - i - 1, y - j - 1, x + i, y - j - 1)
-				self.Renderer.DrawLine(x - i - 1, y + j, x + i, y + j)
+				self.Renderer.DrawLine(int32(x - i - 1), int32(y - j - 1), int32(x + i), int32(y - j - 1))
+				self.Renderer.DrawLine(int32(x - i - 1), int32(y + j), int32(x + i), int32(y + j))
 				break
 			}
 		}
@@ -422,7 +422,7 @@ func (self *App) Poll() {
 
 			if event.Type == sdl.MOUSEBUTTONDOWN {
 
-				x, y := self.BoardXY(event.X, event.Y, true)
+				x, y := self.BoardXY(int(event.X), int(event.Y), true)
 
 				new_node, err := self.Node.TryMove(self.Node.NextColour(), x, y)
 				if err != nil {
@@ -453,7 +453,7 @@ func (self *App) Poll() {
 
 		case *sdl.MouseMotionEvent:
 
-			self.MouseX, self.MouseY = self.BoardXY(event.X, event.Y, false)		// OK to be outside 0-18
+			self.MouseX, self.MouseY = self.BoardXY(int(event.X), int(event.Y), false)		// OK to be outside 0-18
 
 		case *sdl.KeyboardEvent:
 
@@ -747,7 +747,7 @@ func file_dialog(save bool, result_chan chan string) {
 }
 
 
-func pv_from_line(s string, next_colour k.Colour, size int32) *Variation {
+func pv_from_line(s string, next_colour k.Colour, size int) *Variation {
 
 	tokens := strings.Fields(s)
 
