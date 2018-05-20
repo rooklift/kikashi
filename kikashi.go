@@ -356,7 +356,7 @@ func (self *Node) NextColour() Colour {
 
 	if len(self.Props["B"]) > 0 && len(self.Props["W"]) == 0 {
 		return WHITE
-	} else if len(self.Props["W"]) > 0 && len(self.Props["B"] == 0 {
+	} else if len(self.Props["W"]) > 0 && len(self.Props["B"]) == 0 {
 		return BLACK
 	} else if len(self.Props["AB"]) > 0 && len(self.Props["AW"]) == 0 {
 		return WHITE
