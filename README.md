@@ -20,7 +20,7 @@ func main() {
     //      node := k.NewTree(size)
     //
     // But if you want handicap or other stones, one must pass
-    // some actual properties and use k.NewNode(nil, props)
+    // some actual properties and use k.NewNode().
     //
     // In this example, we create the ancient Chinese pattern.
 
