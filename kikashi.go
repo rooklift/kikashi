@@ -458,7 +458,6 @@ func (self *Node) handle_move(colour Colour, x, y int) {
 
 
 func (self *Node) GroupHasLiberties(x, y int) bool {
-
 	touched := make(map[Point]bool)
 	return self.group_has_liberties(x, y, touched)
 }
@@ -469,9 +468,6 @@ func (self *Node) group_has_liberties(x, y int, touched map[Point]bool) bool {
 	touched[Point{x, y}] = true
 
 	colour := self.Board[x][y]
-	if colour != BLACK && colour != WHITE {
-		panic("group_has_liberties(): colour != BLACK && colour != WHITE")
-	}
 
 	for _, point := range adjacent_points(x, y, self.Size()) {
 		if self.Board[point.X][point.Y] == EMPTY {
