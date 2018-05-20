@@ -352,16 +352,18 @@ func (self *Node) Size() int {
 func (self *Node) NextColour() Colour {
 
 	// What colour a new move made from this node should be.
-	// FIXME... should be better.
+	// (i.e. the colour of a child's move.)
 
-	if len(self.Props["B"]) > 0 {
+	if len(self.Props["B"]) > 0 && len(self.Props["W"]) == 0 {
 		return WHITE
-	} else if len(self.Props["W"]) > 0 {
+	} else if len(self.Props["W"]) > 0 && len(self.Props["B"] == 0 {
 		return BLACK
-	} else if len(self.Props["AB"]) > 0 {
+	} else if len(self.Props["AB"]) > 0 && len(self.Props["AW"]) == 0 {
 		return WHITE
-	} else if len(self.Props["AW"]) > 0 {
+	} else if len(self.Props["AW"]) > 0 && len(self.Props["AB"]) == 0 {
 		return BLACK
+	} else if self.Parent != nil {
+		return self.Parent.NextColour()
 	} else {
 		return BLACK
 	}
@@ -640,15 +642,20 @@ func (self *Node) GetEnd() *Node {
 }
 
 
-func (self *Node) Save(filename string) {
+func (self *Node) Save(filename string) error {
 
-	outfile, _ := os.Create(filename)					// FIXME: handle errors!
+	outfile, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
 	defer outfile.Close()
 
 	w := bufio.NewWriter(outfile)						// bufio for speedier output if file is huge.
 	defer w.Flush()
 
 	self.GetRoot().WriteTree(w)
+
+	return nil
 }
 
 
