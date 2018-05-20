@@ -488,8 +488,9 @@ func (self *Node) group_has_liberties(x, y int, touched map[Point]bool) bool {
 func (self *Node) destroy_group(x, y int) {
 
 	colour := self.Board[x][y]
+
 	if colour != BLACK && colour != WHITE {
-		panic("destroy_group: colour != BLACK && colour != WHITE")
+		return
 	}
 
 	self.Board[x][y] = EMPTY
