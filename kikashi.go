@@ -433,7 +433,7 @@ func (self *Node) handle_move(colour Colour, x, y int) {
 		panic("handle_move(): colour != BLACK && colour != WHITE")
 	}
 
-	opponent := BLACK ; if colour == BLACK { opponent = WHITE }
+	opponent := colour.Opposite()
 
 	sz := self.Size()
 
