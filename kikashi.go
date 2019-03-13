@@ -159,7 +159,7 @@ func (self *Node) AddValue(key, value string) {
 }
 
 
-func (self *Node) add_value(key, value string) {			// Handles escaping
+func (self *Node) add_value(key, value string) {			// Handles escaping; no other function should
 
 	value = escape_string(value)
 
@@ -212,7 +212,7 @@ func (self *Node) AllValues(key string) []string {
 		return nil
 	}
 
-	var ret []string
+	var ret []string		// Make a new slice to avoid aliasing.
 
 	for _, s := range list {
 		ret = append(ret, unescape_string(s))
@@ -408,12 +408,12 @@ func (self *Node) make_board() {
 
 	for _, foo := range self.Props["B"] {
 		x, y, ok := PointFromSGFString(foo, sz)
-		if ok { self.handle_move(BLACK, x, y) }
+		if ok { self.modify_board_from_move(BLACK, x, y) }
 	}
 
 	for _, foo := range self.Props["W"] {
 		x, y, ok := PointFromSGFString(foo, sz)
-		if ok { self.handle_move(WHITE, x, y) }
+		if ok { self.modify_board_from_move(WHITE, x, y) }
 	}
 }
 
@@ -430,13 +430,13 @@ func (self *Node) make_board_recursive() {
 }
 
 
-func (self *Node) handle_move(colour Colour, x, y int) {
+func (self *Node) modify_board_from_move(colour Colour, x, y int) {
 
 	// Additional changes to the board based on moves in the properties.
 	// No legality checking here.
 
 	if colour != BLACK && colour != WHITE {
-		panic("handle_move(): colour != BLACK && colour != WHITE")
+		panic("modify_board_from_move(): colour != BLACK && colour != WHITE")
 	}
 
 	opponent := colour.Opposite()
@@ -444,7 +444,7 @@ func (self *Node) handle_move(colour Colour, x, y int) {
 	sz := self.Size()
 
 	if x < 0 || x >= sz || y < 0 || y >= sz {
-		panic("handle_move(): off board")
+		panic("modify_board_from_move(): off board")
 	}
 
 	self.Board[x][y] = colour
