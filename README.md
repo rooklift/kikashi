@@ -2,6 +2,8 @@
 
 Kikashi is a Go / Baduk / Weiqi library for Golang. In particular, it deals with SGF.
 
+This repo is now archived, but I have a similar project at [fohristiwhirl/sgf](https://github.com/fohristiwhirl/sgf).
+
 ## Notes
 
 * Coordinates are zeroth indexed, from top left (0,0).
