@@ -547,7 +547,7 @@ func (self *Node) TryMove(colour Colour, x, y int) (*Node, error) {
 	// Legality checks...
 
 	key := "B" ; if colour == WHITE { key = "W" }
-	val := string(ALPHA[x]) + string(ALPHA[y])
+	val := string([]byte{ALPHA[x]}) + string([]byte{ALPHA[y]})
 
 	new_node := NewNode(self, map[string][]string{key: []string{val}})
 
@@ -835,7 +835,7 @@ func load_sgf_tree(sgf string, parent_of_local_root *Node) (*Node, int, error) {
 					return nil, 0, fmt.Errorf("load_sgf_tree: escape character at end of input")
 				}
 				value += string('\\')
-				value += string(sgf[i + 1])
+				value += string([]byte{sgf[i + 1]})
 				chars_to_skip = 1
 			} else if c == ']' {
 				inside = false
@@ -844,7 +844,7 @@ func load_sgf_tree(sgf string, parent_of_local_root *Node) (*Node, int, error) {
 				}
 				node.add_value(key, value)
 			} else {
-				value += string(c)
+				value += string([]byte{c})
 			}
 
 		} else {
@@ -881,7 +881,7 @@ func load_sgf_tree(sgf string, parent_of_local_root *Node) (*Node, int, error) {
 						key = ""
 						keycomplete = false
 					}
-					key += string(c)
+					key += string([]byte{c})
 				}
 			}
 		}
